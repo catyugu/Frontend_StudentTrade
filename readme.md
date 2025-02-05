@@ -1,6 +1,6 @@
 <h1>Please read the document first before starting developing!!!</h1>
 <h2>1. Set up dependencies</h2>
-<p>please install the latest version of npm and nodejs to avoid unexpected errors.
+<p>please install the latest version of npm and Node.js to avoid unexpected errors.
 Then just run the following commands:</p>
 <pre><code>npm i
 npm run dev
@@ -16,5 +16,9 @@ and subpages into the folder,</p>
 <p>/src/views are for the main pages</p>
 <h2>Notes</h2>
 <p>It is recommended that you use Webstorm to develop the program.
-Hmm..and it is easy to find the crack(learning) version of it.:)</p>
+Hmm...and it is easy to find the crack(learning) version of it.:)</p>
 <p>If you have any questions, please contact me in the QQ group at once</p>
+<h2>GitHub Remote</h2>
+<p>https://github.com/catyugu/projectProject_frontend</p>
+<p>If you encounter any problem connecting to the remote, 
+please contact me in person</p>
