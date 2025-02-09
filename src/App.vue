@@ -1,59 +1,57 @@
 <template>
   <div id="app">
+    <el-button
+      @click="drawer = true"
+      type="primary"
+      id="drawerButton"
+      circle>
+      <i class="el-icon-menu"> </i>
+    </el-button>
+    <el-drawer
+      class="el-drawer"
+      :visible.sync="drawer"
+      direction="ltr"
+      size="250px">
+      <el-menu class="el-menu-vertical-demo"
+               menu-trigger="hover"
+               :collapse="false" :router="true"
+               :collapse-transition="true"
+               :default-active="$route.path">
+        <el-menu-item v-for="m in menuList" :index="m.id" :key="m.id" :route="m.subpageRoute"
+                      @click="drawer=false">
+          <i :class="m.icon"></i>
+          <span slot="title">{{ m.title }}</span>
+        </el-menu-item>
+      </el-menu>
+    </el-drawer>
     <el-container direction="vertical">
-      <el-header id="AppTitle">
-        MyApplicationTitle
-      </el-header>
       <el-main>
-        <el-container direction="horizontal">
-          <div>
-            <el-menu class="el-menu-vertical-demo"
-                     menu-trigger="hover"
-                     :collapse="isCollapse" :router="true"
-                     :default-active="$route.path">
-              <el-button class="el-button--default" @click="isCollapse = !isCollapse">
-                <i class="el-icon-s-fold"></i>
-              </el-button>
-              <el-menu-item v-for="m in menuList" :index="m.id" :key="m.id" :route="m.subpageRoute">
-                <i class="el-icon-menu"></i>
-                <span slot="title">{{ m.title }}</span>
-              </el-menu-item>
-            </el-menu>
-          </div>
-          <router-view>
-          </router-view>
-        </el-container>
+        <router-view>
+        </router-view>
       </el-main>
-      <el-footer>
-        footer
-      </el-footer>
     </el-container>
   </div>
 </template>
 <style>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-}
-
-.el-menu-vertical-demo {
-  min-height: 500px;
-}
-
-.el-header{
-  background-color: #B3C0D1;
+.el-header {
   color: #333;
   text-align: center;
   line-height: 60px;
   font-size: 32px;
 }
-.el-footer{
-  text-align: center;
 
+#drawerButton {
+  position: fixed;
+  top: 5px;
+  left: 5px;
 }
+
 .el-main {
   color: #333;
   line-height: 30px;
+  text-align: center;
 }
+
 </style>
 
 <script>
@@ -62,28 +60,32 @@
 export default {
   data() {
     return {
-      isCollapse: true,
+      drawer: false,
       menuList: [
         {
           id: 1,
           title: '项目广场',
-          subpageRoute: '/projectHome'
+          subpageRoute: '/projectHome',
+          icon: 'el-icon-house'
         },
         {
           id: 2,
-          title: '用户',
-          subpageRoute: '/userHome'
+          title: '讲座预约',
+          subpageRoute: '/lectureHome',
+          icon: 'el-icon-s-check'
         },
         {
           id: 3,
-          title: '设置',
-          subpageRoute: '/editPage'
+          title: '用户',
+          subpageRoute: '/userHome',
+          icon: 'el-icon-user'
         },
         {
           id: 4,
-          title: '关于',
-          subpageRoute: '/aboutUs'
-        },
+          title: '帮助',
+          subpageRoute: '/helpHome',
+          icon: 'el-icon-help'
+        }
       ]
     };
 

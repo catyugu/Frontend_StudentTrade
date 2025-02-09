@@ -2,11 +2,16 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import ProjectHome from '@/views/projectHome.vue';
 import userHome from '@/views/userHome.vue';
-import editPage from '@/views/editPage.vue';
-import aboutUs from '@/views/aboutUs.vue'
+import HelpHome from '@/views/helpHome.vue'
+import lectureHome from '@/views/lectureHome.vue';
 Vue.use(Router)
 export default new Router({
   routes: [
+    {
+      path: '/',
+      name: 'projectHome',
+      component: ProjectHome
+    },
     {
       path: '/projectHome',
       name: 'projectHome',
@@ -18,14 +23,14 @@ export default new Router({
       component:userHome
     },
     {
-      path: '/editPage',
-      name: 'editPage',
-      component: editPage
+      path: '/lectureHome',
+      name: 'lectureHome',
+      component: lectureHome
     },
     {
-      path: '/aboutUs',
-      name: 'aboutUs',
-      component: aboutUs
+      path: '/HelpHome',
+      name: 'HelpHome',
+      component: HelpHome
     }
   ]
 })

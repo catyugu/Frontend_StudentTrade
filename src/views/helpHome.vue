@@ -1,7 +1,6 @@
-
 <template>
 <div>
-  Edit
+  Help
 </div>
 </template>
 
@@ -11,7 +10,8 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+    }
   }
 }
 </script>
