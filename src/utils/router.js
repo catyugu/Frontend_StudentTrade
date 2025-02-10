@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import ProjectHome from '@/views/projectHome.vue';
-import userHome from '@/views/userHome.vue';
-import HelpHome from '@/views/helpHome.vue'
-import lectureHome from '@/views/lectureHome.vue';
+import ProjectHome from '@/views/project/projectHome.vue';
+import userHome from '@/views/user/userHome.vue';
+import HelpHome from '@/views/help/helpHome.vue'
+import lectureHome from '@/views/lecture/lectureHome.vue';
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -13,22 +13,22 @@ export default new Router({
       component: ProjectHome
     },
     {
-      path: '/projectHome',
+      path: '/project/projectHome',
       name: 'projectHome',
       component: ProjectHome
     },
     {
-      path: '/userHome',
+      path: '/user/userHome',
       name: 'userHome',
       component:userHome
     },
     {
-      path: '/lectureHome',
+      path: '/lecture/lectureHome',
       name: 'lectureHome',
       component: lectureHome
     },
     {
-      path: '/HelpHome',
+      path: '/help/HelpHome',
       name: 'HelpHome',
       component: HelpHome
     }

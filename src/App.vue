@@ -65,25 +65,25 @@ export default {
         {
           id: 1,
           title: '项目广场',
-          subpageRoute: '/projectHome',
+          subpageRoute: '/project/projectHome',
           icon: 'el-icon-house'
         },
         {
           id: 2,
           title: '讲座预约',
-          subpageRoute: '/lectureHome',
+          subpageRoute: '/lecture/lectureHome',
           icon: 'el-icon-s-check'
         },
         {
           id: 3,
           title: '用户',
-          subpageRoute: '/userHome',
+          subpageRoute: '/user/userHome',
           icon: 'el-icon-user'
         },
         {
           id: 4,
           title: '帮助',
-          subpageRoute: '/helpHome',
+          subpageRoute: '/help/helpHome',
           icon: 'el-icon-help'
         }
       ]

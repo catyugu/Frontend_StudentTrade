@@ -4,10 +4,10 @@
   </div>
 </template>
 <script>
-import editorComponent from '@/components/editorComponent.vue'
+import MultiEditor from '@/components/multiEditor.vue'
 export default {
   components: {
-    editorComponent
+    editorComponent: MultiEditor
   }
 }
 </script>
