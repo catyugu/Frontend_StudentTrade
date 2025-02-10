@@ -54,7 +54,6 @@ export default {
   data() {
     return {
       object: {
-        state: true,
         input: '',
         content: [
           {
