@@ -40,31 +40,38 @@ export default {
     };
   },
   methods: {
-    login() {
-      this.$refs.loginFormRef.validate(async valid => {
-        if (!valid) return;
-        const res = await this.$http.post('/login', this.loginForm);
+    async login() {
+      const valid = await this.$refs.loginFormRef.validate();
+      if (!valid) return;
+
+      try {
+        const res = await this.$store.getters.http.post('/login', this.loginForm);
         if (res.data.code === 0) {
           this.$notify({
             title: '登录成功!',
             message: '登录成功!'
           });
-          localStorage.setItem('token', res.data.token);
-          this.$router.push('/');
+          await this.$store.dispatch('loginProcess', res.data.data);
+          await this.$router.push('/');
         } else {
           this.$notify({
             title: '登录失败!',
             message: '登录失败!'
           });
         }
-      });
+      } catch (error) {
+        console.error('登录请求失败:', error);
+        this.$notify({
+          title: '登录失败!',
+          message: '服务器请求失败，请稍后再试！'
+        });
+      }
     },
     register() {
       this.$router.push('/user/register');
     }
   }
 };
-
 </script>
 
 <style scoped lang="scss">
