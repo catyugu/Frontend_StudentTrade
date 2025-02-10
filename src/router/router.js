@@ -7,6 +7,7 @@ import lectureHome from '@/views/lecture/lectureHome.vue';
 import loginPage from '@/views/user/loginPage.vue';
 import registerPage from '@/views/user/registerPage.vue';
 import projectUpload from '@/views/project/projectUpload.vue';
+import lectureUpload from '@/views/lecture/lectureUpload.vue';
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -34,6 +35,11 @@ export default new Router({
       path: '/lecture',
       name: 'lectureHome',
       component: lectureHome
+    },
+    {
+      path: '/lecture/upload',
+      name: 'lectureUpload',
+      component: lectureUpload
     },
     {
       path: '/help',

@@ -13,7 +13,7 @@
           <el-form-item label="标题">
             <el-input v-model="form.title" />
           </el-form-item>
-          <el-form-item label=“地点”>
+          <el-form-item label="地点">
             <el-input v-model="form.place" />
           </el-form-item>
           <el-form-item label="时间">
@@ -47,10 +47,13 @@ export default {
   data() {
     return {
       form: {
+        cover: '',
         title: '',
         description: '',
+        place: '',
+        time: '',
+        max_num: '',
         content: '',
-        cover: ''
       },
       uploadUrl: 'http://localhost:8080/upload',
       headers: {

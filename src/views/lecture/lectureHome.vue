@@ -62,8 +62,10 @@ export default {
     };
   },
   methods: {
-    load() {
-      this.object.count += 2;
+    ToUpload(){
+      this.$router.push({
+        name: 'lectureUpload'
+      });
     }
   },
 
