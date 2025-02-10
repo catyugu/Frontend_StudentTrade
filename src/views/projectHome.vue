@@ -30,6 +30,22 @@
             </el-row>
           </el-card>
         </el-row>
+        <el-row style="margin-top: 10px">
+          <el-card :body-style="{ padding: '0px' }">
+            <el-row>
+              <el-col span="8">
+                <img src="../assets/logo.svg" class="image">
+              </el-col>
+              <el-col span="16">
+                <span>项目2</span><br>
+                <span>作者</span>
+                <div class="bottom clearfix">
+                  <el-button type="text" class="button">展开简介</el-button>
+                </div>
+              </el-col>
+            </el-row>
+          </el-card>
+        </el-row>
       </el-main>
     </el-container>
   </div>
