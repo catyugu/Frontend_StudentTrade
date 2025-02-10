@@ -54,7 +54,6 @@ export default {
   data() {
     return {
       object: {
-        message: 'Hello',
         state: true,
         input: '',
         content: [

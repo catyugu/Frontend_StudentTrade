@@ -43,8 +43,10 @@
 
 #drawerButton {
   position: fixed;
-  top: 5px;
-  left: 5px;
+  top: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
 }
 
 .el-main {
