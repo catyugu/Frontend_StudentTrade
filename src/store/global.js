@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {//全局变量
+    isLogin: false,
     userInfo: {
       avatar_src:  'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
       username: 'sxc',

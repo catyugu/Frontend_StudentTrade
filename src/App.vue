@@ -32,6 +32,7 @@
     </el-container>
   </div>
 </template>
+
 <style>
 .el-header {
   color: #333;
@@ -65,25 +66,25 @@ export default {
         {
           id: 1,
           title: '项目广场',
-          subpageRoute: '/project/projectHome',
+          subpageRoute: '/project',
           icon: 'el-icon-house'
         },
         {
           id: 2,
-          title: '讲座预约',
-          subpageRoute: '/lecture/lectureHome',
+          title: '讲座中心',
+          subpageRoute: '/lecture',
           icon: 'el-icon-s-check'
         },
         {
           id: 3,
           title: '用户',
-          subpageRoute: '/user/userHome',
+          subpageRoute: '/user',
           icon: 'el-icon-user'
         },
         {
           id: 4,
           title: '帮助',
-          subpageRoute: '/help/helpHome',
+          subpageRoute: '/help',
           icon: 'el-icon-help'
         }
       ]

@@ -4,6 +4,8 @@ import ProjectHome from '@/views/project/projectHome.vue';
 import userHome from '@/views/user/userHome.vue';
 import HelpHome from '@/views/help/helpHome.vue'
 import lectureHome from '@/views/lecture/lectureHome.vue';
+import loginPage from '@/views/user/loginPage.vue';
+import registerPage from '@/views/user/registerPage.vue';
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -13,24 +15,34 @@ export default new Router({
       component: ProjectHome
     },
     {
-      path: '/project/projectHome',
+      path: '/project',
       name: 'projectHome',
       component: ProjectHome
     },
     {
-      path: '/user/userHome',
+      path: '/user',
       name: 'userHome',
       component:userHome
     },
     {
-      path: '/lecture/lectureHome',
+      path: '/lecture',
       name: 'lectureHome',
       component: lectureHome
     },
     {
-      path: '/help/HelpHome',
+      path: '/help',
       name: 'HelpHome',
       component: HelpHome
+    },
+    {
+      path: '/user/login',
+      name: 'login',
+      component: loginPage
+    },
+    {
+      path: '/user/register',
+      name: 'register',
+      component: registerPage
     }
   ]
 })

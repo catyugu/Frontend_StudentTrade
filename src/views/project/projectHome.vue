@@ -16,7 +16,7 @@
           </el-carousel>
         </div>
         <el-button
-          v-if="this.$store.state.userInfo.type==='教师'"
+          v-if="this.$store.state.isLogin && this.$store.state.userInfo.type==='教师'"
           type="primary"
         style="margin-top: 10px">
           上传项目

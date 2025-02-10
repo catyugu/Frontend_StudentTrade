@@ -45,11 +45,17 @@
 
 export default {
   data() {
-    return{
+    return {
       object: this.$store.state.userInfo,
       disabled: true,
       object_temp: null
     }
+  },
+  created() {
+    if (!this.$store.state.isLogin) {
+      this.$router.push('/user/login');
+    }
+    this.FetchUserInfoFromServer();
   },
   methods: {
     Edit() {
@@ -68,16 +74,13 @@ export default {
     UploadAvatar() {
 
     },
-    FetchUserInfoFromServer(){
+    FetchUserInfoFromServer() {
 
     },
 
-    UploadUserInfo(){
+    UploadUserInfo() {
 
-    }
+    },
   },
-  onLoad(){
-    this.FetchUserInfoFromServer();
-  }
-};
+}
 </script>
