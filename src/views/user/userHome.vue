@@ -5,7 +5,7 @@
         用户信息
       </el-header>
       <el-main>
-        <el-avatar :src="avatar_src" size="150"></el-avatar>
+        <el-avatar :src="object.avatar_src" size="150"></el-avatar>
         <el-form :model="object" label-width="80px">
           <el-form-item label="姓名">
             <el-input v-model="object.username" :disabled="disabled"></el-input>
@@ -42,19 +42,11 @@
 <style scoped lang="scss">
 </style>
 <script>
+
 export default {
   data() {
     return{
-      avatar_src:  'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-      object:{
-        username: 'sxc',
-        nickname: 'miaow',
-        sex: '男',
-        type: '学生',
-        school_serial: '519023598273',
-        phone_number: '12345678901',
-        email: 'sxc@sxc.com',
-      },
+      object: this.$store.state.userInfo,
       disabled: true,
       object_temp: null
     }
@@ -84,7 +76,7 @@ export default {
 
     }
   },
-  onLoad() {
+  onLoad(){
     this.FetchUserInfoFromServer();
   }
 };

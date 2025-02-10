@@ -5,6 +5,7 @@
         项目广场
       </el-header>
       <el-main>
+
         <el-input class="searchBar"
                   @focus="focus" @blur="true" v-model="object.input" placeholder="请输入搜索内容" />
         <div class="block">
@@ -14,6 +15,12 @@
             </el-carousel-item>
           </el-carousel>
         </div>
+        <el-button
+          v-if="this.$store.state.userInfo.type==='教师'"
+          type="primary"
+        style="margin-top: 10px">
+          上传项目
+        </el-button>
         <div>
           <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
             <li v-for="(i, index) in object.content" :key="index">
