@@ -18,6 +18,7 @@
         <el-button
           v-if="this.$store.getters.getIsLogin && this.$store.state.userInfo.type==='教师'"
           type="primary"
+          @click="ToUpload"
         style="margin-top: 10px">
           上传项目
         </el-button>
@@ -69,6 +70,9 @@ export default {
   methods: {
     load() {
       this.object.count += 2;
+    },
+    ToUpload(){
+      this.$router.push('/project/upload');
     }
   },
 
