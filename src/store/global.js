@@ -13,7 +13,7 @@ export default new Vuex.Store({
       username: 'sxc',
       nickname: 'miaow',
       sex: '男',
-      type: '教师',
+      type: '教职',
       school_serial: '519023598273',
       phone_number: '12345678901',
       email: 'sxc@sxc.com',
@@ -43,5 +43,13 @@ export default new Vuex.Store({
       context.state.userInfo = userInfo;
       context.state.http.defaults.headers.common['Authorization'] = context.state.token;
     },
+    logoutProcess(context){
+      context.state.isLogin = false;
+      context.state.userInfo = {};
+      context.state.http.defaults.headers.common['Authorization'] = '';
+    },
+    setUserInfo(context, userInfo){
+      context.state.userInfo = userInfo;
+    }
   },
 })

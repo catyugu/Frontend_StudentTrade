@@ -8,6 +8,7 @@
             <el-upload :action="uploadUrl" :headers="headers" :on-success="uploadSuccess" :before-upload="beforeUpload">
               <el-button>点击上传</el-button>
             </el-upload>
+            <img :src="form.cover" alt=""/>
           </el-form-item>
           <el-form-item label="标题">
             <el-input v-model="form.title" />
@@ -50,17 +51,22 @@ export default {
   },
   methods: {
     ToUpload() {
-      this.$axios.post('http://localhost:8080/project', {
+      this.$store.getters.http.post('/project/upload', {
         title: this.form.title,
         description: this.form.description,
         content: this.form.content,
         cover: this.form.cover
       }).then(res => {
         if (res.data.code === 200) {
-          this.$message.success('上传成功');
-          this.$router.push({
-            name: 'projectHome'
+          this.$message({
+            type: 'success',
+            message: '上传成功'
           });
+          this.$router.push('/project/home');
+        } else {
+          this.$message({
+            type: 'error',
+          })
         }
       })
     }

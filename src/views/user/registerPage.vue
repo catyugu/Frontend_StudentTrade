@@ -8,18 +8,6 @@
         <el-form-item label="姓名" prop="username">
           <el-input v-model="ruleForm.username"></el-input>
         </el-form-item>
-        <el-form-item label="昵称" prop="nickname">
-          <el-input v-model="ruleForm.nickname"></el-input>
-        </el-form-item>
-        <el-form-item label="身份" prop="type" style="text-align: left">
-          <el-select v-model="ruleForm.type">
-            <el-option label="学生" value="学生"></el-option>
-            <el-option label="教师" value="教师"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="学工号" prop="id">
-          <el-input v-model="ruleForm.id"></el-input>
-        </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="ruleForm.password"></el-input>
         </el-form-item>
@@ -50,16 +38,6 @@ export default {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
           { min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur' }
-        ],
-        nickname: [
-          { required: true, message: '请输入昵称', trigger: 'blur' },
-          { min: 3, max: 16}
-        ],
-        type: [
-          { required: true, message: '请选择身份', trigger: 'change' }
-        ],
-        id: [
-          { required: true, message: '请输入学工号', trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }

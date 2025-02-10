@@ -16,7 +16,8 @@
           </el-carousel>
         </div>
         <el-button
-          v-if="this.$store.getters.getIsLogin && this.$store.state.userInfo.type==='教师'"
+          v-if="this.$store.getters.getIsLogin
+          && this.$store.state.userInfo.type==='教职'"
           type="primary"
           @click="ToUpload"
         style="margin-top: 10px">

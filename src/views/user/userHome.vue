@@ -13,8 +13,15 @@
           <el-form-item label="昵称">
             <el-input v-model="object.nickname" :disabled="disabled"></el-input>
           </el-form-item>
-          <el-form-item label="用户类型">
-            <el-input v-model="object.type" :disabled="disabled"></el-input>
+          <el-form-item label="类型" prop="type" style="text-align: left">
+            <el-select v-model="object.type" :disabled="disabled">
+              <el-option label="本科以下" value="本科以下"></el-option>
+              <el-option label="本科学生" value="本科学生"></el-option>
+              <el-option label="硕士研究生" value="硕士研究生"></el-option>
+              <el-option label="博士研究生" value="博士研究生"></el-option>
+              <el-option label="博士后" value="博士后"></el-option>
+              <el-option label="教职" value="教职"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="学工号">
             <el-input v-model="object.school_serial" :disabled="disabled"></el-input>
@@ -29,11 +36,11 @@
             <el-input v-model="object.email" :disabled="disabled"></el-input>
           </el-form-item>
         </el-form>
+        <el-button v-if="disabled" type="primary" @click="UploadAvatar">上传头像</el-button>
         <el-button v-if="disabled" type="primary" @click="Edit">编辑</el-button>
-        <el-button v-if="!disabled" type="primary" @click="Save">保存</el-button>
-        <el-button v-if="!disabled" type="primary" @click="Discard">放弃</el-button>
-
-        <el-button type="primary" @click="UploadAvatar">上传头像</el-button>
+        <el-button v-if="!disabled" type="success" @click="Save">保存</el-button>
+        <el-button v-if="!disabled" @click="Discard">放弃</el-button>
+        <el-button type="danger" @click="Logout" style="margin-top: 10px">登出</el-button>
       </el-main>
     </el-container>
   </div>
@@ -69,17 +76,54 @@ export default {
     },
     Discard() {
       this.disabled = true;
-      this.object = Object.assign({}, this.object_temp);
+      this.object = this.object_temp;
+      this.object_temp = null;
+    },
+    Logout(){
+      this.$store.dispatch('logoutProcess')
+      this.$router.push('/user/login');
+
     },
     UploadAvatar() {
-
+      this.$store.getters.http.post('/user/upload', {
+        avatar_src: this.object.avatar_src
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.$message({
+            type: 'success',
+            message: '上传成功'
+          });
+        }
+      })
     },
     FetchUserInfoFromServer() {
-
+      this.$store.getters.http.post('/user/fetch', {
+        username: this.$store.state.userInfo.username
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.object = res.data;
+        }
+      })
     },
 
     UploadUserInfo() {
-
+      this.$store.getters.http.post('/user/upload', {
+        username: this.object.username,
+        nickname: this.object.nickname,
+        type: this.object.type,
+        school_serial: this.object.school_serial,
+        sex: this.object.sex,
+        phone_number: this.object.phone_number,
+        email: this.object.email,
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.$message({
+            type: 'success',
+            message: '上传成功'
+          });
+          this.$store.dispatch('setUserInfo');
+        }
+      })
     },
   },
 }
