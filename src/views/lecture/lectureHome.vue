@@ -15,24 +15,19 @@
           </el-carousel>
         </div>
         <div>
+          <el-button
+            type="primary"
+            style="margin-top: 10px"
+            @click="ToUpload"
+            v-if="this.$store.getters.getIsLogin
+          && this.$store.state.userInfo.type==='教职'">
+            发布讲座
+          </el-button>
+        </div>
+        <div>
           <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
             <li v-for="(i, index) in object.content" :key="index">
-              <el-row style="margin-top: 10px">
-                <el-card :body-style="{ padding: '0px' }">
-                  <el-row>
-                    <el-col span="8">
-                      <img :src="i.img_src" class="image" alt="Image not found!">
-                    </el-col>
-                    <el-col span="16">
-                      <span v-text="i.title"></span><br>
-                      <span v-text="i.author"></span>
-                      <div class="bottom clearfix">
-                        <el-button type="text" class="button">展开简介</el-button>
-                      </div>
-                    </el-col>
-                  </el-row>
-                </el-card>
-              </el-row>
+              <lecture-card :i="i" />
             </li>
           </ul>
         </div>
@@ -42,7 +37,10 @@
 </template>
 
 <script>
+import LectureCard from '@/components/lectureCard.vue';
+
 export default {
+  components: { LectureCard },
   data() {
     return {
       object: {
@@ -50,8 +48,14 @@ export default {
         content: [
           {
             title: '讲座1',
-            author: 'sxc',
-            img_src: 'src/assets/logo.svg'
+            speaker: 'sxc',
+            img_src: 'src/assets/logo.svg',
+            description: '讲座描述',
+            place: '讲座地点',
+            time: '讲座时间',
+            reserve_num: '0',
+            max_num: '10',
+            id: '1'
           }
         ]
       }

@@ -20,28 +20,13 @@
           && this.$store.state.userInfo.type==='教职'"
           type="primary"
           @click="ToUpload"
-        style="margin-top: 10px">
+          style="margin-top: 10px">
           上传项目
         </el-button>
         <div>
           <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
             <li v-for="(i, index) in object.content" :key="index">
-              <el-row style="margin-top: 10px">
-                <el-card :body-style="{ padding: '0px' }">
-                  <el-row>
-                    <el-col span="8">
-                      <img :src="i.img_src" class="image" alt="Image not found!">
-                    </el-col>
-                    <el-col span="16">
-                      <span v-text="i.title"></span><br>
-                      <span v-text="i.author"></span>
-                      <div class="bottom clearfix">
-                        <el-button type="text" class="button">展开简介</el-button>
-                      </div>
-                    </el-col>
-                  </el-row>
-                </el-card>
-              </el-row>
+              <project-card :i="i" />
             </li>
           </ul>
         </div>
@@ -51,7 +36,10 @@
 </template>
 
 <script>
+import ProjectCard from '@/components/projectCard.vue';
+
 export default {
+  components: { ProjectCard },
   data() {
     return {
       object: {
@@ -60,7 +48,16 @@ export default {
           {
             title: '项目1',
             author: 'sxc',
-            img_src: 'src/assets/logo.svg'
+            img_src: 'src/assets/logo.svg',
+            description: '项目描述',
+            id: '1'
+          },
+          {
+            title: '项目2',
+            author: 'sxc',
+            img_src: 'src/assets/logo.svg',
+            description: '项目描述',
+            id: '2'
           }
         ]
       }
@@ -70,7 +67,7 @@ export default {
     load() {
       this.object.count += 2;
     },
-    ToUpload(){
+    ToUpload() {
       this.$router.push('/project/upload');
     }
   },
