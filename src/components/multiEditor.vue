@@ -1,10 +1,12 @@
-
 <template>
   <div>
-    <div class="editor" style="height: 1000px"></div>
+    <div class="editor">
+      <div class="ql-container ql-snow">
+        <div class="ql-editor"></div>
+      </div>
+    </div>
   </div>
 </template>
-
 <script>
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
@@ -19,22 +21,19 @@ export default {
   data () {
     return {
       quill: null,
+      editorContent: '', // 添加: editorContent 来存储编辑器的内容
       options: {
         theme: 'snow',
         modules: {
           toolbar: {
             container: [
               ['bold', 'italic', 'underline', 'strike'],
-
               [{ header: 1 }, { header: 2 }],
               [{ color: [] }, { background: [] }],
               [{ list: 'ordered' }, { list: 'bullet' }],
-
               [{ align: [] }],
               [{ indent: '-1' }, { indent: '+1' }],
-
-              ['link','image','video'],
-
+              ['link', 'image', 'video'],
               [
                 { table: 'TD' },
                 { 'table-insert-row': 'TIR' },
@@ -42,7 +41,6 @@ export default {
                 { 'table-delete-row': 'TDR' },
                 { 'table-delete-column': 'TDC' }
               ],
-
             ],
             handlers: {
               table: function () {
@@ -62,7 +60,27 @@ export default {
               }
             }
           },
-          table: true
+          table: true,
+          imageResize: {},
+          imageUploader: {
+            upload: file => {
+              return new Promise((resolve, reject) => {
+                const formData = new FormData()
+                formData.append('image', file)
+
+                this.$store.getters.http.post('/upload/image', formData, {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }).then(res => {
+                  resolve(res.data.url)
+                }).catch(err => {
+                  reject('Upload failed')
+                  console.error('Error:', err)
+                })
+              })
+            }
+          }
         },
         placeholder: ''
       }
@@ -72,14 +90,10 @@ export default {
     console.log(this.content)
     const dom = this.$el.querySelector('.editor')
     this.quill = new Quill(dom, this.options)
-    // this.quill.setContents(this.content)
-    // debugger
     this.quill.root.innerHTML = this.content
-    // debugger
+    this.editorContent = this.content // 添加: 初始化 editorContent
     this.quill.on('text-change', () => {
-      //   console.log(this.quill.getContents())
-      //   this.$emit('contentData', this.quill.getContents())
-      //   console.log(this.quill.root.innerHTML)
+      this.editorContent = this.quill.root.innerHTML // 修改: 更新 editorContent
       this.$emit('contentData', this.quill.root.innerHTML)
     })
     this.$el.querySelector(
@@ -96,12 +110,24 @@ export default {
     ).innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1" width="24" height="24" viewBox="0 0 24 24"><defs><clipPath id="master_svg0_152_6491"><rect x="0" y="0" width="24" height="24" rx="0"/></clipPath></defs><g clip-path="url(#master_svg0_152_6491)"><g><path d="M20,13C20.552,13,21,13.448,21,14L21,20C21,20.552,20.552,21,20,21L4,21C3.448,21,3,20.552,3,20L3,14C3,13.448,3.448,13,4,13L20,13ZM19,15L5,15L5,19L19,19L19,15ZM12,1C14.761,1,17,3.239,17,6C17,8.761,14.761,11,12,11C9.239,11,7,8.761,7,6C7,3.239,9.239,1,12,1ZM13,3L11,3L11,4.9990000000000006L9,5L9,7L11,6.999L11,9L13,9L13,6.999L15,7L15,5L13,4.9990000000000006L13,3Z" fill="#444444" fill-opacity="1"/></g></g></svg>'
     this.addQuillTitle()
   },
-  activated () {
-    this.quill.setContents({})
-  },
   methods: {
     addQuillTitle () {
-      let titleConfig;
+      let titleConfig = {
+        'ql-bold': '加粗',
+        'ql-italic': '斜体',
+        'ql-underline': '下划线',
+        'ql-strike': '删除线',
+        'ql-header': '标题',
+        'ql-color': '文字颜色',
+        'ql-background': '背景颜色',
+        'ql-list': '列表',
+        'ql-align': '对齐方式',
+        'ql-link': '插入链接',
+        'ql-image': '插入图片',
+        'ql-video': '插入视频',
+        'ql-table': '插入表格',
+        'ql-indent': '缩进'
+      };
       const oToolBar = document.querySelector('.ql-toolbar')
       const aButton = oToolBar.querySelectorAll('button')
       const aSelect = oToolBar.querySelectorAll('select')
@@ -119,10 +145,11 @@ export default {
       })
     },
     getContentData () {
-      return this.quill.getContents()
+      return this.quill.root.innerHTML
+    },
+    getEditorContent () {
+      return this.editorContent // 添加: 返回 editorContent
     }
   }
 }
 </script>
-<style>
-</style>

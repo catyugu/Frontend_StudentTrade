@@ -17,15 +17,12 @@
             <el-input v-model="form.description" />
           </el-form-item>
           <el-form-item label="内容">
-            <editorComponent v-model="form.content"/>
+            <editorComponent v-model="form.content" @contentData="updateContent"/>
           </el-form-item>
-
         </el-form>
-        <el-button type="primary" @click="ToUpload">上传</el-button>
+        <el-button type="primary" @click="uploadToServer">上传</el-button>
       </el-main>
     </el-container>
-
-
   </div>
 </template>
 <script>
@@ -41,7 +38,7 @@ export default {
         title: '',
         description: '',
         content: '',
-        cover: ''
+        cover: '',
       },
       uploadUrl: 'http://localhost:8080/upload',
       headers: {
@@ -50,12 +47,33 @@ export default {
     };
   },
   methods: {
-    ToUpload() {
+    uploadSuccess(response) {
+      this.form.cover = response.data.url; // 更新封面URL
+      this.$message({
+        type: 'success',
+        message: '上传成功'
+      });
+    },
+    beforeUpload(file) {
+      const isJPGorPNG = file.type === 'image/jpeg' || file.type === 'image/png';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPGorPNG) {
+        this.$message.error('上传头像图片只能是 JPG/PNG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPGorPNG && isLt2M;
+    },
+    uploadToServer() {
+      console.log(this.form);
       this.$store.getters.http.post('/project/upload', {
         title: this.form.title,
         description: this.form.description,
         content: this.form.content,
-        cover: this.form.cover
+        cover: this.form.cover,
+        authorID: this.$store.getters.getUserID
       }).then(res => {
         if (res.data.code === 200) {
           this.$notify({
@@ -65,13 +83,16 @@ export default {
           });
           this.$router.push('/project/home');
         } else {
-          this.notify({
+          this.$notify({
             type: 'error',
             title: '上传失败',
             message: '上传失败'
           })
         }
       })
+    },
+    updateContent(content) {
+      this.form.content = content;
     }
   }
 };
