@@ -1,9 +1,7 @@
 <template>
   <div>
     <el-container direction="vertical">
-      <el-header style="padding-top: 20px;padding-bottom: 20px">
-        讲座中心
-      </el-header>
+      <header-card :header="{title:'讲座中心'}" />
       <el-main>
         <el-input class="searchBar"
                   @focus="focus" @blur="true" v-model="object.input" placeholder="请输入搜索内容" />
@@ -38,9 +36,10 @@
 
 <script>
 import LectureCard from '@/components/lectureCard.vue';
+import HeaderCard from '@/components/headerCard.vue';
 
 export default {
-  components: { LectureCard },
+  components: { HeaderCard, LectureCard },
   data() {
     return {
       object: {

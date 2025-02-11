@@ -1,9 +1,7 @@
 <template>
   <div>
     <el-container direction="vertical">
-      <el-header style="padding-top: 20px;padding-bottom: 20px">
-        项目广场
-      </el-header>
+      <header-card :header="{title:'项目广场'}" />
       <el-main>
 
         <el-input class="searchBar"
@@ -37,9 +35,10 @@
 
 <script>
 import ProjectCard from '@/components/projectCard.vue';
+import HeaderCard from '@/components/headerCard.vue';
 
 export default {
-  components: { ProjectCard },
+  components: { HeaderCard, ProjectCard },
   data() {
     return {
       object: {
