@@ -62,7 +62,6 @@ export default {
     if (!this.$store.state.isLogin) {
       this.$router.push('/user/login');
     }
-    this.FetchUserInfoFromServer();
   },
   methods: {
     Edit() {
@@ -71,7 +70,6 @@ export default {
     },
     Save() {
       this.disabled = true;
-      this.object_temp = null;
       this.UploadUserInfo();
     },
     Discard() {
@@ -96,16 +94,6 @@ export default {
         }
       })
     },
-    FetchUserInfoFromServer() {
-      this.$store.getters.http.post('/user/fetch', {
-        username: this.$store.state.userInfo.username
-      }).then(res => {
-        if (res.data.code === 200) {
-          this.object = res.data;
-        }
-      })
-    },
-
     UploadUserInfo() {
       this.$store.getters.http.post('/user/upload', {
         username: this.object.username,
@@ -123,6 +111,12 @@ export default {
           });
           this.$store.dispatch('setUserInfo');
         }
+      }).catch((err)=>{
+        this.object = this.object_temp;
+        this.$message({
+          type: 'error',
+          message: err.message
+        });
       })
     },
   },
