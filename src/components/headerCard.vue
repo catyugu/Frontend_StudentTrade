@@ -14,13 +14,13 @@
                 <el-avatar :src="$store.getters.getUserInfo.avatar_src"></el-avatar>
               </span>
               <el-dropdown-menu>
-                <el-dropdown-item @click.native="UserInfo">个人信息</el-dropdown-item>
-                <el-dropdown-item @click.native="Logout">登出</el-dropdown-item>
+                <el-dropdown-item @click.native="userInfo">个人信息</el-dropdown-item>
+                <el-dropdown-item @click.native="logout">登出</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
           <div v-else>
-            <el-button type="primary" @click="ToLogin">登录</el-button>
+            <el-button type="primary" @click="toLogin">登录</el-button>
           </div>
         </el-col>
       </el-row>
@@ -44,17 +44,17 @@ export default {
     };
   },
   methods: {
-    ToLogin() {
+    toLogin() {
       this.$router.push({
         path: 'user/login'
       });
     },
-    UserInfo() {
+    userInfo() {
       this.$router.push({
         path: 'user'
       });
     },
-    Logout() {
+    logout() {
       this.$store.dispatch('logoutProcess');
     }
   }

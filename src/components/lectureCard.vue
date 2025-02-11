@@ -4,19 +4,19 @@
       <el-row style="margin-top: 10px">
         <el-card :body-style="{ padding: '0px' }">
           <el-row>
-            <el-col span="8" @click.native="GoToLectureDetail">
+            <el-col span="8" @click.native="goToLectureDetail">
               <img :src="img_src" class="image" alt="Image not found!">
             </el-col>
             <el-col span="16">
               <div class="card-info">
-                <h1  @click="GoToLectureDetail"> {{ title }}</h1>
+                <h1  @click="goToLectureDetail"> {{ title }}</h1>
                 <name-avatar :userID="speakerID"></name-avatar>
                 <span> 地点: {{ place }}</span><br>
                 <span> 时间: {{ time }}</span><br>
                 <span> 预约人数: {{ reserve_num }}/{{ max_num }}</span><br>
               </div>
               <div class="bottom clearfix">
-                <el-button type="text" class="button" @click="Expand">展开简介</el-button>
+                <el-button type="text" class="button" @click="expand">展开简介</el-button>
               </div>
             </el-col>
           </el-row>
@@ -77,10 +77,10 @@ export default {
     this.max_num = this.i.max_num;
   },
   methods: {
-    Expand() {
+    expand() {
       this.showDescription = !this.showDescription;
     },
-    GoToLectureDetail() {
+    goToLectureDetail() {
       this.$router.push({
         name: 'lectureDetail',
         params: {
