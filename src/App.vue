@@ -47,6 +47,7 @@
   left: 20px;
   width: 50px;
   height: 50px;
+  z-index: 999;
 }
 
 .el-main {
@@ -91,8 +92,8 @@ export default {
         }
       ]
     };
-
   },
-  methods: {}
+  methods: {
+  }
 };
 </script>

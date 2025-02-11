@@ -27,7 +27,7 @@
             <el-input v-model="object.school_serial" :disabled="disabled"></el-input>
           </el-form-item>
           <el-form-item label="性别">
-            <el-input v-model="object.sex" :disabled="disabled"></el-input>
+            <el-input v-model="object.gender" :disabled="disabled"></el-input>
           </el-form-item>
           <el-form-item label="手机号">
             <el-input v-model="object.phone_number" :disabled="disabled"></el-input>
@@ -112,7 +112,7 @@ export default {
         nickname: this.object.nickname,
         type: this.object.type,
         school_serial: this.object.school_serial,
-        sex: this.object.sex,
+        gender: this.object.gender,
         phone_number: this.object.phone_number,
         email: this.object.email,
       }).then(res => {

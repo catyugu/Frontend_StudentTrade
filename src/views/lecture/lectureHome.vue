@@ -47,7 +47,7 @@ export default {
         content: [
           {
             title: '讲座1',
-            speaker: 'sxc',
+            speakerID: 'sxc',
             img_src: 'src/assets/logo.svg',
             description: '讲座描述',
             place: '讲座地点',

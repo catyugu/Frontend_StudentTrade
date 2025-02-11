@@ -12,7 +12,7 @@ export default new Vuex.Store({
       avatar_src:  'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
       username: 'sxc',
       nickname: 'miaow',
-      sex: '男',
+      gender: '男',
       type: '教职',
       school_serial: '519023598273',
       phone_number: '12345678901',
@@ -50,6 +50,15 @@ export default new Vuex.Store({
     },
     setUserInfo(context, userInfo){
       context.state.userInfo = userInfo;
+    },
+    getUserInfoByID(context, userID){
+      context.state.http.get('/user/'+userID).then(res  => {
+        context.state.userInfo = res.data;
+        context.commit('setUserInfo', res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
     }
   },
 })
