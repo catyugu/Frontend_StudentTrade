@@ -58,14 +58,17 @@ export default {
         cover: this.form.cover
       }).then(res => {
         if (res.data.code === 200) {
-          this.$message({
+          this.$notify({
             type: 'success',
+            title: '上传成功',
             message: '上传成功'
           });
           this.$router.push('/project/home');
         } else {
-          this.$message({
+          this.notify({
             type: 'error',
+            title: '上传失败',
+            message: '上传失败'
           })
         }
       })

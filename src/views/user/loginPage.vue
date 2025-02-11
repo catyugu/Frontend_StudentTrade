@@ -48,13 +48,15 @@ export default {
         const res = await this.$store.getters.http.post('/login', this.loginForm);
         if (res.data.code === 0) {
           this.$notify({
+            type: 'success',
             title: '登录成功!',
             message: '登录成功!'
           });
-          await this.$store.dispatch('loginProcess', res.data.data);
+          await this.$store.dispatch('loginProcess', res.data.token);
           await this.$router.push('/');
         } else {
           this.$notify({
+            type: 'error',
             title: '登录失败!',
             message: '登录失败!'
           });
@@ -62,6 +64,7 @@ export default {
       } catch (error) {
         console.error('登录请求失败:', error);
         this.$notify({
+          type: 'error',
           title: '登录失败!',
           message: '服务器请求失败，请稍后再试！'
         });

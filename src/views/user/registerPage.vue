@@ -28,9 +28,6 @@ export default {
     return {
       ruleForm: {
         username: '',
-        nickname: '',
-        type: '',
-        id: '',
         password: '',
         checkPass: ''
       },
@@ -61,27 +58,36 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$notify({
-            title: '注册成功！',
-            message: '注册成功!'
-          });
-          console.log(this.ruleForm)
-          this.$router.push('/user/login');
-        } else {
-          this.$notify({
-            title: '注册失败！',
-            message: '注册失败!'
-          });
-          return false;
+          try {
+            this.$store.getters.host.post('/register', this.ruleForm).then((res) => {
+              if (res.data.code === 0) {
+                this.$notify({
+                  type:  'success',
+                  title: '注册成功！',
+                  message: '注册成功!'
+                });
+                console.log(this.ruleForm);
+                this.$router.push('/user/login');
+              } else {
+                this.$notify({
+                  type: 'error',
+                  title: '注册失败W！',
+                  message: '注册失败!'
+                })
+              }
+            })
+          } catch (error) {
+            this.$notify({
+              type: 'error',
+              title: '注册失败！',
+              message: '服务器请求失败，请稍后再试！'
+            })
+          }
         }
-      });
+      })
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    }
   }
-};
-
+}
 </script>
 
 <style scoped lang="scss">

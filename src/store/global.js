@@ -20,7 +20,7 @@ export default new Vuex.Store({
     },
     projectList:[],
     lectureList:[],
-    token: '',
+    token: '114514',
     http: Axios,
     host: 'http://localhost:8080',
   },
@@ -38,10 +38,22 @@ export default new Vuex.Store({
 
   },
   actions: {//可以对mutations里的方法进行修改
-    loginProcess(context, userInfo) {
+    loginProcess(context, token) {
       context.state.isLogin = true;
-      context.state.userInfo = userInfo;
-      context.state.http.defaults.headers.common['Authorization'] = context.state.token;
+      context.state.token = token;
+      context.state.http.defaults.headers.common['Authorization'] = token;
+      context.state.http.get('/user/?'+context.state.userID).then(res  => {
+        context.state.userInfo = res.data;
+        context.commit('setUserInfo', res.data);
+      }).catch(err => {
+        this.$notify(
+          {
+            title: '登录失败',
+            message: err.message,
+            type: 'error',
+          }
+        )
+      })
     },
     logoutProcess(context){
       context.state.isLogin = false;
@@ -52,13 +64,19 @@ export default new Vuex.Store({
       context.state.userInfo = userInfo;
     },
     getUserInfoByID(context, userID){
-      context.state.http.get('/user/'+userID).then(res  => {
+      context.state.http.get('/user/?'+userID).then(res  => {
         context.state.userInfo = res.data;
         context.commit('setUserInfo', res.data);
       })
       .catch(err => {
-        console.log(err);
+        this.$notify(
+          {
+            title: '获取用户信息失败',
+            message: err.message,
+            type: 'error',
+          }
+        )
       })
-    }
+    },
   },
 })
