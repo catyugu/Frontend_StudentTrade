@@ -4,21 +4,29 @@
       <el-row style="margin-top: 10px">
         <el-card :body-style="{ padding: '0px' }">
           <el-row>
-            <el-col span="8" @click.native="goToLectureDetail">
+            <el-col span="6" @click.native="goToLectureDetail">
               <img :src="img_src" class="image" alt="Image not found!">
             </el-col>
-            <el-col span="16">
-              <div class="card-info">
-                <h1  @click="goToLectureDetail"> {{ title }}</h1>
+            <el-col span="12">
+              <div class="card-info" @click="goToLectureDetail">
+                <h1> {{ title }}</h1>
                 <name-avatar :userID="speakerID"></name-avatar>
                 <span> 地点: {{ place }}</span><br>
                 <span> 时间: {{ time }}</span><br>
                 <span> 预约人数: {{ reserve_num }}/{{ max_num }}</span><br>
               </div>
+            </el-col>
+            <el-col span="6">
+
               <div class="bottom clearfix">
+                <el-button type="text" class="button" @click="goEditLecture"
+                           v-if="speakerID === this.$store.getters.getUserID">
+                  前往编辑<br>
                 <el-button type="text" class="button" @click="expand">展开简介</el-button>
+                </el-button>
               </div>
             </el-col>
+
           </el-row>
           <el-row v-if="showDescription">
             {{ this.description }}
@@ -94,12 +102,13 @@ export default {
 
 
 <style scoped lang="scss">
-h1{
+h1 {
   font-size: 20px;
   font-weight: bold;
   margin-top: 10px;
 }
-.lecture-card{
+
+.lecture-card {
   margin-top: 10px;
   margin-bottom: 10px;
 }

@@ -4,18 +4,21 @@
       <el-row style="margin-top: 10px">
         <el-card :body-style="{ padding: '0px' }">
           <el-row>
-            <el-col span="8" @click.native="GoToProjectDetail">
+            <el-col span="6" @click.native="GoToProjectDetail">
               <img :src="img_src" class="image" alt="Image not found!">
             </el-col>
-            <el-col span="16">
-              <span v-text="title" @click="GoToProjectDetail"></span><br>
-              <span v-text="author" @click="GoToProjectDetail"></span>
-              <div class="bottom clearfix">
-                <el-button type="text" class="button" @click="Expand">展开简介</el-button>
-              </div>
+            <el-col span="12"  @click.native="GoToProjectDetail">
+              <span v-text="title"></span><br>
+              <name-avatar :userID="authorID" />
+            </el-col>
+            <el-col span="6">
+              <el-button type="text" class="button" @click="goEditProject"
+                         v-if="authorID === this.$store.getters.getUserID">
+                前往编辑</el-button><br>
+              <el-button type="text" class="button" @click="expand">展开简介</el-button>
             </el-col>
           </el-row>
-          <el-row v-if="showDescription" >
+          <el-row v-if="showDescription">
             <el-row>
               <span v-text="description"></span>
             </el-row>
@@ -26,7 +29,10 @@
   </div>
 </template>
 <script>
+import NameAvatar from '@/components/nameAvatar.vue';
+
 export default {
+  components: { NameAvatar },
   props: {
     i: {
       type: Object,
@@ -34,7 +40,7 @@ export default {
         return {
           img_src: '',
           title: '',
-          author: '',
+          authorID: '',
           description: '',
           id: ''
         };
@@ -46,7 +52,7 @@ export default {
       showDescription: false,
       img_src: '',
       title: '',
-      author: '',
+      authorID: '',
       description: '',
       id: ''
     };
@@ -54,12 +60,12 @@ export default {
   created() {
     this.img_src = this.i.img_src;
     this.title = this.i.title;
-    this.author = this.i.author;
+    this.authorID = this.i.authorID;
     this.description = this.i.description;
     this.id = this.i.id;
   },
   methods: {
-    Expand() {
+    expand() {
       this.showDescription = !this.showDescription;
     },
     GoToProjectDetail() {

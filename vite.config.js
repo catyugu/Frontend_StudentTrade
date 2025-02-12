@@ -6,7 +6,6 @@ import vue2 from '@vitejs/plugin-vue2'
 import Components from 'unplugin-vue-components/vite';
 import { ElementUiResolver } from 'unplugin-vue-components/resolvers';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue2(),

@@ -46,14 +46,14 @@ export default {
         content: [
           {
             title: '项目1',
-            author: 'sxc',
+            authorID: '114514',
             img_src: 'src/assets/logo.svg',
             description: '项目描述',
             id: '1'
           },
           {
             title: '项目2',
-            author: 'sxc',
+            authorID: '1919810',
             img_src: 'src/assets/logo.svg',
             description: '项目描述',
             id: '2'

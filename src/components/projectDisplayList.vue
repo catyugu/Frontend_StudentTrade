@@ -23,7 +23,11 @@ export default {
       list: this.projectList
     };
   },
-  methods: {}
+  created() {
+    for (let i = 0; i < this.projectList.length; i++) {
+      this.list.push(this.$store.dispatch('getProjectInfoByID', this.projectList[i]), i);
+    }
+  },
 };
 </script>
 <style scoped lang="scss">
