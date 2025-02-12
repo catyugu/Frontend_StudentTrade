@@ -109,7 +109,7 @@ export default {
             type: 'success',
             message: '上传成功'
           });
-          this.$store.dispatch('setUserInfo');
+          this.$store.dispatch('setLocalUserInfo');
         }
       }).catch((err)=>{
         this.object = this.object_temp;

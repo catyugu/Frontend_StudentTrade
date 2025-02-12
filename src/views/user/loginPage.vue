@@ -50,7 +50,7 @@ export default {
           this.$notify({
             type: 'success',
             title: '登录成功!',
-            message: '登录成功!'
+            message: '',
           });
           await this.$store.dispatch('loginProcess', res.data.token);
           await this.$router.push('/');
@@ -58,7 +58,7 @@ export default {
           this.$notify({
             type: 'error',
             title: '登录失败!',
-            message: '登录失败!'
+            message: res.data.message,
           });
         }
       } catch (error) {

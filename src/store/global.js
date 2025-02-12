@@ -60,7 +60,7 @@ export default new Vuex.Store({
       context.state.userInfo = {};
       context.state.http.defaults.headers.common['Authorization'] = '';
     },
-    setUserInfo(context, userInfo){
+    setLocalUserInfo(context, userInfo){
       context.state.userInfo = userInfo;
     },
     getUserInfoByID(context, userID){
@@ -77,6 +77,63 @@ export default new Vuex.Store({
           }
         )
       })
+    },
+    getProjectInfoByID(context, projectID){
+      context.state.http.get('/project/?'+projectID).then(res  => {
+        return res.data;
+      })
+      .catch(err => {
+        this.$notify(
+          {
+            title: '获取项目信息失败',
+            message: err.message,
+            type: 'error',
+          }
+        )
+      })
+    },
+    updateProjectInfoByID(context, projectID, projectInfo){
+      context.state.http.put('/project/?'+projectID, projectInfo).then(res  => {
+        return res.data;
+      })
+        .catch(err => {
+          this.$notify(
+            {
+              title: '更新项目信息失败',
+              message: err.message,
+              type: 'error',
+            }
+          )
+        })
+
+    },
+    getLectureInfoByID(context, lectureID){
+      context.state.http.get('/lecture/?'+lectureID).then(res  => {
+        return res.data;
+      })
+        .catch(err => {
+          this.$notify(
+            {
+              title: '获取讲座信息失败',
+              message: err.message,
+              type: 'error',
+            }
+          )
+        })
+    },
+    updateLectureInfoByID(context, lectureID, lectureInfo){
+      context.state.http.put('/lecture/?'+lectureID, lectureInfo).then(res  => {
+        return res.data;
+      })
+        .catch(err => {
+          this.$notify(
+            {
+              title: '更新讲座信息失败',
+              message: err.message,
+              type: 'error',
+            }
+          )
+        })
     },
   },
 })
