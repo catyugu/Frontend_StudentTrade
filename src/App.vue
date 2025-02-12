@@ -80,12 +80,18 @@ export default {
         },
         {
           id: 3,
-          title: '用户',
+          title: '管理',
+          subpageRoute: '/manage',
+          icon: 'el-icon-s-tools'
+        },
+        {
+          id: 4,
+          title: '用户信息',
           subpageRoute: '/user',
           icon: 'el-icon-user'
         },
         {
-          id: 4,
+          id: 5,
           title: '帮助',
           subpageRoute: '/help',
           icon: 'el-icon-help'

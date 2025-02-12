@@ -30,24 +30,15 @@ export default new Router({
       component: projectUpload
     },
     {
+      path: 'project/detail',
+      name: 'projectDetail',
+      component: ProjectDetail,
+      props:true,
+    },
+    {
       path: '/user',
       name: 'userHome',
       component:userHome
-    },
-    {
-      path: '/lecture',
-      name: 'lectureHome',
-      component: lectureHome
-    },
-    {
-      path: '/lecture/upload',
-      name: 'lectureUpload',
-      component: lectureUpload
-    },
-    {
-      path: '/help',
-      name: 'HelpHome',
-      component: HelpHome
     },
     {
       path: '/user/login',
@@ -60,22 +51,33 @@ export default new Router({
       component: registerPage
     },
     {
-      path: 'project/detail',
-      name: 'projectDetail',
-      component: ProjectDetail,
+      path: '/user/teacherInfo',
+      name: 'teacherInfo',
+      component: TeacherInfo,
       props:true,
     },
+    {
+      path: '/lecture',
+      name: 'lectureHome',
+      component: lectureHome
+    },
+    {
+      path: '/lecture/upload',
+      name: 'lectureUpload',
+      component: lectureUpload
+    },
+
     {
       path: '/lecture/detail',
       name: 'lectureDetail',
       component: LectureDetail,
       props:true,
     },
+
     {
-      path: '/user/teacherInfo',
-      name: 'teacherInfo',
-      component: TeacherInfo,
-      props:true,
-    }
+      path: '/help',
+      name: 'HelpHome',
+      component: HelpHome
+    },
   ]
 })
