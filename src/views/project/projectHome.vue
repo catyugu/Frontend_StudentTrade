@@ -49,6 +49,8 @@ export default {
             authorID: '114514',
             img_src: 'src/assets/logo.svg',
             description: '项目描述',
+            content: '项目内容',
+            like_num: '0',
             id: '1'
           },
           {
@@ -56,6 +58,8 @@ export default {
             authorID: '1919810',
             img_src: 'src/assets/logo.svg',
             description: '项目描述',
+            content: '项目内容',
+            like_num: '0',
             id: '2'
           }
         ]

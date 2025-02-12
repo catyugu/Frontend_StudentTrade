@@ -50,9 +50,11 @@ export default {
           title: '',
           speakerID: '',
           description: '',
+          content: '',
           place: '',
           time: '',
           reserve_num: '',
+          reserve_user_list: '',
           max_num: '',
           id: ''
         };
@@ -66,9 +68,11 @@ export default {
       title: '',
       speakerID: '',
       description: '',
+      content: '',
       place: '',
       time: '',
       reserve_num: '',
+      reserve_user_list: '',
       max_num: '',
       id: ''
     };
@@ -78,10 +82,12 @@ export default {
     this.title = this.i.title;
     this.speakerID = this.i.speakerID;
     this.description = this.i.description;
+    this.content = this.i.content;
     this.id = this.i.id;
     this.place = this.i.place;
     this.time = this.i.time;
     this.reserve_num = this.i.reserve_num;
+    this.reserve_user_list = this.i.reserve_user_list;
     this.max_num = this.i.max_num;
   },
   methods: {

@@ -42,6 +42,8 @@ export default {
           title: '',
           authorID: '',
           description: '',
+          content: '',
+          like_num: '',
           id: ''
         };
       }
@@ -54,6 +56,8 @@ export default {
       title: '',
       authorID: '',
       description: '',
+      content: '',
+      like_num: '',
       id: ''
     };
   },
@@ -62,6 +66,8 @@ export default {
     this.title = this.i.title;
     this.authorID = this.i.authorID;
     this.description = this.i.description;
+    this.content = this.i.content;
+    this.like_num = this.i.like_num;
     this.id = this.i.id;
   },
   methods: {

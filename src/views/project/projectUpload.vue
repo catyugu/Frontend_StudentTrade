@@ -17,7 +17,7 @@
             <el-input v-model="form.description" />
           </el-form-item>
           <el-form-item label="内容">
-            <editorComponent v-model="form.content" @contentData="updateContent"/>
+            <editorComponent @contentData="updateContent"/>
           </el-form-item>
         </el-form>
         <el-button type="primary" @click="uploadToServer">上传</el-button>

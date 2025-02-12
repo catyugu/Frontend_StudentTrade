@@ -50,9 +50,11 @@ export default {
             speakerID: '114514',
             img_src: 'src/assets/logo.svg',
             description: '讲座描述',
+            content: '讲座内容',
             place: '讲座地点',
             time: '讲座时间',
             reserve_num: '0',
+            reserve_user_list: '',
             max_num: '10',
             id: '1'
           }

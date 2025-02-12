@@ -10,17 +10,18 @@ export default new Vuex.Store({
     userID: '114514',
     userInfo: {
       avatar_src:  'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-      username: 'sxc',
-      nickname: 'miaow',
+      username: 'xxx',
+      nickname: 'xxx',
       gender: '男',
       type: '教职',
       school_serial: '519023598273',
       phone_number: '12345678901',
-      email: 'sxc@sxc.com',
+      email: 'xxx@sjtu.edu.com',
       projectLikeList: [],
       lectureReserveList: [],
       projectUploadList: [],
-      lectureUploadList: [],
+      lectureUploadList: [],//These two lists are only for teacher (for them to
+      // management and edit after publishing)
     },
     token: '114514',
     http: Axios,
@@ -135,5 +136,47 @@ export default new Vuex.Store({
           )
         })
     },
+    reserveProcess(context, lectureID, userID){
+      context.state.http.post('/lecture/reserve/?'+lectureID+'&'+userID).then(res  => {
+        return res.data;
+      })
+        .catch(err => {
+          this.$notify(
+            {
+              title: '预约失败',
+              message: err.message,
+              type: 'error',
+            }
+          )
+        })
+    },
+    getProjectIDList(context, start, end, params){
+      context.state.http.get('/project/list/?'+start+'&'+end+'&'+params).then(res  => {
+        return res.data;
+      })
+        .catch(err => {
+          this.$notify(
+            {
+              title: '获取项目ID列表失败',
+              message: err.message,
+              type: 'error',
+            }
+          )
+        })
+    },
+    getLectureIDList(context, start, end, params){
+      context.state.http.get('/lecture/list/?'+start+'&'+end+'&'+params).then(res  => {
+        return res.data;
+      })
+        .catch(err => {
+          this.$notify(
+            {
+              title: '获取讲座ID列表失败',
+              message: err.message,
+              type: 'error',
+            }
+          )
+        })
+    }
   },
 })

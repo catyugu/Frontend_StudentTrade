@@ -33,28 +33,9 @@ export default {
               ['link', 'image', 'video'],
             ],
             handlers: {
+              'image': this.imageHandler // 修改: 添加图片处理逻辑
             }
           },
-          imageResize: {}, // 添加: 启用 imageResize 模块
-          imageUploader: {
-            upload: file => {
-              return new Promise((resolve, reject) => {
-                const formData = new FormData()
-                formData.append('image', file)
-
-                this.$store.getters.http.post('/upload/image', formData, {
-                  headers: {
-                    'Content-Type': 'multipart/form-data'
-                  }
-                }).then(res => {
-                  resolve(res.data.url)
-                }).catch(err => {
-                  reject('Upload failed')
-                  console.error('Error:', err)
-                })
-              })
-            }
-          }
         },
         placeholder: ''
       }
@@ -66,11 +47,13 @@ export default {
     this.quill = new Quill(dom, this.options)
     this.quill.root.innerHTML = this.content
     this.editorContent = this.content // 添加: 初始化 editorContent
-    this.quill.on('text-change', () => {
+    this.quill.on ('text-change', () => {
       this.editorContent = this.quill.root.innerHTML // 修改: 更新 editorContent
-      this.$emit('contentData', this.quill.root.innerHTML)
+      this.$emit('contentData', this.editorContent)
     })
     this.addQuillTitle()
+    // 假设需要在其他地方调用 updateContent 方法来更新内容
+    // this.updateContent('新的内容');
   },
   methods: {
     addQuillTitle () {
@@ -105,11 +88,41 @@ export default {
         item.parentNode.title = titleConfig[item.classList[0]]
       })
     },
-    getContentData () {
-      return this.quill.root.innerHTML
+    imageHandler () {
+      const input = document.createElement('input')
+      input.setAttribute('type', 'file')
+      input.setAttribute('accept', 'image/*')
+      input.click()
+
+      input.onchange = () => {
+        const file = input.files[0]
+        if (file) {
+          this.uploadImage(file)
+        }
+      }
     },
-    getEditorContent () {
-      return this.editorContent // 添加: 返回 editorContent
+    uploadImage (file) {
+      const formData = new FormData()
+      formData.append('image', file)
+
+      this.$store.getters.http.post('/image/upload', formData)
+      .then(response => response.data)
+      .then(data => {
+        const url = data.url // 假设服务器返回的 JSON 中包含图片的 URL
+        this.insertToEditor(url)
+      })
+      .catch(error => {
+        console.error('Error uploading image:', error)
+        this.$notify({
+          type: 'error',
+          title: '错误',
+          message: '图片上传失败',
+        })
+      })
+    },
+    insertToEditor (url) {
+      const range = this.quill.getSelection()
+      this.quill.insertEmbed(range.index, 'image', url, Quill.sources.USER)
     }
   }
 }

@@ -26,10 +26,10 @@
             <el-input v-model="form.description" />
           </el-form-item>
           <el-form-item label="内容">
-            <editorComponent v-model="form.content" @contentData="updateContent"/>
+            <editorComponent @contentData="updateContent"/>
           </el-form-item>
         </el-form>
-        <el-button type="primary" @click="uploadToServer">上传</el-button>
+        <el-button type="primary" @click="uploadLectureToServer">上传</el-button>
       </el-main>
     </el-container>
   </div>
@@ -78,7 +78,7 @@ export default {
       }
       return isJPG || isPNG && isLt2M;
     },
-    uploadToServer() {
+    uploadLectureToServer() {
       console.log(this.form); // 测试用
       this.$store.getters.http.post('/lecture/upload', {
         title: this.form.title,
