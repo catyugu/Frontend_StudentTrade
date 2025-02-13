@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container direction="vertical">
-      <el-header>上传项目</el-header>
+      <header-card :header="{title:'讲座上传'}" />
       <el-main>
         <el-form :model="form" label-width="80px" style="text-align: left">
           <el-form-item label="封面">
@@ -48,9 +48,11 @@
 </template>
 <script>
 import MultiEditor from '@/components/multiEditor.vue';
+import HeaderCard from '@/components/headerCard.vue';
 
 export default {
   components: {
+    HeaderCard,
     editorComponent: MultiEditor
   },
   data() {

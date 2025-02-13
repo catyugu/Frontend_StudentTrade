@@ -33,7 +33,8 @@ export default new Vuex.Store({
     getToken: state => state.token,
     getUserInfo: state => state.userInfo,
     getIsLogin: state => state.isLogin,
-    getUserID: state => state.userID
+    getUserID: state => state.userID,
+    getReserveList:  state => state.userInfo.lectureReserveList,
   },
   actions: {
     loginProcess(context, token, id) {
@@ -141,6 +142,18 @@ export default new Vuex.Store({
       context.state.http.post('/lecture/reserve/?' + lectureID + '&' + userID).then(res => {
         return res.data;
       })
+        .then(
+          res => {
+            if (res.data.code === 0) {
+              Vue.prototype.$notify({
+                title: '预约成功',
+                message: '预约成功',
+                type: 'success'
+              });
+              this.$store.state.userInfo.lectureReserveList.push(lectureID);
+            }
+          }
+        )
         .catch(err => {
           Vue.prototype.$notify({
             title: '预约失败',
@@ -164,6 +177,37 @@ export default new Vuex.Store({
         .catch(err => {
           Vue.prototype.$notify({
             title: '收藏失败',
+            message: err.message,
+            type: 'error'
+          });
+        });
+    },
+    cancelLikeProcess(context, projectID, userID){
+      context.state.http.delete('/project/like/?' + projectID + '&' + userID).then(res => {
+        if (res.data.code === 0) {
+          Vue.prototype.$notify({
+            title: '取消收藏成功',
+            message: '取消收藏成功',
+            type: 'success'
+          });
+          this.$store.state.userInfo.projectLikeList.splice(this.$store.state.userInfo.projectLikeList.indexOf(projectID), 1);
+        }
+        return res.data;
+      }).catch(err => {
+          Vue.prototype.$notify({
+            title: '取消收藏失败',
+            message: err.message,
+            type: 'error'
+          });
+        });
+    },
+    cancelReserveProcess(context, lectureID, userID) {
+      context.state.http.post('/lecture/reserve/?' + lectureID + '&' + userID).then(res => {
+        return res.data;
+      })
+        .catch(err => {
+          Vue.prototype.$notify({
+            title: '取消预约失败',
             message: err.message,
             type: 'error'
           });

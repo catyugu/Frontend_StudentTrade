@@ -21,9 +21,23 @@
               <div class="bottom clearfix">
                 <el-button type="text" class="button" @click="goEditLecture"
                            v-if="speakerID === this.$store.getters.getUserID">
-                  前往编辑<br>
-                <el-button type="text" class="button" @click="expand">展开简介</el-button>
+                  前往编辑
+                </el-button><br>
+                <el-button type="primary" class="button" @click="reserveLecture"
+                v-if="state==='报名中' && !(this.$store.getters.getReserveList.includes(this.id))">
+                  预约
                 </el-button>
+                <el-button type="primary" class="button" @click="cancelReservation"
+                           v-if="state==='报名中' && (this.$store.getters.getReserveList.includes(this.id))">
+                  取消预约
+                </el-button><br>
+                <el-button class="button" @click="goToLectureDetail"
+                v-if="state==='已结束'">
+                  讲座已结束，点此查看详情
+                </el-button><br>
+                <el-button type="text" class="button" @click="expand">展开简介</el-button>
+
+
               </div>
             </el-col>
 
@@ -57,6 +71,8 @@ export default {
           reserve_user_list: '',
           max_num: '',
           state: '',
+          create_time: '',
+          update_time: '',
           id: ''
         };
       }
@@ -76,6 +92,8 @@ export default {
       reserve_user_list: '',
       max_num: '',
       state: '',
+      create_time: '',
+      update_time: '',
       id: ''
     };
   },
@@ -91,11 +109,17 @@ export default {
     this.reserve_num = this.i.reserve_num;
     this.reserve_user_list = this.i.reserve_user_list;
     this.state = this.i.state;
+    this.create_time = this.i.create_time;
+    this.update_time = this.i.update_time;
     this.max_num = this.i.max_num;
   },
   methods: {
     expand() {
       this.showDescription = !this.showDescription;
+    },
+    reserveLecture() {
+      this.$store.dispatch('reserveLecture', this.id, this.$store.getters.getUserID);
+      this.$store.dispatch('refreshUserInfo');
     },
     goToLectureDetail() {
       this.$router.push({
@@ -124,7 +148,10 @@ h1 {
   font-weight: bold;
   margin-top: 10px;
 }
-
+el-button {
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
 .lecture-card {
   margin-top: 10px;
   margin-bottom: 10px;

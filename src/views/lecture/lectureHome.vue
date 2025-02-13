@@ -28,6 +28,14 @@
           && this.$store.state.userInfo.type==='教职'">
             发布讲座
           </el-button>
+          <el-button
+            type="primary"
+            style="margin-top: 10px"
+            @click="lectureManage"
+            v-if="this.$store.getters.getIsLogin
+          && this.$store.state.userInfo.type==='教职'">
+            讲座管理
+          </el-button>
         </div>
         <div>
           <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
@@ -63,6 +71,9 @@ export default {
             reserve_num: '0',
             reserve_user_list: '',
             max_num: '10',
+            state: '报名中',
+            create_time: '2022-05-05',
+            update_time: '2022-05-05',
             id: '1'
           }
         ]
@@ -78,6 +89,14 @@ export default {
     myReserve() {
       this.$router.push({
         name: 'LectureReserve',
+        query: {
+          userID: this.$store.getters.getUserID
+        }
+      });
+    },
+    lectureManage() {
+      this.$router.push({
+        name: 'LectureManage',
         query: {
           userID: this.$store.getters.getUserID
         }

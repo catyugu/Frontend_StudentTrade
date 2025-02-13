@@ -2,14 +2,18 @@
 
 <template>
 <div>
+  <el-container direction="vertical">
+    <header-card :header="{title:'我预约的讲座'}" />
  <lecture-display-list :lectureList="lectureList" />
+  </el-container>
 </div>
 </template>
 <script>
 import LectureDisplayList from '@/components/lectureDisplayList.vue';
+import HeaderCard from '@/components/headerCard.vue';
 
 export default {
-  components: { LectureDisplayList },
+  components: { HeaderCard, LectureDisplayList },
   methods: {
   },
   data() {

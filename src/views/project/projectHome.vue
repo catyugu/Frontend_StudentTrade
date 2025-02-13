@@ -66,6 +66,8 @@ export default {
             description: '项目描述',
             content: '项目内容',
             state: '招募中',
+            create_time: '2022-05-05',
+            update_time: '2022-05-05',
             like_num: '0',
             id: '1'
           },
@@ -76,6 +78,8 @@ export default {
             description: '项目描述',
             content: '项目内容',
             state: '暂停招募',
+            create_time: '2022-03-04',
+            update_time: '2022-03-04',
             like_num: '0',
             id: '2'
           }

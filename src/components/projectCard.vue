@@ -45,6 +45,8 @@ export default {
           description: '',
           content: '',
           state: '',
+          create_time: '',
+          update_time: '',
           like_num: '',
           id: ''
         };
@@ -60,6 +62,8 @@ export default {
       description: '',
       content: '',
       state: '',
+      create_time: '',
+      update_time: '',
       like_num: '',
       id: ''
     };
@@ -71,6 +75,8 @@ export default {
     this.description = this.i.description;
     this.content = this.i.content;
     this.state = this.i.state;
+    this.create_time = this.i.create_time;
+    this.update_time = this.i.update_time;
     this.like_num = this.i.like_num;
     this.id = this.i.id;
   },

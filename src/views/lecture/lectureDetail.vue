@@ -2,7 +2,7 @@
 <div>
   <el-container direction="vertical">
     <el-header>
-      <header-card :header="{title:'Lecture Detail'}"></header-card>
+      <header-card :header="{title:'讲座详情'}"></header-card>
     </el-header>
     <el-main>
       <div> ID:{{this.lectureID}}</div>

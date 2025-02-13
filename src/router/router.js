@@ -102,7 +102,7 @@ export default new Router({
     },
     {
       path: '/lecture/manage',
-      name: 'lectureManage',
+      name: 'LectureManage',
       component: LectureManage,
     },
     {
