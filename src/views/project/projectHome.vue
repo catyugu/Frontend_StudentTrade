@@ -14,12 +14,27 @@
           </el-carousel>
         </div>
         <el-button
+          v-if="this.$store.getters.getIsLogin"
+          type="primary"
+          @click="myLike"
+          style="margin-top: 10px">
+          项目收藏
+        </el-button>
+        <el-button
           v-if="this.$store.getters.getIsLogin
           && this.$store.state.userInfo.type==='教职'"
           type="primary"
-          @click="ToUpload"
+          @click="toUpload"
           style="margin-top: 10px">
           上传项目
+        </el-button>
+        <el-button
+          v-if="this.$store.getters.getIsLogin
+          && this.$store.state.userInfo.type==='教职'"
+          type="primary"
+          @click="projectManage"
+          style="margin-top: 10px">
+          项目管理
         </el-button>
         <div>
           <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
@@ -70,8 +85,14 @@ export default {
     load() {
       this.object.count += 2;
     },
-    ToUpload() {
+    toUpload() {
       this.$router.push('/project/upload');
+    },
+    myLike() {
+      this.$router.push('/project/like');
+    },
+    projectManage() {
+      this.$router.push('/project/manage');
     }
   },
 

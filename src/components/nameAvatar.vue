@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div @click="goToUserInfo">
       <img :src="userInfo.avatar" alt="avatar" class="avatar">
       <div class="name">{{userInfo.name}}</div>
     </div>
@@ -24,11 +24,22 @@ export default {
       }
     };
   },
+  created() {
+    this.getNameAvatar();
+  },
   methods: {
     getNameAvatar() {
       this.userInfo.id = this.userID;
-      this.$store.dispatch('getUserInfoByID', this.userInfo).then(res => {
+      this.$store.dispatch('getUserInfoByID', this.userInfo.id).then(res => {
         this.userInfo = res.data.data;
+      });
+    },
+    goToUserInfo() {
+      this.$router.push({
+        path: '/user/userHome',
+        query: {
+          userID: this.userID
+        }
       });
     }
   }

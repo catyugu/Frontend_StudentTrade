@@ -7,7 +7,7 @@
 
 export default ({
   props: {
-    teacherID: {
+    userID: {
       type: String,
       default: ''
     }
@@ -24,9 +24,12 @@ export default ({
       }
     };
   },
+  created() {
+    this.getUserInfo();
+  },
   methods: {
-    getTeacherInfoByID() {
-      this.$store.dispatch('getTeacherInfoByID', this.teacherID)
+    getUserInfo() {
+      this.$store.dispatch('getUserInfoByID', this.userID)
         .then(res => {
           this.teacherInfo = res.data.data;
         });

@@ -10,7 +10,9 @@ import projectUpload from '@/views/project/projectUpload.vue';
 import lectureUpload from '@/views/lecture/lectureUpload.vue';
 import ProjectDetail from '@/views/project/projectDetail.vue';
 import LectureDetail from '@/views/lecture/lectureDetail.vue';
-import TeacherInfo from '@/views/user/teacherInfo.vue';
+import UserInfoDisplay from '@/views/user/userInfoDisplay.vue';
+import projectLike from '@/views/project/projectLike.vue';
+import LectureReserve from '@/views/lecture/lectureReserve.vue';
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -36,6 +38,12 @@ export default new Router({
       props:true,
     },
     {
+      path: '/project/like',
+      name: 'myLike',
+      component: projectLike,
+      props:true,
+    },
+    {
       path: '/user',
       name: 'userHome',
       component:userHome
@@ -51,10 +59,10 @@ export default new Router({
       component: registerPage
     },
     {
-      path: '/user/teacherInfo',
-      name: 'teacherInfo',
-      component: TeacherInfo,
-      props:true,
+      path: '/user/UserInfoDisplay',
+      name: 'UserInfoDisplay',
+      component: UserInfoDisplay,
+      props: true,
     },
     {
       path: '/lecture',
@@ -71,6 +79,12 @@ export default new Router({
       path: '/lecture/detail',
       name: 'lectureDetail',
       component: LectureDetail,
+      props:true,
+    },
+    {
+      path: '/lecture/reserve',
+      name: 'lectureReserve',
+      component: LectureReserve,
       props:true,
     },
 
