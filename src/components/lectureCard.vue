@@ -56,6 +56,7 @@ export default {
           reserve_num: '',
           reserve_user_list: '',
           max_num: '',
+          state: '',
           id: ''
         };
       }
@@ -74,6 +75,7 @@ export default {
       reserve_num: '',
       reserve_user_list: '',
       max_num: '',
+      state: '',
       id: ''
     };
   },
@@ -88,6 +90,7 @@ export default {
     this.time = this.i.time;
     this.reserve_num = this.i.reserve_num;
     this.reserve_user_list = this.i.reserve_user_list;
+    this.state = this.i.state;
     this.max_num = this.i.max_num;
   },
   methods: {

@@ -19,6 +19,14 @@
           <el-form-item label="内容">
             <editorComponent @contentData="updateContent"/>
           </el-form-item>
+          <el-form-item label="状态">
+            <el-select v-model="form.state" placeholder="请选择">
+              <el-option label="未开始招募" value="未开始招募"></el-option>
+              <el-option label="招募进行中" value="招募进行中"></el-option>
+              <el-option label="招募暂停" value="招募暂停"></el-option>
+              <el-option label="招募结束" value="招募结束"></el-option>
+            </el-select>
+          </el-form-item>
         </el-form>
         <el-button type="primary" @click="uploadToServer">上传</el-button>
       </el-main>
@@ -39,6 +47,7 @@ export default {
         description: '',
         content: '',
         cover: '',
+        state: ''
       },
       uploadUrl: 'http://localhost:8080/upload',
       headers: {
@@ -73,6 +82,7 @@ export default {
         description: this.form.description,
         content: this.form.content,
         cover: this.form.cover,
+        state: this.form.state,
         authorID: this.$store.getters.getUserID
       }).then(res => {
         if (res.data.code === 200) {
@@ -81,6 +91,7 @@ export default {
             title: '上传成功',
             message: '上传成功'
           });
+          this.$store.dispatch('refreshUserInfo');
           this.$router.push('/project/home');
         } else {
           this.$notify({

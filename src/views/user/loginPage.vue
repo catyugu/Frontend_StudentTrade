@@ -47,13 +47,13 @@ export default {
       try {
         const res = await this.$store.getters.http.post('/login', this.loginForm);
         if (res.data.code === 0) {
+          await this.$store.dispatch('loginProcess', res.data.token, res.data.id);
+          await this.$router.push('/');
           this.$notify({
             type: 'success',
             title: '登录成功!',
             message: '',
           });
-          await this.$store.dispatch('loginProcess', res.data.token);
-          await this.$router.push('/');
         } else {
           this.$notify({
             type: 'error',
