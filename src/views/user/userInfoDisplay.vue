@@ -6,15 +6,10 @@
 <script>
 
 export default ({
-  props: {
-    userID: {
-      type: String,
-      default: ''
-    }
-  },
   data() {
     return {
-      teacherInfo: {
+      userID: '',
+      userInfo: {
         avatar: '',
         name: '',
         gender: '',
@@ -25,13 +20,14 @@ export default ({
     };
   },
   created() {
+    this.userID = this.$route.query.userID;
     this.getUserInfo();
   },
   methods: {
     getUserInfo() {
       this.$store.dispatch('getUserInfoByID', this.userID)
         .then(res => {
-          this.teacherInfo = res.data.data;
+          this.userInfo = res.data.data;
         });
     }
   }

@@ -28,12 +28,6 @@ import NameAvatar from '@/components/nameAvatar.vue';
 export default {
   name: 'projectDetail',
   components: { NameAvatar, HeaderCard },
-  props: {
-    projectID: {
-      type: String,
-      default: ''
-    }
-  },
   data() {
     return {
       projectInfo: {
@@ -47,7 +41,7 @@ export default {
     };
   },
   created() {
-    this.projectInfo.id = this.projectID;
+    this.projectInfo.id =  this.$route.query.projectID;
     this.getProjectInfoByID(this, this.projectID).then(res => {
       this.projectInfo = res.data.data;
     });

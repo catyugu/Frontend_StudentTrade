@@ -77,7 +77,7 @@ export default {
     GoToProjectDetail() {
       this.$router.push({
         name: 'projectDetail',
-        params: {
+        query: {
           projectID: this.id
         }
       });

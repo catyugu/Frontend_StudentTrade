@@ -4,6 +4,9 @@
     <el-header>
       <header-card :header="{title:'Lecture Detail'}"></header-card>
     </el-header>
+    <el-main>
+      <div> ID:{{this.lectureID}}</div>
+    </el-main>
   </el-container>
 </div>
 </template>
@@ -12,14 +15,10 @@ import HeaderCard from '@/components/headerCard.vue';
 
 export default {
   components: { HeaderCard },
-  props:{
-    lectureID:{
-      type:String,
-      default:''
-    }
-  },
   data(){
     return{
+      // eslint-disable-next-line vue/no-dupe-keys
+      lectureID:'',
       lectureInfo:{
         img_src:'',
         title:'',
@@ -34,11 +33,13 @@ export default {
     }
   },
   created(){
-    this.getLectureInfoByID(this,this.lectureID);
+    // eslint-disable-next-line vue/no-mutating-props
+    this.lectureID=this.$route.query.lectureID;
+    this.getLectureInfoByID(this.lectureID);
   },
   methods:{
-    getLectureInfoByID(context,lectureID){
-      context.$axios.get('/lecture/'+lectureID)
+    getLectureInfoByID(lectureID){
+       this.$store.state.http.get('/lecture/'+lectureID)
       .then(res=>{
         this.lectureInfo=res.data.data;
       })

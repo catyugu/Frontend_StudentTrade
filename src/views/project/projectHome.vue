@@ -86,13 +86,34 @@ export default {
       this.object.count += 2;
     },
     toUpload() {
-      this.$router.push('/project/upload');
+      this.$router.push(
+          {
+            path: '/project/upload',
+            query: {
+              userID: this.$store.state.userInfo.userID
+            }
+          }
+      );
     },
     myLike() {
-      this.$router.push('/project/like');
+      this.$router.push(
+        {
+          name: 'projectLike',
+          query: {
+            userID: this.$store.getters.getUserID
+          }
+        }
+      );
     },
     projectManage() {
-      this.$router.push('/project/manage');
+      this.$router.push(
+        {
+          name:  'projectManage',
+          query: {
+            userID: this.$store.getters.getUserID
+          }
+        }
+      );
     }
   },
 

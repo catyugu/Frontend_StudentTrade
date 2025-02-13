@@ -100,7 +100,7 @@ export default {
     goToLectureDetail() {
       this.$router.push({
         name: 'lectureDetail',
-        params: {
+        query: {
           lectureID: this.id
         }
       });

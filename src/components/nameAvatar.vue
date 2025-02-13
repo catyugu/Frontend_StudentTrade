@@ -36,7 +36,7 @@ export default {
     },
     goToUserInfo() {
       this.$router.push({
-        path: '/user/userHome',
+        path: '/user/userInfoDisplay',
         query: {
           userID: this.userID
         }

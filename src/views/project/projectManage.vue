@@ -1,17 +1,18 @@
 <template>
   <div>
-    <project-display-list :projectList="projectIDList" />
+    <project-display-list :projectList="projectList" />
   </div>
 </template>
 <script>
 import ProjectDisplayList from '@/components/projectDisplayList.vue';
 
 export default {
+  name: 'projectManage',
   components: { ProjectDisplayList },
   data() {
     return {
       userID: '',
-      projectIDList: []
+      projectList: []
     };
   },
   created() {
@@ -20,7 +21,7 @@ export default {
   },
   methods: {
     getProjectList() {
-      this.projectIDList = this.$store.getters.getUserInfo.projectLikeList;
+      this.projectList = this.$store.getters.getUserInfo.projectUploadList;
     }
   }
 };

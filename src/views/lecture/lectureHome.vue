@@ -16,7 +16,14 @@
           <el-button
             type="primary"
             style="margin-top: 10px"
-            @click="ToUpload"
+            @click="myReserve"
+            v-if="this.$store.getters.getIsLogin">
+            我的预约
+          </el-button>
+          <el-button
+            type="primary"
+            style="margin-top: 10px"
+            @click="toUpload"
             v-if="this.$store.getters.getIsLogin
           && this.$store.state.userInfo.type==='教职'">
             发布讲座
@@ -63,11 +70,19 @@ export default {
     };
   },
   methods: {
-    ToUpload(){
+    toUpload(){
       this.$router.push({
         name: 'lectureUpload'
       });
-    }
+    },
+    myReserve() {
+      this.$router.push({
+        name: 'lectureReserve',
+        query: {
+          userID: this.$store.getters.getUserID
+        }
+      });
+    },
   },
 
   computed: {}

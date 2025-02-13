@@ -12,18 +12,14 @@ export default {
   components: { LectureDisplayList },
   methods: {
   },
-  props: {
-    userID: {
-      type: String,
-      default: ''
-    }
-  },
   data() {
     return {
+      userID: '',
       lectureList: [],
     }
   },
   created() {
+    this.userID = this.$route.query.userID
     this.lectureList = this.$store.state.userInfo.lectureReserveList;
   },
 }
