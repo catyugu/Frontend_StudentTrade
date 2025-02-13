@@ -9,7 +9,8 @@
             </el-col>
             <el-col span="12"  @click.native="goToProjectDetail">
               <span v-text="title"></span><br>
-              <name-avatar :userID="authorID" />
+              <name-avatar :userID="authorID" /><br>
+              <span>当前状态：{{state}}</span>
             </el-col>
             <el-col span="6">
               <el-button type="text" class="button" @click="goEditProject"
@@ -43,6 +44,7 @@ export default {
           authorID: '',
           description: '',
           content: '',
+          state: '',
           like_num: '',
           id: ''
         };
@@ -57,6 +59,7 @@ export default {
       authorID: '',
       description: '',
       content: '',
+      state: '',
       like_num: '',
       id: ''
     };
@@ -67,6 +70,7 @@ export default {
     this.authorID = this.i.authorID;
     this.description = this.i.description;
     this.content = this.i.content;
+    this.state = this.i.state;
     this.like_num = this.i.like_num;
     this.id = this.i.id;
   },

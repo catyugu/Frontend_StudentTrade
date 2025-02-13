@@ -149,6 +149,26 @@ export default new Vuex.Store({
           });
         });
     },
+    likeProcess(context, projectID, userID){
+      context.state.http.post('/project/like/?' + projectID + '&' + userID).then(res => {
+        if (res.data.code === 0){
+          Vue.prototype.$notify({
+            title: '收藏成功',
+            message: '收藏成功',
+            type: 'success'
+          });
+          this.$store.state.userInfo.projectLikeList.push(projectID);
+        }
+        return res.data;
+      })
+        .catch(err => {
+          Vue.prototype.$notify({
+            title: '收藏失败',
+            message: err.message,
+            type: 'error'
+          });
+        });
+    },
     getProjectIDList(context, start, end, params) {
       context.state.http.get('/project/list/?' + start + '&' + end + '&' + params).then(res => {
         return res.data;

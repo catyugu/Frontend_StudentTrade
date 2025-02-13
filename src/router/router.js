@@ -97,7 +97,7 @@ export default new Router({
     },
     {
       path: '/lecture/reserve',
-      name: 'lectureReserve',
+      name: 'LectureReserve',
       component: LectureReserve,
     },
     {

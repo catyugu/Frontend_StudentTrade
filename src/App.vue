@@ -52,7 +52,7 @@
 
 .el-main {
   color: #333;
-  line-height: 30px;
+  line-height: 20px;
   text-align: center;
 }
 

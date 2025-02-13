@@ -77,7 +77,7 @@ export default {
     },
     myReserve() {
       this.$router.push({
-        name: 'lectureReserve',
+        name: 'LectureReserve',
         query: {
           userID: this.$store.getters.getUserID
         }

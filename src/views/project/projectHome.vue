@@ -65,6 +65,7 @@ export default {
             img_src: 'src/assets/logo.svg',
             description: '项目描述',
             content: '项目内容',
+            state: '招募中',
             like_num: '0',
             id: '1'
           },
@@ -74,6 +75,7 @@ export default {
             img_src: 'src/assets/logo.svg',
             description: '项目描述',
             content: '项目内容',
+            state: '暂停招募',
             like_num: '0',
             id: '2'
           }
