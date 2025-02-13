@@ -46,7 +46,6 @@ export default new Router({
       path: '/project/manage',
       name: 'projectManage',
       component: ProjectManage,
-      props:true,
     },
     {
       path: '/user',
