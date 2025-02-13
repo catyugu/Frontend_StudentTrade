@@ -104,6 +104,14 @@ export default {
           lectureID: this.id
         }
       });
+    },
+    goEditLecture() {
+      this.$router.push({
+        name: 'LectureEdit',
+        query: {
+          lectureID: this.id
+        }
+      });
     }
   }
 };

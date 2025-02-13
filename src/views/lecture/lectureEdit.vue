@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container direction="vertical">
-      <el-header>上传项目</el-header>
+      <el-header>编辑项目</el-header>
       <el-main>
         <el-form :model="form" label-width="80px" style="text-align: left">
           <el-form-item label="封面">
@@ -55,6 +55,7 @@ export default {
   },
   data() {
     return {
+      lectureID: '',
       form: {
         cover: '',
         title: '',
@@ -139,6 +140,17 @@ export default {
     },
     updateContent(content) { // 添加: 更新内容的方法
       this.form.content = content;
+    }
+  },
+  created(){
+    this.lectureID = this.$route.query.lectureID;
+    console.log('lectureID:'+this.lectureID)
+    let form = this.$store.dispatch('getLectureInfoByID', this.lectureID);
+    if (form !== null){
+      console.log(form)
+      this.form = form;
+    }else{
+      /****/
     }
   }
 };

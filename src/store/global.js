@@ -35,7 +35,7 @@ export default new Vuex.Store({
     getIsLogin: state => state.isLogin,
     getUserID: state => state.userID
   },
-  mutations: {//全局方法
+  actions: {
     loginProcess(context, token, id) {
       context.state.isLogin = true;
       context.state.token = token;
@@ -46,13 +46,11 @@ export default new Vuex.Store({
           context.state.userInfo = res.data;
         }
       ).catch(err => {
-        this.$notify(
-          {
-            title: '登录失败',
-            message: err.message,
-            type: 'error'
-          }
-        );
+        Vue.prototype.$notify({
+          title: '登录失败',
+          message: err.message,
+          type: 'error'
+        });
       });
     },
     logoutProcess(context) {
@@ -69,13 +67,11 @@ export default new Vuex.Store({
         context.commit('setUserInfo', res.data);
       })
         .catch(err => {
-          this.$notify(
-            {
-              title: '获取用户信息失败',
-              message: err.message,
-              type: 'error'
-            }
-          );
+          Vue.prototype.$notify({
+            title: '获取用户信息失败',
+            message: err.message,
+            type: 'error'
+          });
         });
     },
     refreshUserInfo(context) {
@@ -84,13 +80,11 @@ export default new Vuex.Store({
         context.commit('setUserInfo', res.data);
       })
         .catch(err => {
-          this.$notify(
-            {
-              title: '获取用户信息失败',
-              message: err.message,
-              type: 'error'
-            }
-          );
+          Vue.prototype.$notify({
+            title: '获取用户信息失败',
+            message: err.message,
+            type: 'error'
+          });
         });
     },
     getProjectInfoByID(context, projectID) {
@@ -98,13 +92,12 @@ export default new Vuex.Store({
         return res.data;
       })
         .catch(err => {
-          this.$notify(
-            {
-              title: '获取项目信息失败',
-              message: err.message,
-              type: 'error'
-            }
-          );
+          Vue.prototype.$notify({
+            title: '获取项目信息失败',
+            message: err.message,
+            type: 'error'
+          });
+          return null;
         });
     },
     updateProjectInfoByID(context, projectID, projectInfo) {
@@ -112,42 +105,36 @@ export default new Vuex.Store({
         return res.data;
       })
         .catch(err => {
-          this.$notify(
-            {
-              title: '更新项目信息失败',
-              message: err.message,
-              type: 'error'
-            }
-          );
+          Vue.prototype.$notify({
+            title: '更新项目信息失败',
+            message: err.message,
+            type: 'error'
+          });
         });
 
     },
     getLectureInfoByID(context, lectureID) {
-      context.state.http.get('/lecture/?' + lectureID).then(res => {
+      context.state.http.get('/lecture/?' + lectureID, { timeout: 3000 }).then(res => {
         return res.data;
-      })
-        .catch(err => {
-          this.$notify(
-            {
-              title: '获取讲座信息失败',
-              message: err.message,
-              type: 'error'
-            }
-          );
+      }).catch(err => {
+        Vue.prototype.$notify({
+          title: '获取讲座信息失败',
+          message: err.message,
+          type: 'error'
         });
+        return null;
+      });
     },
     updateLectureInfoByID(context, lectureID, lectureInfo) {
       context.state.http.put('/lecture/?' + lectureID, lectureInfo).then(res => {
         return res.data;
       })
         .catch(err => {
-          this.$notify(
-            {
-              title: '更新讲座信息失败',
-              message: err.message,
-              type: 'error'
-            }
-          );
+          Vue.prototype.$notify({
+            title: '更新讲座信息失败',
+            message: err.message,
+            type: 'error'
+          });
         });
     },
     reserveProcess(context, lectureID, userID) {
@@ -155,13 +142,11 @@ export default new Vuex.Store({
         return res.data;
       })
         .catch(err => {
-          this.$notify(
-            {
-              title: '预约失败',
-              message: err.message,
-              type: 'error'
-            }
-          );
+          Vue.prototype.$notify({
+            title: '预约失败',
+            message: err.message,
+            type: 'error'
+          });
         });
     },
     getProjectIDList(context, start, end, params) {
@@ -169,13 +154,11 @@ export default new Vuex.Store({
         return res.data;
       })
         .catch(err => {
-          this.$notify(
-            {
-              title: '获取项目ID列表失败',
-              message: err.message,
-              type: 'error'
-            }
-          );
+          Vue.prototype.$notify({
+            title: '获取项目ID列表失败',
+            message: err.message,
+            type: 'error'
+          });
         });
     },
     getLectureIDList(context, start, end, params) {
@@ -183,14 +166,15 @@ export default new Vuex.Store({
         return res.data;
       })
         .catch(err => {
-          this.$notify(
-            {
-              title: '获取讲座ID列表失败',
-              message: err.message,
-              type: 'error'
-            }
-          );
+          Vue.prototype.$notify({
+            title: '获取讲座ID列表失败',
+            message: err.message,
+            type: 'error'
+          });
         });
     }
+  },
+  mutations:{
+
   }
 });

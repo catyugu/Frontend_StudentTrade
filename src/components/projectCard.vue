@@ -4,10 +4,10 @@
       <el-row style="margin-top: 10px">
         <el-card :body-style="{ padding: '0px' }">
           <el-row>
-            <el-col span="6" @click.native="GoToProjectDetail">
+            <el-col span="6" @click.native="goToProjectDetail">
               <img :src="img_src" class="image" alt="Image not found!">
             </el-col>
-            <el-col span="12"  @click.native="GoToProjectDetail">
+            <el-col span="12"  @click.native="goToProjectDetail">
               <span v-text="title"></span><br>
               <name-avatar :userID="authorID" />
             </el-col>
@@ -74,9 +74,17 @@ export default {
     expand() {
       this.showDescription = !this.showDescription;
     },
-    GoToProjectDetail() {
+    goToProjectDetail() {
       this.$router.push({
         name: 'projectDetail',
+        query: {
+          projectID: this.id
+        }
+      });
+    },
+    goEditProject () {
+      this.$router.push({
+        name: 'ProjectEdit',
         query: {
           projectID: this.id
         }
