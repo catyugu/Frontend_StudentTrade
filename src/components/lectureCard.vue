@@ -118,7 +118,10 @@ export default {
       this.showDescription = !this.showDescription;
     },
     reserveLecture() {
-      this.$store.dispatch('reserveLecture', this.id, this.$store.getters.getUserID);
+      this.$store.dispatch('reserveProcess', this.id, this.$store.getters.getUserID);
+    },
+    cancelReservation() {
+      this.$store.dispatch('cancelReserveProcess', this.id, this.$store.getters.getUserID);
       this.$store.dispatch('refreshUserInfo');
     },
     goToLectureDetail() {

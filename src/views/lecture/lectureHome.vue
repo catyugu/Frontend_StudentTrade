@@ -75,6 +75,22 @@ export default {
             create_time: '2022-05-05',
             update_time: '2022-05-05',
             id: '1'
+          },
+          {
+            title: '讲座2',
+            speakerID: '1919810',
+            img_src: 'src/assets/logo.svg',
+            description: '讲座描述',
+            content: '讲座内容',
+            place: '讲座地点',
+            time: '讲座时间',
+            reserve_num: '0',
+            reserve_user_list: '',
+            max_num: '10',
+            state: '报名中',
+            create_time: '2022-05-05',
+            update_time: '2022-05-05',
+            id: '2'
           }
         ]
       }

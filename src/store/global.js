@@ -18,7 +18,7 @@ export default new Vuex.Store({
       phone_number: '12345678901',
       email: 'xxx@sjtu.edu.com',
       projectLikeList: [],
-      lectureReserveList: [],
+      lectureReserveList: ['2'],
       projectUploadList: [],
       lectureUploadList: []//These two lists are only for teacher (for them to
       // management and edit after publishing)
@@ -88,6 +88,32 @@ export default new Vuex.Store({
           });
         });
     },
+    refreshProjectInfo(context, projectID) {
+      context.state.http.get('/project/?' + projectID).then(res => {
+        return res.data;
+      })
+        .catch(err => {
+          Vue.prototype.$notify({
+            title: '更新项目信息失败',
+            message: err.message,
+            type: 'error'
+          });
+          return null;
+        });
+    },
+    refreshLectureInfo(context, lectureID) {
+      context.state.http.get('/lecture/?' + lectureID).then(res => {
+        return res.data;
+      })
+        .catch(err => {
+          Vue.prototype.$notify({
+            title: '更新讲座信息失败',
+            message: err.message,
+            type: 'error'
+          });
+          return null;
+        });
+    },
     getProjectInfoByID(context, projectID) {
       context.state.http.get('/project/?' + projectID).then(res => {
         return res.data;
@@ -150,7 +176,8 @@ export default new Vuex.Store({
                 message: '预约成功',
                 type: 'success'
               });
-              this.$store.state.userInfo.lectureReserveList.push(lectureID);
+              this.$store.dispatch('refreshUserInfo');
+              this.$store.dispatch('refreshLectureInfo', lectureID);
             }
           }
         )
@@ -170,7 +197,8 @@ export default new Vuex.Store({
             message: '收藏成功',
             type: 'success'
           });
-          this.$store.state.userInfo.projectLikeList.push(projectID);
+          this.$store.dispatch('refreshUserInfo');
+          this.$store.dispatch('refreshProjectInfo', projectID);
         }
         return res.data;
       })
@@ -190,7 +218,8 @@ export default new Vuex.Store({
             message: '取消收藏成功',
             type: 'success'
           });
-          this.$store.state.userInfo.projectLikeList.splice(this.$store.state.userInfo.projectLikeList.indexOf(projectID), 1);
+          this.$store.dispatch('refreshUserInfo');
+          this.$store.dispatch('refreshProjectInfo', projectID);
         }
         return res.data;
       }).catch(err => {
@@ -203,6 +232,13 @@ export default new Vuex.Store({
     },
     cancelReserveProcess(context, lectureID, userID) {
       context.state.http.post('/lecture/reserve/?' + lectureID + '&' + userID).then(res => {
+        Vue.prototype.$notify({
+          title: '取消预约成功',
+          message: '取消预约成功',
+          type: 'success'
+        });
+        this.$store.dispatch('refreshUserInfo');
+        this.$store.dispatch('refreshLectureInfo', lectureID);
         return res.data;
       })
         .catch(err => {
