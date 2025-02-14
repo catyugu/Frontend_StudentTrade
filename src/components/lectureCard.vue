@@ -7,7 +7,7 @@
             <el-col span="6" @click.native="goToLectureDetail">
               <img :src="img_src" class="image" alt="Image not found!">
             </el-col>
-            <el-col span="12">
+            <el-col span="11">
               <div class="card-info" @click="goToLectureDetail">
                 <h1> {{ title }}</h1>
                 <name-avatar :userID="speakerID"></name-avatar>
@@ -16,12 +16,12 @@
                 <span> 预约人数: {{ reserve_num }}/{{ max_num }}</span><br>
               </div>
             </el-col>
-            <el-col span="6">
+            <el-col span="7">
               <div class="bottom clearfix">
                 <el-button type="text" class="button" @click="goEditLecture"
                            v-if="speakerID === this.$store.getters.getUserID">
                   前往编辑
-                </el-button><br>
+                </el-button><br><br>
                 <el-button type="primary" class="button" @click="reserveLecture"
                 v-if="state==='报名中' && !(this.$store.getters.getReserveList.includes(this.id))">
                   预约
