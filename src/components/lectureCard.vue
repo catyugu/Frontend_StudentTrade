@@ -35,8 +35,6 @@
                   讲座已结束，点此查看详情
                 </el-button><br>
                 <el-button type="text" class="button" @click="expand">展开简介</el-button>
-
-
               </div>
             </el-col>
 
