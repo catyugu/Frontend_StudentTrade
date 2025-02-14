@@ -18,7 +18,7 @@
           type="primary"
           @click="myLike"
           style="margin-top: 10px">
-          项目收藏
+          我的收藏
         </el-button>
         <el-button
           v-if="this.$store.getters.getIsLogin

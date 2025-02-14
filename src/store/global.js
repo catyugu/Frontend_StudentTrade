@@ -17,7 +17,7 @@ export default new Vuex.Store({
       school_serial: '519023598273',
       phone_number: '12345678901',
       email: 'xxx@sjtu.edu.com',
-      projectLikeList: [],
+      projectLikeList: ['1'],
       lectureReserveList: ['2'],
       projectUploadList: [],
       lectureUploadList: []//These two lists are only for teacher (for them to

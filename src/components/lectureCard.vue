@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="lecture-card">
-      <el-row style="margin-top: 10px">
+      <el-row style="margin-top: 10px;">
         <el-card :body-style="{ padding: '0px' }">
           <el-row>
-            <el-col span="6" @click.native="goToLectureDetail">
+            <el-col span="8" @click.native="goToLectureDetail">
               <img :src="img_src" class="image" alt="Image not found!">
             </el-col>
-            <el-col span="11">
+            <el-col span="9">
               <div class="card-info" @click="goToLectureDetail">
                 <h1> {{ title }}</h1>
                 <name-avatar :userID="speakerID"></name-avatar>
@@ -18,23 +18,44 @@
             </el-col>
             <el-col span="7">
               <div class="bottom clearfix">
-                <el-button type="text" class="button" @click="goEditLecture"
-                           v-if="speakerID === this.$store.getters.getUserID">
-                  前往编辑
-                </el-button><br><br>
-                <el-button type="primary" class="button" @click="reserveLecture"
-                v-if="state==='报名中' && !(this.$store.getters.getReserveList.includes(this.id))">
-                  预约
-                </el-button>
-                <el-button type="primary" class="button" @click="cancelReservation"
-                           v-if="state==='报名中' && (this.$store.getters.getReserveList.includes(this.id))">
-                  取消预约
-                </el-button><br>
-                <el-button class="button" @click="goToLectureDetail"
-                v-if="state==='已结束'">
-                  讲座已结束，点此查看详情
-                </el-button><br>
-                <el-button type="text" class="button" @click="expand">展开简介</el-button>
+                <div v-if="speakerID === this.$store.getters.getUserID" class="button-father">
+                  <el-button type="success" class="button" @click="goEditLecture">
+                    前往编辑
+                  </el-button>
+                  <br>
+                </div>
+                <div v-if="!this.$store.getters.getIsLogin" class="button-father">
+                  <el-button type="primary" class="button" @click="goLogin">
+                    登录后方可预约
+                  </el-button>
+                </div>
+                <div v-if="this.$store.getters.getIsLogin && state==='报名中' &&
+                 !(this.$store.getters.getReserveList.includes(this.id))"
+                     class="button-father">
+                  <el-button type="primary" class="button" @click="reserveLecture">
+                    预约
+                  </el-button>
+                  <br>
+                </div>
+                <div class="button-father"
+                      v-if="this.$store.getters.getIsLogin && state==='报名中' && (this.$store.getters.getReserveList.includes(this.id))">
+                  <el-button type="primary" class="button" @click="cancelReservation"
+                  >
+                    取消预约
+                  </el-button>
+                  <br>
+                </div>
+                <div class="button-father" v-if="state==='已结束'">
+                  <el-button class="button" @click="goToLectureDetail">
+                    讲座已结束，点此查看详情
+                  </el-button>
+                  <br>
+                </div>
+                <div class="button-father">
+                  <el-button type="text" class="button" @click="expand">
+                    展开简介
+                  </el-button>
+                </div>
               </div>
             </el-col>
 
@@ -120,6 +141,11 @@ export default {
     cancelReservation() {
       this.$store.dispatch('cancelReserveProcess', this.id, this.$store.getters.getUserID);
     },
+    goLogin() {
+      this.$router.push({
+        name: 'Login'
+      });
+    },
     goToLectureDetail() {
       this.$router.push({
         name: 'lectureDetail',
@@ -147,9 +173,9 @@ h1 {
   font-weight: bold;
   margin-top: 10px;
 }
-el-button {
+.button-father{
   margin-top: 10px;
-  padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 .lecture-card {
   margin-top: 10px;

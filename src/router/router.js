@@ -62,7 +62,7 @@ export default new Router({
     },
     {
       path: '/user/login',
-      name: 'login',
+      name: 'Login',
       component: LoginPage,
     },
     {
