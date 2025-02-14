@@ -129,8 +129,8 @@ export default new Vuex.Store({
         });
     },
     updateProjectInfoByID(context, projectID, projectInfo) {
-      context.state.http.put('/project/?' + projectID, projectInfo).then(res => {
-        return res.data;
+      context.state.http.put('/project/?' + projectID, projectInfo).then(() => {
+        return true;
       })
         .catch(err => {
           Vue.prototype.$notify({
@@ -138,8 +138,8 @@ export default new Vuex.Store({
             message: err.message,
             type: 'error'
           });
+          return false;
         });
-
     },
     getLectureInfoByID(context, lectureID) {
       context.state.http.get('/lecture/?' + lectureID, { timeout: 3000 }).then(res => {
@@ -154,8 +154,8 @@ export default new Vuex.Store({
       });
     },
     updateLectureInfoByID(context, lectureID, lectureInfo) {
-      context.state.http.put('/lecture/?' + lectureID, lectureInfo).then(res => {
-        return res.data;
+      context.state.http.put('/lecture/?' + lectureID, lectureInfo).then(() => {
+        return true;
       })
         .catch(err => {
           Vue.prototype.$notify({
@@ -163,6 +163,7 @@ export default new Vuex.Store({
             message: err.message,
             type: 'error'
           });
+          return false;
         });
     },
     reserveProcess(context, lectureID, userID) {
