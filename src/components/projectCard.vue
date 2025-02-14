@@ -5,7 +5,9 @@
         <el-card>
           <el-row class="card-body">
             <el-col span="8" @click.native="goToProjectDetail">
-              <img :src="img_src" class="image" alt="Image not found!">
+              <div style="height: inherit">
+                <img :src="img_src" class="image" alt="Image not found!">
+              </div>
             </el-col>
             <el-col span="9" @click.native="goToProjectDetail">
               <span v-text="title"></span><br>
@@ -26,13 +28,15 @@
                   </el-button>
                   <br>
                 </div>
-                <div v-if="this.$store.getters.getIsLogin && !(this.$store.getters.getLikeList.includes(this.id))" class="button-father">
+                <div v-if="this.$store.getters.getIsLogin && !(this.$store.getters.getLikeList.includes(this.id))"
+                     class="button-father">
                   <el-button type="primary" class="button" @click="likeProject">
                     收藏项目
                   </el-button>
                   <br>
                 </div>
-                <div v-if="(this.$store.getters.getIsLogin && this.$store.getters.getLikeList.includes(this.id))"  class="button-father">
+                <div v-if="(this.$store.getters.getIsLogin && this.$store.getters.getLikeList.includes(this.id))"
+                     class="button-father">
                   <el-button type="primary" class="button" @click="cancelLikeProject">
                     取消收藏
                   </el-button>
@@ -145,13 +149,9 @@ export default {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.button-father{
+
+.button-father {
   margin-top: 10px;
   margin-bottom: 10px;
-}
-.button-group{
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
 }
 </style>
