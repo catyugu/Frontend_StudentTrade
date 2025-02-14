@@ -17,7 +17,6 @@
               </div>
             </el-col>
             <el-col span="6">
-
               <div class="bottom clearfix">
                 <el-button type="text" class="button" @click="goEditLecture"
                            v-if="speakerID === this.$store.getters.getUserID">
@@ -122,7 +121,6 @@ export default {
     },
     cancelReservation() {
       this.$store.dispatch('cancelReserveProcess', this.id, this.$store.getters.getUserID);
-      this.$store.dispatch('refreshUserInfo');
     },
     goToLectureDetail() {
       this.$router.push({

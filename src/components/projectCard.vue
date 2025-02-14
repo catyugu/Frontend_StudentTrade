@@ -16,6 +16,14 @@
               <el-button type="text" class="button" @click="goEditProject"
                          v-if="authorID === this.$store.getters.getUserID">
                 前往编辑</el-button><br>
+              <el-button type="primary" class="button" @click="likeProject"
+                         v-if="!(this.$store.getters.getLikeList.includes(this.id))">
+                收藏项目
+              </el-button>
+              <el-button type="primary" class="button" @click="cancelLikeProject"
+                         v-if="(this.$store.getters.getLikeList.includes(this.id))">
+                取消收藏
+              </el-button>
               <el-button type="text" class="button" @click="expand">展开简介</el-button>
             </el-col>
           </el-row>
@@ -83,6 +91,12 @@ export default {
   methods: {
     expand() {
       this.showDescription = !this.showDescription;
+    },
+    likeProject() {
+      this.$store.dispatch('likeProcess', this.id, this.$store.getters.getUserID);
+    },
+    cancelLikeProject() {
+      this.$store.dispatch('cancelLikeProject', this.id, this.$store.getters.getUserID);
     },
     goToProjectDetail() {
       this.$router.push({

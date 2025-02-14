@@ -35,6 +35,7 @@ export default new Vuex.Store({
     getIsLogin: state => state.isLogin,
     getUserID: state => state.userID,
     getReserveList:  state => state.userInfo.lectureReserveList,
+    getLikeList: state => state.userInfo.projectLikeList
   },
   actions: {
     loginProcess(context, token, id) {
