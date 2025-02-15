@@ -3,21 +3,22 @@
     <div class="lecture-card">
       <el-row style="margin-top: 10px;">
         <el-card :body-style="{ padding: '0px' }">
-          <el-row>
-            <el-col span="8" @click.native="goToLectureDetail">
+          <el-row class="card-body">
+            <el-col span="6" @click.native="goToLectureDetail">
               <img :src="img_src" class="image" alt="Image not found!">
             </el-col>
-            <el-col span="9">
+            <el-col span="12">
               <div class="card-info" @click="goToLectureDetail">
                 <h1> {{ title }}</h1>
                 <name-avatar :userID="speakerID"></name-avatar>
+                <br>
                 <span> 地点: {{ place }}</span><br>
                 <span> 时间: {{ time }}</span><br>
                 <span> 预约人数: {{ reserve_num }}/{{ max_num }}</span><br>
               </div>
             </el-col>
-            <el-col span="7">
-              <div class="bottom clearfix">
+            <el-col span="6">
+              <div class="button-group clearfix">
                 <div v-if="speakerID === this.$store.getters.getUserID" class="button-father">
                   <el-button type="success" class="button" @click="goEditLecture">
                     前往编辑
@@ -169,16 +170,32 @@ export default {
 
 <style scoped lang="scss">
 h1 {
-  font-size: 20px;
   font-weight: bold;
-  margin-top: 10px;
+  font-size: clamp(1.2rem, 2.25vw, 2.25rem);
+}
+.button{
+  font-size: clamp(0.8rem, 3vw, 1.5rem);
+  padding: 10px 10px
 }
 .button-father{
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 .lecture-card {
   margin-top: 10px;
   margin-bottom: 10px;
+  font-size: clamp(0.7rem, 1.5vw, 1.5rem);
+}
+.card-body{
+  display: flex;
+  flex-direction: row;
+  margin: 5px 0;
+}
+.button-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 </style>

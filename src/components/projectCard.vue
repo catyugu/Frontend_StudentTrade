@@ -4,46 +4,46 @@
       <el-row style="margin-top: 10px;">
         <el-card>
           <el-row class="card-body">
-            <el-col span="8" @click.native="goToProjectDetail">
+            <el-col span="6" @click.native="goToProjectDetail">
               <div style="height: inherit">
                 <img :src="img_src" class="image" alt="Image not found!">
               </div>
             </el-col>
-            <el-col span="9" @click.native="goToProjectDetail">
-              <span v-text="title"></span><br>
+            <el-col span="12" @click.native="goToProjectDetail">
+              <h1>{{title}}</h1><br>
               <name-avatar :userID="authorID" />
               <br>
-              <span>当前状态：{{ state }}</span>
+              <span>创建时间：{{ create_time }}</span><br>
+              <span>当前状态：{{ state }}</span><br>
+
             </el-col>
-            <el-col span="7">
+            <el-col span="6">
               <div class="button-group clearfix">
                 <div v-if="!this.$store.getters.getIsLogin" class="button-father">
                   <el-button type="primary" class="button" @click="goLogin">
                     登录后方可收藏
-                  </el-button>
+                  </el-button><br>
                 </div>
                 <div v-if="authorID === this.$store.getters.getUserID" class="button-father">
                   <el-button type="success" class="button" @click="goEditProject">
                     前往编辑
-                  </el-button>
-                  <br>
+                  </el-button><br>
                 </div>
                 <div v-if="this.$store.getters.getIsLogin && !(this.$store.getters.getLikeList.includes(this.id))"
                      class="button-father">
                   <el-button type="primary" class="button" @click="likeProject">
                     收藏项目
-                  </el-button>
-                  <br>
+                  </el-button><br>
                 </div>
                 <div v-if="(this.$store.getters.getIsLogin && this.$store.getters.getLikeList.includes(this.id))"
                      class="button-father">
                   <el-button type="primary" class="button" @click="cancelLikeProject">
                     取消收藏
-                  </el-button>
-                  <br>
+                  </el-button><br>
                 </div>
-                <div>
-                  <el-button type="text" class="button" @click="expand">展开简介</el-button>
+                <div v-if="(this.$store.getters.getIsLogin && this.$store.getters.getLikeList.includes(this.id))"
+                     class="button-father">
+                  <el-button  class="button" type="text" @click="expand">展开简介</el-button>
                 </div>
               </div>
             </el-col>
@@ -145,13 +145,33 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+h1 {
+  font-weight: bold;
+  font-size: clamp(1.2rem, 2.25vw, 2.25rem);
+}
 .project-card {
   margin-top: 10px;
   margin-bottom: 10px;
+  font-size: clamp(0.7rem, 1.5vw, 1.5rem);
 }
-
+.button{
+  font-size: clamp(0.8rem, 3vw, 1.5rem);
+  padding: 10px 10px;
+}
 .button-father {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+.card-body{
+  display: flex;
+  flex-direction: row;
+  margin: 5px 0;
+}
+.button-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 </style>

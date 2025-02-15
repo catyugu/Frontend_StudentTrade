@@ -7,6 +7,7 @@
       <el-main>
         <el-avatar :src="object.avatar_src" size="150"></el-avatar>
         <el-form :model="object" label-width="80px">
+          <br>
           <el-form-item label="姓名">
             <el-input v-model="object.username" :disabled="disabled"></el-input>
           </el-form-item>
@@ -95,7 +96,7 @@ export default {
       })
     },
     UploadUserInfo() {
-      this.$store.getters.http.post('/user/upload', {
+      this.$store.getters.http.post('/user/update'+this.$store.getters.getUserID, {
         username: this.object.username,
         nickname: this.object.nickname,
         type: this.object.type,
