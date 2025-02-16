@@ -8,8 +8,13 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="ruleForm.email"></el-input>
         </el-form-item>
-        <el-form-item label="姓名" prop="email">
+        <el-form-item style="text-align: left;">
+          <span style="font-style: italic">备注：邮箱为唯一标识，不可修改</span>
+        </el-form-item>
+        <el-form-item label="姓名" prop="email" style="text-align: left;">
           <el-input v-model="ruleForm.username"></el-input>
+          <span style="font-style: italic">备注：该项不可修改，请填写真实姓名,方便身份审核与师生联系</span>
+          <span style="font-style: italic">您的真实姓名</span>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="ruleForm.password"></el-input>

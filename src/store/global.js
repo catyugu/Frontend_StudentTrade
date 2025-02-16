@@ -7,18 +7,19 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {//全局变量
     isLogin: false,
-    userID: '114514',
+    userID: '',
     userInfo: {
-      avatarSrc: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-      username: 'xxx',
-      nickname: 'xxx',
-      gender: '男',
-      type: '教职',
-      school_serial: '519023598273',
-      phone_number: '12345678901',
-      email: 'xxx@sjtu.edu.com',
-      projectLikeList: ['1'],
-      lectureReserveList: ['2'],
+      id: '',
+      avatar_src: '',
+      username: '',
+      nickname: '',
+      gender: '',
+      type: '',
+      school_serial: '',
+      phone_number: '',
+      email: '',
+      projectLikeList: [],
+      lectureReserveList: [],
       projectUploadList: [],
       lectureUploadList: []
     },
@@ -32,12 +33,12 @@ export default new Vuex.Store({
     getToken: state => state.token,
     getUserInfo: state => state.userInfo,
     getIsLogin: state => state.isLogin,
-    getUserID: state => state.userID,
+    getUserID: state => state.userInfo.id,
     getReserveList: state => state.userInfo.lectureReserveList,
     getLikeList: state => state.userInfo.projectLikeList
   },
   actions: {
-    async loginProcess(context, token, id) {
+    async loginProcess(context, token) {
       // 设置临时登录状态标志
       context.state.isFetchingUserInfo = true;
       // 更新 HTTP 请求头中的 Authorization 字段
@@ -45,13 +46,18 @@ export default new Vuex.Store({
 
       try {
         const res = await context.state.http.get(
-          '/api/user/userInfo?' + token);
+          '/api/user/userInfo/own');
         console.log(res);
         if (res.data.data !== null) {
           context.state.userInfo = res.data.data;
           context.state.isLogin = true;
           context.state.token = token;
-          context.state.userID = id;
+          let userState = {
+            userInfo: res.data.data,
+            token: token,
+            isLogin: true,
+          };
+          localStorage.setItem('userState', JSON.stringify(userState));
           Vue.prototype.$notify({
             type: 'success',
             title: '登录成功!',
@@ -73,18 +79,31 @@ export default new Vuex.Store({
         context.state.isFetchingUserInfo = false;
       }
     },
+    async getUserStateFromLocalStorage(context) {
+      let userState = JSON.parse(localStorage.getItem('userState'));
+      context.state.isLogin = userState.isLogin;
+      context.state.userInfo = userState.userInfo;
+      context.state.token = userState.token;
+      context.state.http.defaults.headers.common['Authorization'] = context.state.token;
+    },
+    async setUserInfoOnLocalStorage(context) {
+      let userState = {
+        userInfo: context.state.userInfo,
+        token: context.state.token,
+        isLogin: true,
+      };
+      localStorage.setItem('userState', JSON.stringify(userState));
+    },
     logoutProcess(context) {
       context.state.isLogin = false;
       context.state.userInfo = {};
+      context.state.token = '';
       context.state.http.defaults.headers.common['Authorization'] = '';
-    },
-    setLocalUserInfo(context, userInfo) {
-      context.state.userInfo = userInfo;
+      localStorage.removeItem('userState');
     },
     getUserInfoByID(context, userID) {
-      context.state.http.get('/api/user/?' + userID).then(res => {
-        context.state.userInfo = res.data;
-        context.commit('setUserInfo', res.data);
+      context.state.http.get('/api/user/userInfo/?' + userID).then(res => {
+        return res.data.data;
       })
         .catch(err => {
           Vue.prototype.$notify({
@@ -95,9 +114,12 @@ export default new Vuex.Store({
         });
     },
     refreshUserInfo(context) {
-      context.state.http.get('/api/user/?' + context.state.userID).then(res => {
-        context.state.userInfo = res.data;
-        context.commit('setUserInfo', res.data);
+      context.state.http.get('/api/user/userInfo/own').then(res => {
+        console.log(res);
+        context.state.userInfo = res.data.data;
+        context.state.userID = res.data.data.id;
+        context.commit('setUserInfoOnLocalStorage');
+        return true;
       })
         .catch(err => {
           Vue.prototype.$notify({
@@ -105,6 +127,7 @@ export default new Vuex.Store({
             message: err.message,
             type: 'error'
           });
+          return false;
         });
     },
     refreshProjectInfo(context, projectID) {

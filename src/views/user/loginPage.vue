@@ -51,7 +51,7 @@ export default {
           }})
         if (res.data.code === 0) {
           if (await this.$store.dispatch('loginProcess', res.data.data.token, res.data.data.id)){
-            this.$router.push('/');
+            await this.$router.push('/');
           }
         } else {
           this.$notify({

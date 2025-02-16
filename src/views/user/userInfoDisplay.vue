@@ -10,7 +10,7 @@ export default ({
     return {
       userID: '',
       userInfo: {
-        avatarSrc: '',
+        avatar_src: '',
         name: '',
         gender: '',
         introduction: '',
