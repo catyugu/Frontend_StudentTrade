@@ -1,15 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import Axios from 'axios';
+import axios from 'axios';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {//全局变量
-    isLogin: true,
+    isLogin: false,
     userID: '114514',
     userInfo: {
-      avatar_src: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+      avatarSrc: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
       username: 'xxx',
       nickname: 'xxx',
       gender: '男',
@@ -20,11 +20,10 @@ export default new Vuex.Store({
       projectLikeList: ['1'],
       lectureReserveList: ['2'],
       projectUploadList: [],
-      lectureUploadList: []//These two lists are only for teacher (for them to
-      // management and edit after publishing)
+      lectureUploadList: []
     },
     token: '114514',
-    http: Axios,
+    http: axios,
     host: 'http://localhost:8080'
   },
   getters: {
@@ -34,26 +33,45 @@ export default new Vuex.Store({
     getUserInfo: state => state.userInfo,
     getIsLogin: state => state.isLogin,
     getUserID: state => state.userID,
-    getReserveList:  state => state.userInfo.lectureReserveList,
+    getReserveList: state => state.userInfo.lectureReserveList,
     getLikeList: state => state.userInfo.projectLikeList
   },
   actions: {
-    loginProcess(context, token, id) {
-      context.state.isLogin = true;
-      context.state.token = token;
-      context.state.userID = id;
+    async loginProcess(context, token, id) {
+      // 设置临时登录状态标志
+      context.state.isFetchingUserInfo = true;
+      // 更新 HTTP 请求头中的 Authorization 字段
       context.state.http.defaults.headers.common['Authorization'] = token;
-      this.$store.dispatch('getUserInfoByID', id).then(
-        res => {
-          context.state.userInfo = res.data;
+
+      try {
+        const res = await context.state.http.get(
+          '/api/user/userInfo?' + token);
+        console.log(res);
+        if (res.data.data !== null) {
+          context.state.userInfo = res.data.data;
+          context.state.isLogin = true;
+          context.state.token = token;
+          context.state.userID = id;
+          Vue.prototype.$notify({
+            type: 'success',
+            title: '登录成功!',
+            message: '',
+          });
+          return true;
+        } else {
+          throw new Error('用户信息为空');
         }
-      ).catch(err => {
+      } catch (err) {
+        console.error('登录失败:', err);
         Vue.prototype.$notify({
           title: '登录失败',
           message: err.message,
           type: 'error'
         });
-      });
+        return false;
+      } finally {
+        context.state.isFetchingUserInfo = false;
+      }
     },
     logoutProcess(context) {
       context.state.isLogin = false;
@@ -64,7 +82,7 @@ export default new Vuex.Store({
       context.state.userInfo = userInfo;
     },
     getUserInfoByID(context, userID) {
-      context.state.http.get('/user/?' + userID).then(res => {
+      context.state.http.get('/api/user/?' + userID).then(res => {
         context.state.userInfo = res.data;
         context.commit('setUserInfo', res.data);
       })
@@ -77,7 +95,7 @@ export default new Vuex.Store({
         });
     },
     refreshUserInfo(context) {
-      context.state.http.get('/user/?' + context.state.userID).then(res => {
+      context.state.http.get('/api/user/?' + context.state.userID).then(res => {
         context.state.userInfo = res.data;
         context.commit('setUserInfo', res.data);
       })
@@ -191,9 +209,9 @@ export default new Vuex.Store({
           });
         });
     },
-    likeProcess(context, projectID, userID){
+    likeProcess(context, projectID, userID) {
       context.state.http.post('/project/like/?' + projectID + '&' + userID).then(res => {
-        if (res.data.code === 0){
+        if (res.data.code === 0) {
           Vue.prototype.$notify({
             title: '收藏成功',
             message: '收藏成功',
@@ -212,7 +230,7 @@ export default new Vuex.Store({
           });
         });
     },
-    cancelLikeProcess(context, projectID, userID){
+    cancelLikeProcess(context, projectID, userID) {
       context.state.http.delete('/project/like/?' + projectID + '&' + userID).then(res => {
         if (res.data.code === 0) {
           Vue.prototype.$notify({
@@ -225,12 +243,12 @@ export default new Vuex.Store({
         }
         return res.data;
       }).catch(err => {
-          Vue.prototype.$notify({
-            title: '取消收藏失败',
-            message: err.message,
-            type: 'error'
-          });
+        Vue.prototype.$notify({
+          title: '取消收藏失败',
+          message: err.message,
+          type: 'error'
         });
+      });
     },
     cancelReserveProcess(context, lectureID, userID) {
       context.state.http.post('/lecture/reserve/?' + lectureID + '&' + userID).then(res => {
@@ -274,9 +292,6 @@ export default new Vuex.Store({
             type: 'error'
           });
         });
-    }
-  },
-  mutations:{
-
+    },
   }
-});
+})

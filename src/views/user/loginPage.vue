@@ -6,8 +6,8 @@
       </el-header>
       <el-main>
         <el-form :model="loginForm" :rules="loginRules" ref="loginFormRef" label-width="100px" class="login-form">
-          <el-form-item label="用户名" prop="username">
-            <el-input v-model="loginForm.username"></el-input>
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="loginForm.email"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
             <el-input v-model="loginForm.password" show-password></el-input>
@@ -25,13 +25,12 @@ export default {
   data() {
     return {
       loginForm: {
-        username: '',
+        email: '',
         password: ''
       },
       loginRules: {
-        username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在 3 到 16 个字符', trigger: 'blur' }
+        email: [
+          { required: true, message: '请输入邮箱', trigger: 'blur' },
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }
@@ -45,20 +44,20 @@ export default {
       if (!valid) return;
 
       try {
-        const res = await this.$store.getters.http.post('/login', this.loginForm);
+        const res = await this.$store.getters.http.post('/api/user/login',null,
+          {params:{
+              email:this.loginForm.email,
+              password:this.loginForm.password
+          }})
         if (res.data.code === 0) {
-          await this.$store.dispatch('loginProcess', res.data.token, res.data.id);
-          await this.$router.push('/');
-          this.$notify({
-            type: 'success',
-            title: '登录成功!',
-            message: '',
-          });
+          if (await this.$store.dispatch('loginProcess', res.data.data.token, res.data.data.id)){
+            this.$router.push('/');
+          }
         } else {
           this.$notify({
             type: 'error',
             title: '登录失败!',
-            message: res.data.message,
+            message: res.data.msg,
           });
         }
       } catch (error) {

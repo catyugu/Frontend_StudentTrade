@@ -11,7 +11,7 @@
             <el-dropdown>
               <span class="el-dropdown-link">
                 {{ $store.getters.getUserInfo.name }}
-                <el-avatar :src="$store.getters.getUserInfo.avatar_src"></el-avatar>
+                <el-avatar :src="$store.getters.getUserInfo.avatarSrc"></el-avatar>
               </span>
               <el-dropdown-menu>
                 <el-dropdown-item @click.native="userInfo">个人信息</el-dropdown-item>

@@ -8,7 +8,7 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="ruleForm.email"></el-input>
         </el-form-item>
-        <el-form-item label="姓名" prop="username">
+        <el-form-item label="姓名" prop="email">
           <el-input v-model="ruleForm.username"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
@@ -71,23 +71,30 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           try {
-            this.$store.getters.host.post('/register', this.ruleForm).then((res) => {
-              if (res.data.code === 0) {
-                this.$notify({
-                  type: 'success',
-                  title: '注册成功！',
-                  message: '注册成功!'
-                });
-                console.log(this.ruleForm);
-                this.$router.push('/user/login');
-              } else {
-                this.$notify({
-                  type: 'error',
-                  title: '注册失败！',
-                  message: res.data.message
-                });
-              }
-            });
+            this.$store.getters.http.post('/api/user/register', null, {
+                params: {
+                  email: this.ruleForm.email,
+                  username: this.ruleForm.username,
+                  password: this.ruleForm.password
+                }
+              })
+              .then((res) => {
+                if (res.data.code === 0) {
+                  this.$notify({
+                    type: 'success',
+                    title: '注册成功！',
+                    message: '注册成功!'
+                  });
+                  console.log(res);
+                  this.$router.push('/user/login');
+                } else {
+                  this.$notify({
+                    type: 'error',
+                    title: '注册失败！',
+                    message: res.data.msg
+                  });
+                }
+              });
           } catch (error) {
             this.$notify({
               type: 'error',

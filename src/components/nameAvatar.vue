@@ -1,7 +1,8 @@
 <template>
   <div>
     <div @click="goToUserInfo">
-      <img :src="userInfo.avatar" alt="avatar" class="avatar">
+      <img :src="userInfo.avatarSrc||'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"
+           alt="avatar" class="avatar" />
       <div class="name">{{userInfo.name}}</div>
     </div>
   </div>
@@ -52,5 +53,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.avatar{
+  width: 30px;
+  height: 30px;
+}
 </style>

@@ -5,7 +5,7 @@
         用户信息
       </el-header>
       <el-main>
-        <el-avatar :src="object.avatar_src" size="150"></el-avatar>
+        <el-avatar :src="object.avatarSrc || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'" size="150"></el-avatar>
         <el-form :model="object" label-width="80px">
           <br>
           <el-form-item label="姓名">
@@ -85,7 +85,7 @@ export default {
     },
     UploadAvatar() {
       this.$store.getters.http.post('/user/upload', {
-        avatar_src: this.object.avatar_src
+        avatarSrc: this.object.avatarSrc
       }).then(res => {
         if (res.data.code === 200) {
           this.$message({
@@ -96,7 +96,7 @@ export default {
       })
     },
     UploadUserInfo() {
-      this.$store.getters.http.post('/user/update'+this.$store.getters.getUserID, {
+      this.$store.getters.http.post('/api/user/update'+this.$store.getters.getUserID, {
         username: this.object.username,
         nickname: this.object.nickname,
         type: this.object.type,
@@ -104,7 +104,7 @@ export default {
         gender: this.object.gender,
         phone_number: this.object.phone_number,
         email: this.object.email,
-      }).then(res => {
+      },).then(res => {
         if (res.data.code === 200) {
           this.$message({
             type: 'success',
