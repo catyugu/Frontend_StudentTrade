@@ -8,7 +8,7 @@
             <el-upload :action="uploadUrl" :headers="headers" :on-success="uploadSuccess" :before-upload="beforeUpload">
               <el-button>点击上传</el-button>
             </el-upload>
-            <img :src="form.cover" alt=""/>
+            <img :src="form.coverSrc" alt=""/>
           </el-form-item>
           <el-form-item label="标题">
             <el-input v-model="form.title" />
@@ -59,7 +59,7 @@ export default {
     return {
       lectureID: '',
       form: {
-        cover: '',
+        coverSrc: '',
         title: '',
         description: '',
         place: '',
@@ -120,7 +120,7 @@ export default {
         reserve_num: 0,
         reserve_user_list: '',
         state: '',
-        cover: this.form.cover,
+        coverSrc: this.form.coverSrc,
         author_id: this.$store.getters.getUserID
       }).then(res => {
         if (res.data.code === 1) {

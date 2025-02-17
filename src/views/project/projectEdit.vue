@@ -8,7 +8,7 @@
             <el-upload :action="uploadUrl" :headers="headers" :on-success="uploadSuccess" :before-upload="beforeUpload">
               <el-button>点击上传</el-button>
             </el-upload>
-            <img :src="form.cover" alt=""/>
+            <img :src="form.coverSrc" alt=""/>
           </el-form-item>
           <el-form-item label="标题">
             <el-input v-model="form.title" />
@@ -49,7 +49,7 @@ export default {
         title: '',
         description: '',
         content: '',
-        cover: '',
+        coverSrc: '',
         state: ''
       },
       uploadUrl: 'http://localhost:8080/upload',
@@ -84,7 +84,7 @@ export default {
         title: this.form.title,
         description: this.form.description,
         content: this.form.content,
-        cover: this.form.cover,
+        coverSrc: this.form.coverSrc,
         state: this.form.state,
         author_id: this.$store.getters.getUserID
       }).then(res => {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div @click="goToUserInfo">
-      <img :src="userInfo.avatarSrc||'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"
+      <el-avatar :src="userInfo.avatarSrc||'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"
            alt="avatar" class="avatar" />
       <div class="name">{{userInfo.name}}</div>
     </div>
@@ -53,8 +53,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .avatar{
-  width: 30px;
-  height: 30px;
+  width: clamp(1.2rem, 2.25vw, 2.25rem);
+  height: clamp(1.2rem, 2.25vw, 2.25rem);
 }
 </style>

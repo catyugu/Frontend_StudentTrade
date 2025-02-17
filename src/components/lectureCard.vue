@@ -79,7 +79,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          img_src: '',
+          coverSrc: '',
           title: '',
           speakerID: '',
           description: '',
@@ -100,7 +100,7 @@ export default {
   data() {
     return {
       showDescription: false,
-      img_src: '',
+      coverSrc: '',
       title: '',
       speakerID: '',
       description: '',
@@ -117,7 +117,7 @@ export default {
     };
   },
   created() {
-    this.img_src = this.i.img_src;
+    this.img_src = this.i.coverSrc;
     this.title = this.i.title;
     this.speakerID = this.i.speakerID;
     this.description = this.i.description;

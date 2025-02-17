@@ -20,7 +20,7 @@ export default {
       // eslint-disable-next-line vue/no-dupe-keys
       lectureID:'',
       lectureInfo:{
-        img_src:'',
+        coverSrc:'',
         title:'',
         speaker:'',
         description:'',

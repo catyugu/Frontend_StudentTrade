@@ -62,7 +62,7 @@ export default {
           {
             title: '项目1',
             author_id: '114514',
-            img_src: 'src/assets/logo.svg',
+            coverSrc: 'src/assets/logo.svg',
             description: '项目描述',
             content: '项目内容',
             state: '招募中',
@@ -74,7 +74,7 @@ export default {
           {
             title: '项目2',
             author_id: '1919810',
-            img_src: 'src/assets/logo.svg',
+            coverSrc: 'src/assets/logo.svg',
             description: '项目描述',
             content: '项目内容',
             state: '暂停招募',

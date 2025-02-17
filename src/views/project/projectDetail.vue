@@ -7,7 +7,7 @@
       <el-main>
         <el-row>
           <el-col span=8>
-            <img :src="projectInfo.img_src" alt="找不到封面"/>
+            <img :src="projectInfo.coverSrc" alt="找不到封面"/>
           </el-col>
           <el-col span=16>
             <h1>项目名称：{{ projectInfo.title }}</h1>
@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       projectInfo: {
-        img_src: '',
+        coverSrc: '',
         title: '',
         author_id: '',
         description: '',

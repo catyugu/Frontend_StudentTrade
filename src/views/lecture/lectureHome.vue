@@ -63,7 +63,7 @@ export default {
           {
             title: '讲座1',
             speakerID: '114514',
-            img_src: 'src/assets/logo.svg',
+            coverSrc: 'src/assets/logo.svg',
             description: '讲座描述',
             content: '讲座内容',
             place: '讲座地点',
@@ -79,7 +79,7 @@ export default {
           {
             title: '讲座2',
             speakerID: '1919810',
-            img_src: 'src/assets/logo.svg',
+            coverSrc: 'src/assets/logo.svg',
             description: '讲座描述',
             content: '讲座内容',
             place: '讲座地点',

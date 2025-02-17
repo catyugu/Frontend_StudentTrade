@@ -5,8 +5,8 @@
       <el-main>
         <el-form :model="form" label-width="80px" style="text-align: left">
           <el-form-item label="封面">
-            <el-button type="primary" @click="uploadCover">上传封面</el-button>
-            <img :src="form.cover" alt=""/>
+            <el-button type="primary" @click="uploadCover">上传封面</el-button><br>
+            <img :src="form.coverSrc" alt="" style="width: 60vw"/>
           </el-form-item>
           <el-form-item label="标题">
             <el-input v-model="form.title" />
@@ -26,7 +26,7 @@
             </el-select>
           </el-form-item>
         </el-form>
-        <el-dialog :visible.sync="dialogVisible" title="裁减封面">
+        <el-dialog :visible.sync="dialogVisible" title="裁剪封面">
           <vue-cropper
             ref="cropper"
             :src="imageSrc"
@@ -67,7 +67,7 @@ export default {
         title: '',
         description: '',
         content: '',
-        cover: '',
+        coverSrc: '',
         state: ''
       },
       dialogVisible: false,
@@ -76,11 +76,12 @@ export default {
   },
   methods: {
     uploadCover() {
-      const input = document.createElement('input');
+      let input = document.createElement('input');
       input.type = 'file';
       input.accept = 'image/*';
-      input.onchange = (e) => {
-        const file = e.target.files[0];
+      input.onchange = (handler, e) => {
+        let file =  e.target.files[0];
+        console.log(e.target.files)
         if (file) {
           this.imageSrc = URL.createObjectURL(file);
           this.dialogVisible = true;
@@ -104,7 +105,7 @@ export default {
         }).then((res)=>{
           console.log(res);
           if (res.data.code === 0) {
-            this.form.cover = res.data.data;
+            this.form.coverSrc = res.data.data;
           }
           else{
             this.$notify({
@@ -129,7 +130,7 @@ export default {
         title: this.form.title,
         description: this.form.description,
         content: this.form.content,
-        cover: this.form.cover,
+        coverSrc: this.form.coverSrc,
         state: this.form.state,
         author_id: this.$store.getters.getUserID
       }).then(res => {
