@@ -6,7 +6,7 @@
       </el-header>
       <el-main>
         <el-avatar :src="object.avatarSrc || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"
-                   size="150"></el-avatar>
+                   size="large"></el-avatar>
         <el-form :model="object" label-width="80px">
           <br>
           <el-form-item label="邮箱" style="text-align: left;">
@@ -43,26 +43,50 @@
             <el-input v-model="object.phone_number" :disabled="disabled"></el-input>
           </el-form-item>
         </el-form>
-        <el-button v-if="disabled" type="primary" @click="UploadAvatar">上传头像</el-button>
+        <el-button v-if="disabled" type="primary" @click="uploadAvatar">上传头像</el-button>
         <el-button v-if="disabled" type="primary" @click="Edit">编辑</el-button>
         <el-button v-if="!disabled" type="success" @click="Save">保存</el-button>
         <el-button v-if="!disabled" @click="Discard">放弃</el-button>
         <el-button type="danger" @click="Logout" style="margin-top: 10px">登出</el-button>
+        <!-- 添加裁剪组件 -->
+        <el-dialog :visible.sync="dialogVisible" title="裁剪头像">
+          <vue-cropper
+            ref="cropper"
+            :src="imageSrc"
+            :aspect-ratio="1"
+            :view-mode="1"
+            :guides="true"
+            :auto-crop-area="0.5"
+            :background="true"
+            :rotatable="false"
+            :scalable="false"
+            shape="circle"
+          ></vue-cropper>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="cropImage">确 定</el-button>
+          </span>
+        </el-dialog>
       </el-main>
     </el-container>
   </div>
 </template>
 
-<style scoped lang="scss">
-</style>
 <script>
+import 'cropperjs/dist/cropper.css';
+import VueCropper from 'vue-cropperjs';
 
 export default {
+  components: {
+    VueCropper
+  },
   data() {
     return {
       object: null,
       disabled: true,
-      object_temp: null
+      object_temp: null,
+      dialogVisible: false,
+      imageSrc: ''
     };
   },
   created() {
@@ -87,35 +111,33 @@ export default {
     Logout() {
       this.$store.dispatch('logoutProcess');
       this.$router.push('/user/login');
-
     },
-    UploadAvatar() {
-      this.$store.getters.http.post('/user/upload', {
-        avatarSrc: this.object.avatarSrc
-      }).then(res => {
-        if (res.data.code === 200) {
-          this.$message({
-            type: 'success',
-            message: '上传成功'
-          });
+    uploadAvatar() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          this.imageSrc = URL.createObjectURL(file);
+          this.dialogVisible = true;
         }
-      });
+      };
+      input.click();
     },
     UploadUserInfo() {
-      this.$store.getters.http.post('/api/user/update',
-        {
-          id: this.$store.getters.getUserID,
-          nickname: this.object.nickname,
-          type: this.object.type,
-          school_serial: this.object.school_serial,
-          gender: this.object.gender,
-          phone_number: this.object.phone_number,
-      },
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then(res => {
+      this.$store.getters.http.post('/api/user/update', {
+        id: this.$store.getters.getUserID,
+        nickname: this.object.nickname,
+        type: this.object.type,
+        school_serial: this.object.school_serial,
+        gender: this.object.gender,
+        phone_number: this.object.phone_number
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
         if (res.data.code === 0) {
           this.$notify({
             type: 'success',
@@ -123,8 +145,8 @@ export default {
             message: '上传成功'
           });
           this.$store.dispatch('setUserInfoOnLocalStorage');
-          this.$store.dispatch('getUserStateFromLocalStorage')
-          this.disabled = true
+          this.$store.dispatch('getUserStateFromLocalStorage');
+          this.disabled = true;
         }
       }).catch((err) => {
         this.object = this.object_temp;
@@ -133,8 +155,37 @@ export default {
           title: '上传失败',
           message: err.message
         });
-      })
+      });
+    },
+    // 添加 cropImage 方法
+    cropImage() {
+      const canvas = this.$refs.cropper.getCroppedCanvas();
+      const base64Image = canvas.toDataURL('image/png');
+      console.log(base64Image);
+      this.$store.getters.http.post('/api/tool/image',
+        {
+          image64: base64Image
+        },{
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then(res => {
+        console.log(res);
+        if (res.data.code === 0) {
+          this.object.avatarSrc = res.data.data;
+          this.$message({
+            type: 'success',
+            message: '上传成功'
+          });
+          this.dialogVisible = false;
+        }
+      }).catch(err => {
+        this.$message({
+          type: 'error',
+          message: '上传失败: ' + err.message
+        });
+      });
     }
-  }
+  },
 };
 </script>
