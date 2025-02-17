@@ -94,18 +94,18 @@ export default {
   },
   methods: {
   },
-  mounted() {
+  async mounted() {
     let userState = JSON.parse(localStorage.getItem('userState'));
     if (userState !== null) {
-      this.$store.dispatch('getUserStateFromLocalStorage');
+      await this.$store.dispatch('getUserStateFromLocalStorage');
       if (this.$store.dispatch('refreshUserInfo')) {
-        this.$router.push('/project');
+        await this.$router.push('/project');
       } else {
-        this.$store.dispatch('logoutProcess')
-        this.$router.push('/user/login');
+        await this.$store.dispatch('logoutProcess')
+        await this.$router.push('/user/login');
       }
     }else {
-      this.$router.push('/user/login');
+      await this.$router.push('/user/login');
     }
   },
 }

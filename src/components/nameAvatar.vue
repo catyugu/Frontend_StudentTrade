@@ -1,7 +1,7 @@
 <template>
   <div>
     <div @click="goToUserInfo">
-      <img :src="userInfo.avatar_src||'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"
+      <img :src="userInfo.avatarSrc||'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"
            alt="avatar" class="avatar" />
       <div class="name">{{userInfo.name}}</div>
     </div>

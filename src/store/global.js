@@ -7,10 +7,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {//全局变量
     isLogin: false,
-    userID: '',
     userInfo: {
       id: '',
-      avatar_src: '',
+      avatarSrc: '',
       username: '',
       nickname: '',
       gender: '',
@@ -18,6 +17,8 @@ export default new Vuex.Store({
       school_serial: '',
       phone_number: '',
       email: '',
+      createTime: '',
+      updateTime: '',
       projectLikeList: [],
       lectureReserveList: [],
       projectUploadList: [],
@@ -113,22 +114,22 @@ export default new Vuex.Store({
           });
         });
     },
-    refreshUserInfo(context) {
+    async refreshUserInfo(context) {
       context.state.http.get('/api/user/userInfo/own').then(res => {
         console.log(res);
         context.state.userInfo = res.data.data;
         context.state.userID = res.data.data.id;
-        context.commit('setUserInfoOnLocalStorage');
+        context.dispatch('setUserInfoOnLocalStorage');
         return true;
       })
         .catch(err => {
+          console.log(err);
           Vue.prototype.$notify({
             title: '获取用户信息失败',
             message: err.message,
             type: 'error'
           });
-          return false;
-        });
+        }).finally(()=>{return false;});
     },
     refreshProjectInfo(context, projectID) {
       context.state.http.get('/project/?' + projectID).then(res => {

@@ -5,7 +5,7 @@
         用户信息
       </el-header>
       <el-main>
-        <el-avatar :src="object.avatar_src || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"
+        <el-avatar :src="object.avatarSrc || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"
                    size="150"></el-avatar>
         <el-form :model="object" label-width="80px">
           <br>
@@ -90,7 +90,7 @@ export default {
     },
     UploadAvatar() {
       this.$store.getters.http.post('/user/upload', {
-        avatar_src: this.object.avatar_src
+        avatarSrc: this.object.avatarSrc
       }).then(res => {
         if (res.data.code === 200) {
           this.$message({
