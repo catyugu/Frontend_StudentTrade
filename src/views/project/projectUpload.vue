@@ -141,7 +141,7 @@ export default {
             message: '上传成功'
           });
           this.$store.dispatch('refreshUserInfo');
-          this.$router.push('/project/home');
+          this.$router.push('/project');
         } else {
           this.$notify({
             type: 'error',
