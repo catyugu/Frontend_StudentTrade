@@ -1,12 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import api from '@/api/api.js'; // 引入 api.js
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
+  state: {//全局变量
     isLogin: false,
     userInfo: {
       id: '',
@@ -25,9 +24,9 @@ export default new Vuex.Store({
       projectUploadList: [],
       lectureUploadList: []
     },
-    token: '',
+    token: '114514',
     http: axios,
-    host: 'http://localhost:8080',
+    host: 'http://localhost:8080'
   },
   getters: {
     http: state => state.http,
@@ -116,22 +115,21 @@ export default new Vuex.Store({
         });
     },
     async refreshUserInfo(context) {
-      try {
-        const res = await context.state.http.get('/api/user/userInfo/own');
+      context.state.http.get('/api/user/userInfo/own').then(res => {
         console.log(res);
         context.state.userInfo = res.data.data;
         context.state.userID = res.data.data.id;
-        await context.dispatch('setUserInfoOnLocalStorage');
+        context.dispatch('setUserInfoOnLocalStorage');
         return true;
-      } catch (err) {
-        console.log(err);
-        Vue.prototype.$notify({
-          title: '获取用户信息失败',
-          message: err.message,
-          type: 'error'
-        });
-        return false;
-      }
+      })
+        .catch(err => {
+          console.log(err);
+          Vue.prototype.$notify({
+            title: '获取用户信息失败',
+            message: err.message,
+            type: 'error'
+          });
+        }).finally(()=>{return false;});
     },
     refreshProjectInfo(context, projectID) {
       context.state.http.get('/project/?' + projectID).then(res => {
@@ -295,8 +293,17 @@ export default new Vuex.Store({
           });
         });
     },
-    getProjectIDList() {
-      return api.getProjectIDList();
+    getProjectIDList(context, start, end, params) {
+      context.state.http.get('/project/list/?' + start + '&' + end + '&' + params).then(res => {
+        return res.data;
+      })
+        .catch(err => {
+          Vue.prototype.$notify({
+            title: '获取项目ID列表失败',
+            message: err.message,
+            type: 'error'
+          });
+        });
     },
     getLectureIDList(context, start, end, params) {
       context.state.http.get('/lecture/list/?' + start + '&' + end + '&' + params).then(res => {

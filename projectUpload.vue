@@ -1,6 +1,6 @@
 uploadToServer() {
   console.log(this.form);
-  this.$store.getters.http.post('/api/project/create', {
+  api.uploadProject({
     title: this.form.title,
     description: this.form.description,
     content: this.form.content,

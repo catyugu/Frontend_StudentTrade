@@ -37,6 +37,7 @@
 .el-header {
   color: #333;
   text-align: center;
+  line-height: 60px;
   font-size: 32px;
 }
 
@@ -93,15 +94,13 @@ export default {
   },
   methods: {
   },
-  async created() {
-    console.log('app created');
-    let userState = await JSON.parse(localStorage.getItem('userState'));
+  async mounted() {
+    let userState = JSON.parse(localStorage.getItem('userState'));
     if (userState !== null) {
       await this.$store.dispatch('getUserStateFromLocalStorage');
-      let promise =  await this.$store.dispatch('refreshUserInfo');
-      if (promise === false)
-      {
-        console.log('refreshUserInfo failed');
+      if (this.$store.dispatch('refreshUserInfo')) {
+        await this.$router.push('/project');
+      } else {
         await this.$store.dispatch('logoutProcess')
         await this.$router.push('/user/login');
       }
