@@ -11,7 +11,7 @@
           </el-col>
           <el-col span=16>
             <h1>项目名称：{{ projectInfo.title }}</h1>
-            <name-avatar :userID="projectInfo.authorID"></name-avatar>
+            <name-avatar :userID="projectInfo.author_id"></name-avatar>
           </el-col>
 
         </el-row>
@@ -33,7 +33,7 @@ export default {
       projectInfo: {
         img_src: '',
         title: '',
-        authorID: '',
+        author_id: '',
         description: '',
         content: '',
         id: ''

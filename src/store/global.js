@@ -24,7 +24,7 @@ export default new Vuex.Store({
       projectUploadList: [],
       lectureUploadList: []
     },
-    token: '114514',
+    token: '',
     http: axios,
     host: 'http://localhost:8080'
   },

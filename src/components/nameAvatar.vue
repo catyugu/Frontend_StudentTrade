@@ -19,13 +19,13 @@ export default {
   data() {
     return {
       userInfo: {
-        avatar: '',
+        avatarSrc: '',
         name: '',
         id: ''
       }
     };
   },
-  created() {
+  beforeCreate() {
     this.getNameAvatar();
   },
   methods: {

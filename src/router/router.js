@@ -21,7 +21,8 @@ import App from '@/App.vue';
 Vue.use(Router)
 export default new Router({
   routes: [
-    {path: '/',
+    {
+      path: '/',
       component: App,
       redirect: '/project',
       children: [

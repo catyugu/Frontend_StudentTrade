@@ -161,18 +161,30 @@ export default {
     cropImage() {
       const canvas = this.$refs.cropper.getCroppedCanvas();
       const base64Image = canvas.toDataURL('image/png');
-      console.log(base64Image);
-      this.$store.getters.http.post('/api/tool/image',
-        {
-          image64: base64Image
-        }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then(res => {
+
+      // 移除所有非预期字符
+      const cleanedBase64Image = base64Image.replace(/[^A-Za-z0-9+/=:;,]/g, '');
+
+      console.log(cleanedBase64Image);
+      this.$store.getters.http.post('/api/tool/image', cleanedBase64Image
+        , {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }).then(res => {
         console.log(res);
         if (res.data.code === 0) {
           this.object.avatarSrc = res.data.data;
+          this.$store.state.userInfo.avatarSrc = res.data.data;
+          this.$store.getters.http.post('/api/user/update', {
+            id: this.$store.getters.getUserID,
+            avatarSrc: res.data.data
+          }, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          this.$store.dispatch('setUserInfoOnLocalStorage');
           this.$message({
             type: 'success',
             message: '上传成功'
@@ -186,6 +198,7 @@ export default {
         });
       });
     }
+
   },
 };
 </script>

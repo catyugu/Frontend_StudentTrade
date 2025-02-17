@@ -71,7 +71,7 @@ export default {
         return {
           img_src: '',
           title: '',
-          authorID: '',
+          author_id: '',
           description: '',
           content: '',
           state: '',
@@ -88,7 +88,7 @@ export default {
       showDescription: false,
       img_src: '',
       title: '',
-      authorID: '',
+      author_id: '',
       description: '',
       content: '',
       state: '',
@@ -101,7 +101,7 @@ export default {
   created() {
     this.img_src = this.i.img_src;
     this.title = this.i.title;
-    this.authorID = this.i.authorID;
+    this.author_id = this.i.author_id;
     this.description = this.i.description;
     this.content = this.i.content;
     this.state = this.i.state;
