@@ -79,31 +79,30 @@ export default {
       let input = document.createElement('input');
       input.type = 'file';
       input.accept = 'image/*';
-      input.onchange = (handler, e) => {
-        let file =  e.target.files[0];
+      input.onchange = (e) => {
         console.log(e.target.files)
+        let file =  e.target.files[0];
         if (file) {
           this.imageSrc = URL.createObjectURL(file);
+          this.$nextTick(() => {
+            this.$refs.cropper.replace(this.imageSrc);
+          });
           this.dialogVisible = true;
         }
       };
       input.click();
     },
     cropImage() {
-      const canvas = this.$refs.cropper.getCroppedCanvas();
+      let canvas = this.$refs.cropper.getCroppedCanvas();
+      console.log(canvas)
       const base64Image = canvas.toDataURL('image/png');
-
-      // 移除所有非预期字符
       const cleanedBase64Image = base64Image.replace(/[^A-Za-z0-9+/=:;,]/g, '');
-
-      console.log(cleanedBase64Image);
       this.$store.getters.http.post('/api/tool/image', cleanedBase64Image
         , {
           headers: {
             'Content-Type': 'application/json',
           },
         }).then((res)=>{
-          console.log(res);
           if (res.data.code === 0) {
             this.form.coverSrc = res.data.data;
           }
@@ -142,7 +141,7 @@ export default {
             message: '上传成功'
           });
           this.$store.dispatch('refreshUserInfo');
-          this.$router.push('/project/home');
+          // this.$router.push('/project/home');
         } else {
           this.$notify({
             type: 'error',
