@@ -94,6 +94,7 @@ export default {
   methods: {
   },
   async created() {
+    console.log('app created');
     let userState = await JSON.parse(localStorage.getItem('userState'));
     if (userState !== null) {
       await this.$store.dispatch('getUserStateFromLocalStorage');

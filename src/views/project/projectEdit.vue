@@ -86,7 +86,7 @@ export default {
         content: this.form.content,
         coverSrc: this.form.coverSrc,
         state: this.form.state,
-        author_id: this.$store.getters.getUserID
+        authorId: this.$store.getters.getUserID
       }).then(res => {
         if (res.data.code === 200) {
           this.$notify({

@@ -120,7 +120,7 @@ export default {
         reserve_user_list: '',
         state: '',
         coverSrc: this.form.coverSrc,
-        author_id: this.$store.getters.getUserID
+        authorId: this.$store.getters.getUserID
       }).then(res => {
         if (res.data.code === 1) {
           this.$notify({

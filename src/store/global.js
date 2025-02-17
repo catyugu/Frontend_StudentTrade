@@ -1,11 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import api from '@/api/api.js'; // 引入 api.js
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {//全局变量
+  state: {
     isLogin: false,
     userInfo: {
       id: '',
@@ -26,7 +27,7 @@ export default new Vuex.Store({
     },
     token: '',
     http: axios,
-    host: 'http://localhost:8080'
+    host: 'http://localhost:8080',
   },
   getters: {
     http: state => state.http,
@@ -294,17 +295,8 @@ export default new Vuex.Store({
           });
         });
     },
-    getProjectIDList(context, start, end, params) {
-      context.state.http.get('/project/list/?' + start + '&' + end + '&' + params).then(res => {
-        return res.data;
-      })
-        .catch(err => {
-          Vue.prototype.$notify({
-            title: '获取项目ID列表失败',
-            message: err.message,
-            type: 'error'
-          });
-        });
+    getProjectIDList() {
+      return api.getProjectIDList();
     },
     getLectureIDList(context, start, end, params) {
       context.state.http.get('/lecture/list/?' + start + '&' + end + '&' + params).then(res => {

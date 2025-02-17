@@ -131,7 +131,7 @@ export default {
         content: this.form.content,
         coverSrc: this.form.coverSrc,
         state: this.form.state,
-        author_id: this.$store.getters.getUserID
+        authorId: this.$store.getters.getUserID
       }).then(res => {
         console.log(res)
         if (res.data.code === 0) {
@@ -141,7 +141,7 @@ export default {
             message: '上传成功'
           });
           this.$store.dispatch('refreshUserInfo');
-          // this.$router.push('/project/home');
+          this.$router.push('/project/home');
         } else {
           this.$notify({
             type: 'error',

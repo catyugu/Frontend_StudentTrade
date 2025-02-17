@@ -56,12 +56,13 @@ export default {
   components: { HeaderCard, ProjectCard },
   data() {
     return {
+      projectIDList: [],
       object: {
         input: '',
         content: [
           {
             title: '项目1',
-            author_id: '114514',
+            authorId: '114514',
             coverSrc: 'src/assets/logo.svg',
             description: '项目描述',
             content: '项目内容',
@@ -73,7 +74,7 @@ export default {
           },
           {
             title: '项目2',
-            author_id: '1919810',
+            authorId: '1919810',
             coverSrc: 'src/assets/logo.svg',
             description: '项目描述',
             content: '项目内容',
@@ -122,8 +123,11 @@ export default {
       );
     }
   },
-
-  computed: {}
+  async mounted(){
+    console.log('projectHome created')
+    this.projectIDList = this.$store.dispatch('getProjectIDList');
+    console.log(this.projectIDList);
+  }
 };
 </script>
 

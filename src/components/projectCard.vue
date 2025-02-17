@@ -6,12 +6,12 @@
           <el-row class="card-body">
             <el-col span="6" @click.native="goToProjectDetail">
               <div style="height: inherit">
-                <img :src="img_src" class="image" alt="Image not found!">
+                <img :src="coverSrc" class="image" alt="Image not found!">
               </div>
             </el-col>
             <el-col span="12" @click.native="goToProjectDetail">
               <h1>{{title}}</h1><br>
-              <name-avatar :userID="authorID" />
+              <name-avatar :userID="authorId" />
               <br>
               <span>创建时间：{{ create_time }}</span><br>
               <span>当前状态：{{ state }}</span><br>
@@ -24,7 +24,7 @@
                     登录后方可收藏
                   </el-button><br>
                 </div>
-                <div v-if="authorID === this.$store.getters.getUserID" class="button-father">
+                <div v-if="authorId === this.$store.getters.getUserID" class="button-father">
                   <el-button type="success" class="button" @click="goEditProject">
                     前往编辑
                   </el-button><br>
@@ -71,7 +71,7 @@ export default {
         return {
           coverSrc: '',
           title: '',
-          author_id: '',
+          authorId: '',
           description: '',
           content: '',
           state: '',
@@ -88,7 +88,7 @@ export default {
       showDescription: false,
       coverSrc: '',
       title: '',
-      author_id: '',
+      authorId: '',
       description: '',
       content: '',
       state: '',
@@ -99,9 +99,9 @@ export default {
     };
   },
   created() {
-    this.img_src = this.i.coverSrc;
+    this.coverSrc = this.i.coverSrc;
     this.title = this.i.title;
-    this.author_id = this.i.author_id;
+    this.authorId = this.i.authorId;
     this.description = this.i.description;
     this.content = this.i.content;
     this.state = this.i.state;
