@@ -37,7 +37,6 @@
 .el-header {
   color: #333;
   text-align: center;
-  line-height: 60px;
   font-size: 32px;
 }
 

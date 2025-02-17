@@ -70,7 +70,6 @@ export default {
       this.$router.push('/user/login');
     }
     this.object = JSON.parse(localStorage.getItem('userState')).userInfo;
-    console.log(this.object)
   },
   methods: {
     Edit() {
@@ -117,16 +116,15 @@ export default {
             'Content-Type': 'application/json'
           }
         }).then(res => {
-        console.log(res)
         if (res.data.code === 0) {
           this.$notify({
             type: 'success',
             title: '上传成功',
             message: '上传成功'
           });
-          this.$store.state.userInfo = this.object;
           this.$store.dispatch('setUserInfoOnLocalStorage');
-          this.disabled = true;
+          this.$store.dispatch('getUserStateFromLocalStorage')
+          this.disabled = true
         }
       }).catch((err) => {
         this.object = this.object_temp;
