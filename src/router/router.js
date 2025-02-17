@@ -17,14 +17,14 @@ import ProjectLike from '@/views/project/projectLike.vue';
 import LectureEdit from '@/views/lecture/lectureEdit.vue';
 import LectureManage from '@/views/lecture/lectureManage.vue';
 import ProjectEdit from '@/views/project/projectEdit.vue';
+import App from '@/App.vue';
 Vue.use(Router)
 export default new Router({
   routes: [
-    {
-      path: '/',
-      name: 'projectHome',
-      component: ProjectHome
-    },
+    {path: '/',
+      component: App,
+      redirect: '/project',
+      children: [
     {
       path: '/project',
       name: 'projectHome',
@@ -110,5 +110,5 @@ export default new Router({
       name: 'HelpHome',
       component: HelpHome
     },
-  ]
+  ]}]
 })

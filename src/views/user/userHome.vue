@@ -60,15 +60,17 @@
 export default {
   data() {
     return {
-      object: this.$store.state.userInfo,
+      object: null,
       disabled: true,
       object_temp: null
     };
   },
   created() {
-    if (!this.$store.state.isLogin) {
+    if (!localStorage.getItem('userState')) {
       this.$router.push('/user/login');
     }
+    this.object = JSON.parse(localStorage.getItem('userState')).userInfo;
+    console.log(this.object)
   },
   methods: {
     Edit() {
@@ -122,6 +124,7 @@ export default {
             title: '上传成功',
             message: '上传成功'
           });
+          this.$store.state.userInfo = this.object;
           this.$store.dispatch('setUserInfoOnLocalStorage');
           this.disabled = true;
         }

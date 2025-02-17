@@ -115,21 +115,22 @@ export default new Vuex.Store({
         });
     },
     async refreshUserInfo(context) {
-      context.state.http.get('/api/user/userInfo/own').then(res => {
+      try {
+        const res = await context.state.http.get('/api/user/userInfo/own');
         console.log(res);
         context.state.userInfo = res.data.data;
         context.state.userID = res.data.data.id;
-        context.dispatch('setUserInfoOnLocalStorage');
+        await context.dispatch('setUserInfoOnLocalStorage');
         return true;
-      })
-        .catch(err => {
-          console.log(err);
-          Vue.prototype.$notify({
-            title: '获取用户信息失败',
-            message: err.message,
-            type: 'error'
-          });
-        }).finally(()=>{return false;});
+      } catch (err) {
+        console.log(err);
+        Vue.prototype.$notify({
+          title: '获取用户信息失败',
+          message: err.message,
+          type: 'error'
+        });
+        return false;
+      }
     },
     refreshProjectInfo(context, projectID) {
       context.state.http.get('/project/?' + projectID).then(res => {

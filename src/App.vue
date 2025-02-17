@@ -94,13 +94,14 @@ export default {
   },
   methods: {
   },
-  async mounted() {
-    let userState = JSON.parse(localStorage.getItem('userState'));
+  async created() {
+    let userState = await JSON.parse(localStorage.getItem('userState'));
     if (userState !== null) {
       await this.$store.dispatch('getUserStateFromLocalStorage');
-      if (this.$store.dispatch('refreshUserInfo')) {
-        await this.$router.push('/project');
-      } else {
+      let promise =  await this.$store.dispatch('refreshUserInfo');
+      if (promise === false)
+      {
+        console.log('refreshUserInfo failed');
         await this.$store.dispatch('logoutProcess')
         await this.$router.push('/user/login');
       }

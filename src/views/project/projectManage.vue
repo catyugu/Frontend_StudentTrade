@@ -19,7 +19,7 @@ export default {
       projectList: []
     };
   },
-  created() {
+  mounted() {
     this.userID = this.$route.query.userID;
     this.getProjectList();
   },
