@@ -165,9 +165,9 @@ export default {
       this.$store.getters.http.post('/api/tool/image',
         {
           image64: base64Image
-        },{
+        }, {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
       }).then(res => {
         console.log(res);
