@@ -18,15 +18,13 @@ export default {
       projectIDList: []
     };
   },
-  created() {
+  async created() {
     this.userID = this.$route.query.userID;
-    this.getProjectList();
+    this.userID = this.$route.query.userID;
+    let info = await this.$store.dispatch('getUserInfoByID', this.userID);
+    this.projectIDList = info.projectLikeList;
+    console.log(info)
   },
-  methods: {
-    getProjectList() {
-      this.projectIDList = this.$store.getters.getUserInfo.projectLikeList;
-    }
-  }
 };
 </script>
 

@@ -114,10 +114,10 @@ export default {
       const formData = new FormData()
       formData.append('image', file)
 
-      this.$store.getters.http.post('/image/upload', formData)
-      .then(response => response.data)
-      .then(data => {
-        const url = data.url // 假设服务器返回的 JSON 中包含图片的 URL
+      this.$store.getters.http.post('/api/tool/image', formData)
+      .then(response => {
+        console.log(response)
+        const url = response.data.data.url // 假设服务器返回的 JSON 中包含图片的 URL
         this.insertToEditor(url)
       })
       .catch(error => {

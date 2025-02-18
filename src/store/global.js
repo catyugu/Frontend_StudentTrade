@@ -210,9 +210,8 @@ export default new Vuex.Store({
         });
     },
     likeProcess(context, projectId) {
-      return context.state.http.post( '/api/project/like?projectId='+ projectId + '&userId='+context.getters.getUserID,
-        null
-        ).then(async res => {
+      return context.state.http.post( '/api/project/like?projectId='+ projectId + '&userId='+context.getters.getUserID)
+        .then(async res => {
         console.log(res)
         if (res.data.code === 0) {
           Vue.prototype.$notify({
@@ -222,6 +221,13 @@ export default new Vuex.Store({
           });
           await context.dispatch('refreshUserInfo');
           await context.dispatch('refreshProjectInfo', projectId);
+        }else{
+          Vue.prototype.$notify({
+            title: '收藏失败',
+            message: res.data.msg,
+            type: 'error'
+          })
+          return null;
         }
         return res.data;
       })
@@ -233,16 +239,25 @@ export default new Vuex.Store({
           });
         });
     },
-    cancelLikeProcess(context, projectID, userID) {
-      return context.state.http.delete('/project/like/?' + projectID + '&' + userID).then(res => {
+    cancelLikeProcess(context, projectId) {
+      return context.state.http.post('/api/project/cancelLike?projectId='+ projectId + '&userId='+context.getters.getUserID)
+        .then(async res => {
+        console.log(res)
         if (res.data.code === 0) {
           Vue.prototype.$notify({
             title: '取消收藏成功',
             message: '取消收藏成功',
             type: 'success'
           });
-          context.dispatch('refreshUserInfo');
-          context.dispatch('refreshProjectInfo', projectID);
+          await context.dispatch('refreshUserInfo');
+          await context.dispatch('refreshProjectInfo', projectId);
+        }else{
+          Vue.prototype.$notify({
+            title: '取消收藏失败',
+            message: res.data.msg,
+            type: 'error'
+          });
+          return null;
         }
         return res.data;
       }).catch(err => {
@@ -251,6 +266,7 @@ export default new Vuex.Store({
           message: err.message,
           type: 'error'
         });
+        return null;
       });
     },
     cancelReserveProcess(context, lectureID, userID) {

@@ -14,8 +14,9 @@
               <name-avatar :userID="thisProject.authorId" />
               <br>
               <span>更新时间：{{ thisProject.updateTime.split("T")[0] }}</span><br>
-              <span>当前状态：{{ thisProject.status }}</span><br>
-
+              <span>
+                招募状态：{{getStatusText(thisProject.status) }}
+              </span><br>
             </el-col>
           </el-row>
           <el-row class="card-button">
@@ -95,11 +96,23 @@ export default {
     expand() {
       this.showDescription = !this.showDescription;
     },
+    getStatusText(status) {
+      switch (status) {
+        case 'ON_GOING':
+          return '进行中';
+        case 'FINISHED':
+          return '招募已结束';
+        case 'SUSPENDED':
+          return '暂停招募';
+        default:
+          return status; // 默认情况下返回原始状态
+      }
+    },
     likeProject() {
       this.$store.dispatch('likeProcess', this.thisProject.id);
     },
     cancelLikeProject() {
-      this.$store.dispatch('cancelLikeProcess', this.thisProject.id, this.$store.getters.getUserID);
+      this.$store.dispatch('cancelLikeProcess', this.thisProject.id);
     },
     goLogin() {
       this.$router.push({

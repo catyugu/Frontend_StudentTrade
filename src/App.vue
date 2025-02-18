@@ -95,18 +95,7 @@ export default {
   methods: {
   },
   async mounted() {
-    let userState = JSON.parse(localStorage.getItem('userState'));
-    if (userState !== null) {
-      await this.$store.dispatch('getUserStateFromLocalStorage');
-      if (this.$store.dispatch('refreshUserInfo')) {
-        await this.$router.push('/project');
-      } else {
-        await this.$store.dispatch('logoutProcess')
-        await this.$router.push('/user/login');
-      }
-    }else {
-      await this.$router.push('/user/login');
-    }
+
   },
 }
 </script>
