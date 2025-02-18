@@ -25,19 +25,21 @@
            </el-select>
           </el-form-item>
         </el-form>
-        <el-dialog :visible.sync="dialogVisible" title="裁剪封面">
+        <el-dialog :visible.sync="dialogVisible" title="裁剪封面" style="width: 100vw">
+          <div style="text-align: center">
           <vue-cropper
             ref="cropper"
             :src="imageSrc"
-            :aspect-ratio="4/3"
+            :aspectRatio="4/3"
             :view-mode="1"
+            :dragMode="'move'"
             :guides="true"
             :auto-crop-area="0.5"
             :background="true"
             :can-scale="true"
             :fixed-box="false"
-            :can-move="true"
-            :can-move-box="true"
+            :cropBoxMovable="false"
+            :cropBoxResizable="false"
             :rotatable="false"
             shape="circle"
           ></vue-cropper>
@@ -45,6 +47,7 @@
             <el-button @click="dialogVisible = false">取 消</el-button>
             <el-button type="primary" @click="cropImage">确 定</el-button>
           </span>
+          </div>
         </el-dialog>
         <el-button type="primary" @click="uploadToServer">上传</el-button>
       </el-main>
@@ -161,5 +164,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
+.cropper-container{
+  width: 200px;
+}
 </style>
