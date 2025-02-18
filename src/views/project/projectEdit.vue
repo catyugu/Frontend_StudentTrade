@@ -30,6 +30,7 @@
           <vue-cropper
             ref="cropper"
             :src="imageSrc"
+            :toggleDragModeOnDblclick="false"
             :aspectRatio="4/3"
             :view-mode="1"
             :dragMode="'move'"

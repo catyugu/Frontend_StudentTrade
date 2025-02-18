@@ -15,6 +15,7 @@
             </el-carousel-item>
           </el-carousel>
         </div>
+        <div class="project-button-group">
         <el-button
           v-if="this.$store.getters.getIsLogin"
           type="primary"
@@ -38,6 +39,7 @@
           style="margin-top: 10px">
           项目管理
         </el-button>
+        </div>
         <div>
           <project-display-list :projectList="projectIDList" />
         </div>
@@ -143,4 +145,5 @@ export default {
   height: 100%;
   object-fit: cover;
 }
+
 </style>

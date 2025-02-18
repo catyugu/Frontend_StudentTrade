@@ -31,5 +31,10 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-
+.project-display-list-item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 </style>

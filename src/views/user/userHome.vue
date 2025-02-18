@@ -55,11 +55,16 @@
             :src="imageSrc"
             :aspect-ratio="1"
             :view-mode="1"
+            :dragMode="'move'"
             :guides="true"
             :auto-crop-area="0.5"
             :background="true"
+            :can-scale="true"
+            :fixed-box="false"
+            :cropBoxMovable="false"
+            :cropBoxResizable="false"
             :rotatable="false"
-            :scalable="false"
+            :toggleDragModeOnDblclick="false"
             shape="circle"
           ></vue-cropper>
           <span slot="footer" class="dialog-footer">

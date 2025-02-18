@@ -55,7 +55,7 @@ export default {
 <style scoped lang="scss">
 
 .avatar{
-  width: clamp(1.2rem, 2.25vw, 2.25rem);
-  height: clamp(1.2rem, 2.25vw, 2.25rem);
+  width: 40px;
+  height: 40px;
 }
 </style>
