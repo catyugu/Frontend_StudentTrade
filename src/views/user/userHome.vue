@@ -118,13 +118,17 @@ export default {
       this.$router.push('/user/login');
     },
     uploadAvatar() {
-      const input = document.createElement('input');
+      let input = document.createElement('input');
       input.type = 'file';
       input.accept = 'image/*';
       input.onchange = (e) => {
-        const file = e.target.files[0];
+        console.log(e.target.files)
+        let file =  e.target.files[0];
         if (file) {
           this.imageSrc = URL.createObjectURL(file);
+          this.$nextTick(() => {
+            this.$refs.cropper.replace(this.imageSrc);
+          });
           this.dialogVisible = true;
         }
       };
@@ -164,6 +168,7 @@ export default {
     },
     // 添加 cropImage 方法
     cropImage() {
+
       const canvas = this.$refs.cropper.getCroppedCanvas();
       const base64Image = canvas.toDataURL('image/png');
 
