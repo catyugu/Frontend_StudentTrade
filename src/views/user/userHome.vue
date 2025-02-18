@@ -47,6 +47,7 @@
         <el-button v-if="disabled" type="primary" @click="Edit">编辑</el-button>
         <el-button v-if="!disabled" type="success" @click="Save">保存</el-button>
         <el-button v-if="!disabled" @click="Discard">放弃</el-button>
+        <el-button v-if="disabled" type="primary" @click="changePassword">修改密码</el-button>
         <el-button type="danger" @click="Logout" style="margin-top: 10px">登出</el-button>
         <!-- 添加裁剪组件 -->
         <el-dialog :visible.sync="dialogVisible" title="裁剪头像">
@@ -116,6 +117,9 @@ export default {
     Logout() {
       this.$store.dispatch('logoutProcess');
       this.$router.push('/user/login');
+    },
+    changePassword(){
+      this.$router.push('/user/changePwd');
     },
     uploadAvatar() {
       let input = document.createElement('input');

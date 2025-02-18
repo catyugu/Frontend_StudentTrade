@@ -18,6 +18,7 @@ import LectureEdit from '@/views/lecture/lectureEdit.vue';
 import LectureManage from '@/views/lecture/lectureManage.vue';
 import ProjectEdit from '@/views/project/projectEdit.vue';
 import App from '@/App.vue';
+import ChangePassword from '@/views/user/changePassword.vue';
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -70,6 +71,11 @@ export default new Router({
       path: '/user/register',
       name: 'register',
       component: RegisterPage
+    },
+        {
+      path: '/user/changePwd',
+      name: 'changePwd',
+      component: ChangePassword,
     },
     {
       path: '/user/userInfoDisplay',
