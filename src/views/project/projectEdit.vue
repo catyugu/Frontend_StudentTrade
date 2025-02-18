@@ -15,7 +15,7 @@
             <el-input v-model="form.description" />
           </el-form-item>
           <el-form-item label="内容">
-            <editorComponent @contentData="updateContent"/>
+            <editorComponent @contentData="updateContent" :content="form.content"/>
           </el-form-item>
           <el-form-item label="状态">
             <el-select v-model="form.status" placeholder="请选择">
