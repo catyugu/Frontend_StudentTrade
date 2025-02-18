@@ -7,14 +7,15 @@
         <el-input class="searchBar"
                   @focus="focus" @blur="true" v-model="input" placeholder="请输入搜索内容" />
         <div class="block">
-          <el-carousel height="20vw" type="card">
+          <el-carousel height="25vw" type="card" class="carousel-container">
             <el-carousel-item v-for="item in scrollWin" :key="item">
               <h3 class="medium">
-                <img :src=" item.coverSrc" alt=""/>
+                <img :src=" item.coverSrc" alt="" class="carousel-image"/>
               </h3>
             </el-carousel-item>
           </el-carousel>
         </div>
+        <div class="project-button-group">
         <el-button
           v-if="this.$store.getters.getIsLogin"
           type="primary"
@@ -38,6 +39,7 @@
           style="margin-top: 10px">
           项目管理
         </el-button>
+        </div>
         <div>
           <project-display-list :projectList="projectIDList" />
         </div>
@@ -137,4 +139,11 @@ export default {
   width: 100%;
   display: block;
 }
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 </style>
