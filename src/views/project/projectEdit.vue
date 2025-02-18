@@ -29,13 +29,16 @@
           <vue-cropper
             ref="cropper"
             :src="imageSrc"
-            :aspect-ratio="1"
+            :aspect-ratio="4/3"
             :view-mode="1"
             :guides="true"
             :auto-crop-area="0.5"
             :background="true"
+            :can-scale="true"
+            :fixed-box="false"
+            :can-move="true"
+            :can-move-box="true"
             :rotatable="false"
-            :scalable="false"
             shape="circle"
           ></vue-cropper>
           <span slot="footer" class="dialog-footer">
