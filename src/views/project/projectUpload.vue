@@ -19,10 +19,9 @@
           </el-form-item>
           <el-form-item label="状态">
             <el-select v-model="form.status" placeholder="请选择">
-              <el-option label="未开始招募" value="未开始招募"></el-option>
-              <el-option label="招募进行中" value="招募进行中"></el-option>
-              <el-option label="招募暂停" value="招募暂停"></el-option>
-              <el-option label="招募结束" value="招募结束"></el-option>
+          <el-option label="招募进行中" value="ON_GOING"></el-option>
+              <el-option label="招募暂停" value="SUSPENDED"></el-option>
+              <el-option label="招募结束" value="FINISHED"></el-option>
             </el-select>
           </el-form-item>
         </el-form>

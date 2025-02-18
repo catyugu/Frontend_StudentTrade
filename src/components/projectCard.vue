@@ -41,8 +41,7 @@
                     取消收藏
                   </el-button><br>
                 </div>
-                <div v-if="(this.$store.getters.getIsLogin && this.$store.getters.getLikeList.includes(this.thisProject.id))"
-                     class="button-father">
+                <div class="button-father">
                   <el-button  class="button" type="text" @click="expand">展开简介</el-button>
                 </div>
               </div>

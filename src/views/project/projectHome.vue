@@ -7,9 +7,11 @@
         <el-input class="searchBar"
                   @focus="focus" @blur="true" v-model="input" placeholder="请输入搜索内容" />
         <div class="block">
-          <el-carousel height="200px">
-            <el-carousel-item v-for="item in 3" :key="item">
-              <h3 class="small">{{ item }}</h3>
+          <el-carousel height="20vw" type="card">
+            <el-carousel-item v-for="item in scrollWin" :key="item">
+              <h3 class="medium">
+                <img :src=" item.coverSrc" alt=""/>
+              </h3>
             </el-carousel-item>
           </el-carousel>
         </div>
@@ -53,6 +55,7 @@ export default {
   data() {
     return {
       projectIDList: [],
+      scrollWin: [],
       input: '',
     }
   },
@@ -93,6 +96,9 @@ export default {
     nextTick(async () => {
       try {
         this.projectIDList = await this.$store.dispatch('getProjectIDList');
+        for (let i = 0; i < 3; i++){
+          this.scrollWin.push(await this.$store.dispatch('getProjectInfoByID', this.projectIDList[i]));
+        }
       } catch (error) {
         this.$notify({
           type: 'error',
