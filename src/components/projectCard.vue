@@ -96,10 +96,10 @@ export default {
       this.showDescription = !this.showDescription;
     },
     likeProject() {
-      this.$store.dispatch('likeProcess', this.id, this.$store.getters.getUserID);
+      this.$store.dispatch('likeProcess', this.thisProject.id);
     },
     cancelLikeProject() {
-      this.$store.dispatch('cancelLikeProcess', this.id, this.$store.getters.getUserID);
+      this.$store.dispatch('cancelLikeProcess', this.thisProject.id, this.$store.getters.getUserID);
     },
     goLogin() {
       this.$router.push({
@@ -128,23 +128,23 @@ export default {
 <style scoped lang="scss">
 h1 {
   font-weight: bold;
-  font-size: 4vw;
+  font-size: 3.6vw;
 }
 
 .project-card {
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 2.5vw;
-  width: 75vw
+  font-size: 2.2vw;
+  width: 70vw
 }
 
 .button {
-  font-size: 3vw;
+  font-size: 2vw;
   padding: 8px 15px;
 }
 
 .button-father {
-  margin: 5% 5%;
+  margin: 5%;
 }
 
 .card-body {

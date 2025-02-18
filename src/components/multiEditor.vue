@@ -17,6 +17,7 @@ export default {
   },
   data () {
     return {
+      init: true,
       quill: null,
       editorContent: '', // 添加: editorContent 来存储编辑器的内容
       options: {
@@ -38,6 +39,14 @@ export default {
           },
         },
         placeholder: ''
+      }
+    }
+  },
+  watch: {
+    content (newValue) {
+      if (this.init){
+        this.quill.root.innerHTML = newValue
+        this.init = false
       }
     }
   },

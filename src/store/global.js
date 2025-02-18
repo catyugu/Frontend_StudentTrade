@@ -102,8 +102,8 @@ export default new Vuex.Store({
       context.state.http.defaults.headers.common['Authorization'] = '';
       localStorage.removeItem('userState');
     },
-    getUserInfoByID(context, userID) {
-      context.state.http.get('/api/user/userInfo/?' + userID).then(res => {
+    async getUserInfoByID(context, userID) {
+      return context.state.http.get('/api/user/userInfo/' + userID).then(res => {
         return res.data.data;
       })
         .catch(err => {
@@ -112,13 +112,15 @@ export default new Vuex.Store({
             message: err.message,
             type: 'error'
           });
-        });
+        }).finally(() => { return null;});
     },
     async refreshUserInfo(context) {
-      context.state.http.get('/api/user/userInfo/own').then(res => {
+      return context.state.http.get('/api/user/userInfo/own').then(res => {
+        console.log('-----------------------------------')
         context.state.userInfo = res.data.data;
         context.state.userID = res.data.data.id;
         context.dispatch('setUserInfoOnLocalStorage');
+        console.log(context.getters.getUserID)
         return true;
       })
         .catch(err => {
@@ -170,21 +172,8 @@ export default new Vuex.Store({
           return null;
         });
     },
-    updateProjectInfoByID(context, projectID, projectInfo) {
-      context.state.http.put('/project/?' + projectID, projectInfo).then(() => {
-        return true;
-      })
-        .catch(err => {
-          Vue.prototype.$notify({
-            title: '更新项目信息失败',
-            message: err.message,
-            type: 'error'
-          });
-          return false;
-        });
-    },
     getLectureInfoByID(context, lectureID) {
-      context.state.http.get('/lecture/?' + lectureID, { timeout: 3000 }).then(res => {
+      return context.state.http.get('/lecture/?' + lectureID, { timeout: 3000 }).then(res => {
         return res.data;
       }).catch(err => {
         Vue.prototype.$notify({
@@ -194,19 +183,6 @@ export default new Vuex.Store({
         });
         return null;
       });
-    },
-    updateLectureInfoByID(context, lectureID, lectureInfo) {
-      context.state.http.put('/lecture/?' + lectureID, lectureInfo).then(() => {
-        return true;
-      })
-        .catch(err => {
-          Vue.prototype.$notify({
-            title: '更新讲座信息失败',
-            message: err.message,
-            type: 'error'
-          });
-          return false;
-        });
     },
     reserveProcess(context, lectureID, userID) {
       context.state.http.post('/lecture/reserve/?' + lectureID + '&' + userID).then(res => {
@@ -233,16 +209,19 @@ export default new Vuex.Store({
           });
         });
     },
-    likeProcess(context, projectID, userID) {
-      context.state.http.post('/project/like/?' + projectID + '&' + userID).then(res => {
+    likeProcess(context, projectId) {
+      return context.state.http.post( '/api/project/like?projectId='+ projectId + '&userId='+context.getters.getUserID,
+        null
+        ).then(async res => {
+        console.log(res)
         if (res.data.code === 0) {
           Vue.prototype.$notify({
             title: '收藏成功',
             message: '收藏成功',
             type: 'success'
           });
-          this.$store.dispatch('refreshUserInfo');
-          this.$store.dispatch('refreshProjectInfo', projectID);
+          await context.dispatch('refreshUserInfo');
+          await context.dispatch('refreshProjectInfo', projectId);
         }
         return res.data;
       })
@@ -255,15 +234,15 @@ export default new Vuex.Store({
         });
     },
     cancelLikeProcess(context, projectID, userID) {
-      context.state.http.delete('/project/like/?' + projectID + '&' + userID).then(res => {
+      return context.state.http.delete('/project/like/?' + projectID + '&' + userID).then(res => {
         if (res.data.code === 0) {
           Vue.prototype.$notify({
             title: '取消收藏成功',
             message: '取消收藏成功',
             type: 'success'
           });
-          this.$store.dispatch('refreshUserInfo');
-          this.$store.dispatch('refreshProjectInfo', projectID);
+          context.dispatch('refreshUserInfo');
+          context.dispatch('refreshProjectInfo', projectID);
         }
         return res.data;
       }).catch(err => {
@@ -281,8 +260,8 @@ export default new Vuex.Store({
           message: '取消预约成功',
           type: 'success'
         });
-        this.$store.dispatch('refreshUserInfo');
-        this.$store.dispatch('refreshLectureInfo', lectureID);
+        context.dispatch('refreshUserInfo');
+        context.dispatch('refreshLectureInfo', lectureID);
         return res.data;
       })
         .catch(err => {
