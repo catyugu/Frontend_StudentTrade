@@ -12,4 +12,19 @@ new Vue({
   store,
   render:(h)=>h(App),
   router:Router,
+  async created(){
+    console.log('App mounted');
+    let userState = JSON.parse(localStorage.getItem('userState'));
+    if (userState !== null) {
+      await this.$store.dispatch('getUserStateFromLocalStorage');
+      if (await this.$store.dispatch('refreshUserInfo')) {
+        console.log('refreshUserInfo success')
+      } else {
+        await this.$store.dispatch('logoutProcess')
+        await this.$router.push('/user/login');
+      }
+    }else {
+      await this.$router.push('/user/login');
+    }
+  }
 }).$mount('#app')
