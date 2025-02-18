@@ -18,7 +18,7 @@
             <editorComponent @contentData="updateContent"/>
           </el-form-item>
           <el-form-item label="状态">
-            <el-select v-model="form.state" placeholder="请选择">
+            <el-select v-model="form.status" placeholder="请选择">
               <el-option label="未开始招募" value="未开始招募"></el-option>
               <el-option label="招募进行中" value="招募进行中"></el-option>
               <el-option label="招募暂停" value="招募暂停"></el-option>
@@ -68,7 +68,7 @@ export default {
         description: '',
         content: '',
         coverSrc: '',
-        state: ''
+        status: ''
       },
       dialogVisible: false,
       imageSrc: ''
@@ -130,7 +130,7 @@ export default {
         description: this.form.description,
         content: this.form.content,
         coverSrc: this.form.coverSrc,
-        state: this.form.state,
+        status: this.form.status,
         authorId: this.$store.getters.getUserID
       }).then(res => {
         console.log(res)

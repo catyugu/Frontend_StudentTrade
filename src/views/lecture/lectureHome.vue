@@ -71,9 +71,9 @@ export default {
             reserve_num: '0',
             reserve_user_list: '',
             max_num: '10',
-            state: '报名中',
-            create_time: '2022-05-05',
-            update_time: '2022-05-05',
+            status: '报名中',
+            createTime: '2022-05-05',
+            updateTime: '2022-05-05',
             id: '1'
           },
           {
@@ -87,9 +87,9 @@ export default {
             reserve_num: '0',
             reserve_user_list: '',
             max_num: '10',
-            state: '报名中',
-            create_time: '2022-05-05',
-            update_time: '2022-05-05',
+            status: '报名中',
+            createTime: '2022-05-05',
+            updateTime: '2022-05-05',
             id: '2'
           }
         ]

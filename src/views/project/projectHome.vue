@@ -5,7 +5,7 @@
       <el-main>
 
         <el-input class="searchBar"
-                  @focus="focus" @blur="true" v-model="object.input" placeholder="请输入搜索内容" />
+                  @focus="focus" @blur="true" v-model="input" placeholder="请输入搜索内容" />
         <div class="block">
           <el-carousel height="200px">
             <el-carousel-item v-for="item in 3" :key="item">
@@ -37,11 +37,7 @@
           项目管理
         </el-button>
         <div>
-          <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
-            <li v-for="(i, index) in object.content" :key="index">
-              <project-card :i="i" />
-            </li>
-          </ul>
+          <project-display-list :projectList="projectIDList" />
         </div>
       </el-main>
     </el-container>
@@ -49,49 +45,18 @@
 </template>
 
 <script>
-import ProjectCard from '@/components/projectCard.vue';
 import HeaderCard from '@/components/headerCard.vue';
-
+import { nextTick } from 'vue';
+import ProjectDisplayList from '@/components/projectDisplayList.vue';
 export default {
-  components: { HeaderCard, ProjectCard },
+  components: { ProjectDisplayList, HeaderCard },
   data() {
     return {
       projectIDList: [],
-      object: {
-        input: '',
-        content: [
-          {
-            title: '项目1',
-            authorId: '114514',
-            coverSrc: 'src/assets/logo.svg',
-            description: '项目描述',
-            content: '项目内容',
-            state: '招募中',
-            create_time: '2022-05-05',
-            update_time: '2022-05-05',
-            like_num: '0',
-            id: '1'
-          },
-          {
-            title: '项目2',
-            authorId: '1919810',
-            coverSrc: 'src/assets/logo.svg',
-            description: '项目描述',
-            content: '项目内容',
-            state: '暂停招募',
-            create_time: '2022-03-04',
-            update_time: '2022-03-04',
-            like_num: '0',
-            id: '2'
-          }
-        ]
-      }
-    };
+      input: '',
+    }
   },
   methods: {
-    load() {
-      this.object.count += 2;
-    },
     toUpload() {
       this.$router.push(
           {
@@ -123,10 +88,19 @@ export default {
       );
     }
   },
-  async mounted(){
-    console.log('projectHome created')
-    this.projectIDList = this.$store.dispatch('getProjectIDList');
-    console.log(this.projectIDList);
+  async created() {
+    console.log('projectHome created');
+    nextTick(async () => {
+      try {
+        this.projectIDList = await this.$store.dispatch('getProjectIDList');
+      } catch (error) {
+        this.$notify({
+          type: 'error',
+          title: '获取项目列表失败!',
+          message: '服务器请求失败，请稍后再试！'
+        });
+      }
+    });
   }
 };
 </script>

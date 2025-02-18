@@ -119,7 +119,7 @@ export default {
         max_num: this.form.max_num,
         reserve_num: 0,
         reserve_user_list: '',
-        state: '',
+        status: '',
         coverSrc: this.form.coverSrc,
         authorId: this.$store.getters.getUserID
       }).then(res => {

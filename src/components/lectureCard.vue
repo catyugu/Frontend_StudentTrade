@@ -89,9 +89,9 @@ export default {
           reserve_num: '',
           reserve_user_list: '',
           max_num: '',
-          state: '',
-          create_time: '',
-          update_time: '',
+          status: '',
+          createTime: '',
+          updateTime: '',
           id: ''
         };
       }
@@ -110,9 +110,9 @@ export default {
       reserve_num: '',
       reserve_user_list: '',
       max_num: '',
-      state: '',
-      create_time: '',
-      update_time: '',
+      status: '',
+      createTime: '',
+      updateTime: '',
       id: ''
     };
   },
@@ -127,9 +127,9 @@ export default {
     this.time = this.i.time;
     this.reserve_num = this.i.reserve_num;
     this.reserve_user_list = this.i.reserve_user_list;
-    this.state = this.i.state;
-    this.create_time = this.i.create_time;
-    this.update_time = this.i.update_time;
+    this.state = this.i.status;
+    this.create_time = this.i.createTime;
+    this.update_time = this.i.updateTime;
     this.max_num = this.i.max_num;
   },
   methods: {

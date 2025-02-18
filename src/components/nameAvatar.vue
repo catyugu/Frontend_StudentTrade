@@ -31,8 +31,8 @@ export default {
   methods: {
     getNameAvatar() {
       this.userInfo.id = this.userID;
-      if (this.$store.state.userInfo !== null){
-        this.userInfo = this.$store.state.userInfo;
+      if (this.$store.status.userInfo !== null){
+        this.userInfo = this.$store.status.userInfo;
         return;
       }
       this.$store.dispatch('getUserInfoByID', this.userInfo.id).then(res => {

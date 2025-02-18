@@ -5,7 +5,7 @@ uploadToServer() {
     description: this.form.description,
     content: this.form.content,
     coverSrc: this.form.coverSrc,
-    state: this.form.state,
+    status: this.form.status,
     authorId: this.$store.getters.getUserID
   }).then(res => {
     console.log(res)

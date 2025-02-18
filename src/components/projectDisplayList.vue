@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="project-display-list">
-      <div class="project-display-list-item" v-for="(item, index) in list" :key="index">
-        <project-card :i="item" />
-      </div>
-    </div>
+    <ul class="project-display-list">
+      <li class="project-display-list-item" v-for="(item, index) in list" :key="index">
+        <project-card :id="item" />
+      </li>
+    </ul>
   </div>
 </template>
 <script>
@@ -20,12 +20,12 @@ export default {
   },
   data() {
     return {
-      list: this.projectList
+      list: []
     };
   },
-  created() {
-    for (let i = 0; i < this.projectList.length; i++) {
-      this.list.push(this.$store.dispatch('getProjectInfoByID', this.projectList[i]), i);
+  watch: {
+    projectList() {
+      this.list = this.projectList;
     }
   },
 };

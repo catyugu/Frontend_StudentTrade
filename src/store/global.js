@@ -116,7 +116,6 @@ export default new Vuex.Store({
     },
     async refreshUserInfo(context) {
       context.state.http.get('/api/user/userInfo/own').then(res => {
-        console.log(res);
         context.state.userInfo = res.data.data;
         context.state.userID = res.data.data.id;
         context.dispatch('setUserInfoOnLocalStorage');
@@ -158,8 +157,9 @@ export default new Vuex.Store({
         });
     },
     getProjectInfoByID(context, projectID) {
-      context.state.http.get('/project/?' + projectID).then(res => {
-        return res.data;
+      return context.state.http.get('/api/project/get/' + projectID).then(res => {
+        console.log(res)
+        return res.data.data;
       })
         .catch(err => {
           Vue.prototype.$notify({
@@ -293,17 +293,19 @@ export default new Vuex.Store({
           });
         });
     },
-    getProjectIDList(context, start, end, params) {
-      context.state.http.get('/project/list/?' + start + '&' + end + '&' + params).then(res => {
-        return res.data;
+    getProjectIDList(context) {
+      return context.state.http.get('/api/project/projects').then(res => {
+        console.log(res);
+        return res.data.data;
       })
-        .catch(err => {
-          Vue.prototype.$notify({
-            title: '获取项目ID列表失败',
-            message: err.message,
-            type: 'error'
-          });
+      .catch(err => {
+        Vue.prototype.$notify({
+          title: '获取项目ID列表失败',
+          message: err.message,
+          type: 'error'
         });
+        return null;
+      });
     },
     getLectureIDList(context, start, end, params) {
       context.state.http.get('/lecture/list/?' + start + '&' + end + '&' + params).then(res => {

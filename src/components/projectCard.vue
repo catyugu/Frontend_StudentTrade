@@ -6,15 +6,15 @@
           <el-row class="card-body">
             <el-col span="6" @click.native="goToProjectDetail">
               <div style="height: inherit">
-                <img :src="coverSrc" class="image" alt="Image not found!">
+                <img :src="thisProject.coverSrc" class="image" alt="Image not found!">
               </div>
             </el-col>
             <el-col span="12" @click.native="goToProjectDetail">
-              <h1>{{title}}</h1><br>
-              <name-avatar :userID="authorId" />
+              <h1>{{thisProject.title}}</h1><br>
+              <name-avatar :userID="thisProject.authorId" />
               <br>
-              <span>创建时间：{{ create_time }}</span><br>
-              <span>当前状态：{{ state }}</span><br>
+              <span>更新时间：{{ thisProject.updateTime.split('T')[0]}}</span><br>
+              <span>当前状态：{{ thisProject.status }}</span><br>
 
             </el-col>
             <el-col span="6">
@@ -24,24 +24,24 @@
                     登录后方可收藏
                   </el-button><br>
                 </div>
-                <div v-if="authorId === this.$store.getters.getUserID" class="button-father">
+                <div v-if="thisProject.authorId === this.$store.getters.getUserID" class="button-father">
                   <el-button type="success" class="button" @click="goEditProject">
                     前往编辑
                   </el-button><br>
                 </div>
-                <div v-if="this.$store.getters.getIsLogin && !(this.$store.getters.getLikeList.includes(this.id))"
+                <div v-if="this.$store.getters.getIsLogin && !(this.$store.getters.getLikeList.includes(this.thisProject.id))"
                      class="button-father">
                   <el-button type="primary" class="button" @click="likeProject">
                     收藏项目
                   </el-button><br>
                 </div>
-                <div v-if="(this.$store.getters.getIsLogin && this.$store.getters.getLikeList.includes(this.id))"
+                <div v-if="(this.$store.getters.getIsLogin && this.$store.getters.getLikeList.includes(this.thisProject.id))"
                      class="button-father">
                   <el-button type="primary" class="button" @click="cancelLikeProject">
                     取消收藏
                   </el-button><br>
                 </div>
-                <div v-if="(this.$store.getters.getIsLogin && this.$store.getters.getLikeList.includes(this.id))"
+                <div v-if="(this.$store.getters.getIsLogin && this.$store.getters.getLikeList.includes(this.thisProject.id))"
                      class="button-father">
                   <el-button  class="button" type="text" @click="expand">展开简介</el-button>
                 </div>
@@ -51,7 +51,7 @@
           <el-row class="card-description" v-if="showDescription">
             <el-divider></el-divider>
             <el-row>
-              <span v-text="description"></span>
+              <span v-text="thisProject.description"></span>
             </el-row>
           </el-row>
         </el-card>
@@ -65,50 +65,30 @@ import NameAvatar from '@/components/nameAvatar.vue';
 export default {
   components: { NameAvatar },
   props: {
-    i: {
-      type: Object,
-      default: () => {
-        return {
-          coverSrc: '',
-          title: '',
-          authorId: '',
-          description: '',
-          content: '',
-          state: '',
-          create_time: '',
-          update_time: '',
-          like_num: '',
-          id: ''
-        };
-      }
-    }
+    id:{
+      type: String,
+      default: ''
+    },
   },
   data() {
     return {
       showDescription: false,
-      coverSrc: '',
-      title: '',
-      authorId: '',
-      description: '',
-      content: '',
-      state: '',
-      create_time: '',
-      update_time: '',
-      like_num: '',
-      id: ''
+      thisProject:{
+        coverSrc: '',
+        title: '',
+        authorId: '',
+        description: '',
+        content: '',
+        status: '',
+        createTime: '',
+        updateTime: '',
+        like_num: '',
+        id: ''
+      }
     };
   },
-  created() {
-    this.coverSrc = this.i.coverSrc;
-    this.title = this.i.title;
-    this.authorId = this.i.authorId;
-    this.description = this.i.description;
-    this.content = this.i.content;
-    this.state = this.i.state;
-    this.create_time = this.i.create_time;
-    this.update_time = this.i.update_time;
-    this.like_num = this.i.like_num;
-    this.id = this.i.id;
+  async created() {
+    this.thisProject = await this.$store.dispatch('getProjectInfoByID', this.id)
   },
   methods: {
     expand() {
@@ -129,7 +109,7 @@ export default {
       this.$router.push({
         name: 'projectDetail',
         query: {
-          projectID: this.id
+          projectID: this.thisProject.id
         }
       });
     },
@@ -137,7 +117,7 @@ export default {
       this.$router.push({
         name: 'ProjectEdit',
         query: {
-          projectID: this.id
+          projectID: this.thisProject.id
         }
       });
     }
