@@ -1,19 +1,75 @@
 <template>
   <div>
-
+    <el-container direction="vertical">
+      <header-card :header="{title:'用户信息'}" />
+      <el-main>
+        <el-row>
+          <el-col :span="8">
+            <el-avatar :src="userInfo.avatarSrc" alt="" class="avatar-display" />
+          </el-col>
+          <el-col :span="16" class="user-info-display">
+            <el-card>
+              <el-row>
+                <el-col :span="8">
+                  <span>用户名</span>
+                </el-col>
+                <el-col :span="16">
+                  <span>{{userInfo.username}}</span>
+                </el-col>
+              </el-row><el-divider></el-divider>
+              <el-row>
+                <el-col :span="8">
+                  <span>性别</span>
+                </el-col>
+                <el-col :span="16">
+                  <span>{{userInfo.gender}}</span>
+                </el-col>
+              </el-row>
+              <el-row><el-divider></el-divider>
+                <el-col :span="8">
+                  <span>邮箱</span>
+                </el-col>
+                <el-col :span="16">
+                  <span>{{userInfo.email}}</span>
+                </el-col>
+              </el-row><el-divider></el-divider>
+              <el-row>
+                <el-col :span="8">
+                  <span>电话</span>
+                </el-col>
+                <el-col :span="16">
+                  <span>{{userInfo.phone}}</span>
+                </el-col>
+              </el-row><el-divider></el-divider>
+            </el-card>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col span="12">
+            <project-display-list :projectList="userInfo.projectUploadList" />
+          </el-col>
+        </el-row>
+      </el-main>
+    </el-container>
   </div>
 </template>
 <script>
-
-export default ({
+import HeaderCard from '@/components/headerCard.vue';
+import ProjectDisplayList from '@/components/projectDisplayList.vue';
+export default {
+  components: {
+    ProjectDisplayList,
+    HeaderCard
+  },
   data() {
     return {
       userID: '',
       userInfo: {
         avatarSrc: '',
-        name: '',
+        username: '',
         gender: '',
-        introduction: '',
+        projectUploadList: [],
+        lectureReserveList: [],
         email: '',
         phone: ''
       }
@@ -24,16 +80,17 @@ export default ({
     this.getUserInfo();
   },
   methods: {
-    getUserInfo() {
-      this.$store.dispatch('getUserInfoByID', this.userID)
-        .then(res => {
-          this.userInfo = res.data.data;
-        });
+    async getUserInfo() {
+      this.userInfo = await this.$store.dispatch('getUserInfoByID', this.userID)
+      console.log(this.userInfo)
     }
   }
-});
+};
 </script>
 
 <style scoped lang="scss">
-
+.avatar-display {
+  width: 15vw;
+  height: 15vw;
+}
 </style>

@@ -24,7 +24,7 @@ export default new Vuex.Store({
       projectUploadList: [],
       lectureUploadList: []
     },
-    token: '114514',
+    token: '',
     http: axios,
     host: 'http://localhost:8080'
   },
@@ -120,7 +120,7 @@ export default new Vuex.Store({
         context.state.userInfo = res.data.data;
         context.state.userID = res.data.data.id;
         context.dispatch('setUserInfoOnLocalStorage');
-        console.log(context.getters.getUserID)
+        console.log(context.state.userInfo)
         return true;
       })
         .catch(err => {
