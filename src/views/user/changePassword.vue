@@ -45,14 +45,27 @@ export default {
         })
         return;
       }
+      console.log(this.$store.getters.getToken);
       this.$store.getters.http.post('/api/user/changePassword',
-        this.form).then(res => {
+        null,{
+        params:{
+          oldPassword: this.form.oldPassword,
+          newPassword: this.form.newPassword
+        },
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': this.$store.getters.getToken
+          },
+        },
+      ).then(res => {
+        console.log(res)
           if (res.data.code === 0) {
             this.$notify({
               title: '成功',
-              message: '修改密码成功',
+              message: '修改密码成功，请重新登录',
               type: 'success'
             })
+            this.$router.push('/user/login')
           }
           else {
             this.$notify({
