@@ -160,7 +160,6 @@ export default new Vuex.Store({
     },
     getProjectInfoByID(context, projectID) {
       return context.state.http.get('/api/project/get/' + projectID).then(res => {
-        console.log(res)
         return res.data.data;
       })
         .catch(err => {
