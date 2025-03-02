@@ -3,7 +3,9 @@
     <el-header style="margin-top: 20px;margin-bottom: 30px">
       <el-row>
         <el-col span="4">
-          <el-button @click="routeReturn">返回</el-button>
+          &nbsp;
+          <el-button @click="routeReturn"
+          v-if="this.$route.path.split('/').length > 2">返回</el-button>
         </el-col>
         <el-col span="16" style="font-weight: bold">{{ title }}</el-col>
         <el-col span="4">

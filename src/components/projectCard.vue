@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="project-card-container">
     <div class="project-card">
       <el-row style="margin-top: 10px;">
         <el-card>
           <el-row class="card-body">
             <el-col span="12" @click.native="goToProjectDetail">
-              <div style="height: inherit">
+              <div style="height: inherit;">
                 <img :src="thisProject.coverSrc" class="image" alt="Image not found!">
               </div>
             </el-col>
@@ -63,9 +63,8 @@
 </template>
 <script>
 import NameAvatar from '@/components/nameAvatar.vue';
-
 export default {
-  components: { NameAvatar },
+  components: {NameAvatar },
   props: {
     id: {
       type: String,
@@ -151,10 +150,13 @@ h1 {
   line-height: 1.4vw;
   width: 100%;
 }
+.project-card-container{
+  width: 100%;
+}
 
 .button {
   font-size: 2.1vw;
-  padding: 6px 8px;
+  padding: 5% 5%;
 }
 
 .button-father {

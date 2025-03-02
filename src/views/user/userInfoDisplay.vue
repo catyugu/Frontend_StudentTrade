@@ -47,7 +47,11 @@
         <el-row>
           <el-col span="12">
             <h1 style="font-size: 3vw;"><b>TA的项目</b></h1>
-            <project-display-list :projectList="userInfo.projectUploadList" />
+            <project-display-list :projectList="userInfo.projectUploadList"  style="text-align: center"/>
+          </el-col>
+          <el-col span="12">
+            <h1 style="font-size: 3vw;"><b>TA的讲座</b></h1>
+
           </el-col>
         </el-row>
       </el-main>

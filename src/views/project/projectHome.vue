@@ -2,7 +2,7 @@
   <div>
     <el-container direction="vertical">
       <header-card :header="{title:'项目广场'}" />
-      <el-main>
+      <el-main style="text-align: center">
 
         <el-input class="searchBar"
                   @focus="focus" @blur="true" v-model="input" placeholder="请输入搜索内容" />
@@ -40,8 +40,8 @@
           项目管理
         </el-button>
         </div>
-        <div>
-          <project-display-list :projectList="projectIDList" />
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <project-display-list style="width: 70vw;" :projectList="projectIDList" />
         </div>
       </el-main>
     </el-container>
