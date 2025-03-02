@@ -14,7 +14,6 @@
               <name-avatar :userID="thisProject.authorId" />
               <br>
               <span>更新时间：{{ thisProject.updateTime.split("T")[0] }}</span><br>
-              <el-divider></el-divider>
               <span>
                 招募状态：{{getStatusText(thisProject.status) }}
               </span><br>
@@ -142,19 +141,20 @@ export default {
 <style scoped lang="scss">
 h1 {
   font-weight: bold;
-  font-size: 2.0vw;
+  font-size: 2.5vw;
 }
 
 .project-card {
   margin-top: 10px;
   margin-bottom: 10px;
   font-size: 1.2vw;
+  line-height: 1.4vw;
   width: 100%;
 }
 
 .button {
-  font-size: 2vw;
-  padding: 8px 8px;
+  font-size: 2.1vw;
+  padding: 6px 8px;
 }
 
 .button-father {

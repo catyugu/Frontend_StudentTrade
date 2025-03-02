@@ -49,7 +49,10 @@ export default {
 <style scoped lang="scss">
 
 .avatar{
-  width: 40px;
-  height: 40px;
+  width: 6vw;
+  height: 6vw;
+}
+.name{
+  font-size: 2vw;
 }
 </style>

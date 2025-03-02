@@ -40,13 +40,13 @@
                 <el-col :span="16">
                   <span>{{userInfo.phone_number}}</span>
                 </el-col>
-              </el-row><el-divider></el-divider>
+              </el-row>
             </el-card>
           </el-col>
         </el-row>
         <el-row>
           <el-col span="12">
-            <h1>TA的项目</h1>
+            <h1 style="font-size: 3vw;"><b>TA的项目</b></h1>
             <project-display-list :projectList="userInfo.projectUploadList" />
           </el-col>
         </el-row>
@@ -95,7 +95,8 @@ export default {
   height: 15vw;
 }
 .user-info-display {
-  font-size: 2vh;
+  font-size: 2.2vw;
+  margin-bottom: 20px;
 }
 .el-divider {
   margin: 1.5vh 0;

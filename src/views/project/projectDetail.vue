@@ -4,7 +4,7 @@
       <el-header>
         <header-card :header="{title: '项目详情'}"></header-card>
       </el-header>
-      <el-main>
+      <el-main style="margin-top: 30px">
         <el-row>
           <el-col span=8>
             <img :src="projectInfo.coverSrc" alt="找不到封面"
@@ -18,12 +18,16 @@
         <el-divider></el-divider>
         <el-row>
           <el-col span=24 class="brief-intro">
-            <div v-html="projectInfo.description"></div>
+            <h2 style="font-size: larger"><b>项目概述</b></h2>
+            <div v-html="projectInfo.description"
+            style="text-align: left"></div>
           </el-col>
         </el-row>
         <el-row>
           <el-col span=24 class="project-content">
-            <div v-html="projectInfo.content"></div>
+            <h2 style="font-size: larger"><b>项目详情</b></h2>
+            <div v-html="projectInfo.content"
+                 style="text-align: left"></div>
           </el-col>
         </el-row>
 
@@ -72,17 +76,19 @@ export default {
 }
 .project-title{
   font-size: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 .brief-intro{
-  margin: 20px 0px;
+  margin: 20px 0;
+  padding: 20px;
   border: 1px solid #ccc;
   div{
     font-size: 20px;
   }
 }
 .project-content{
-  margin: 20px 0px;
+  margin: 20px 0;
+  padding: 20px;
   border: 1px solid #ccc;
   div{
     font-size: 20px;
