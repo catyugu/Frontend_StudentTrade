@@ -38,7 +38,7 @@
                   <span>电话</span>
                 </el-col>
                 <el-col :span="16">
-                  <span>{{userInfo.phone}}</span>
+                  <span>{{userInfo.phone_number}}</span>
                 </el-col>
               </el-row><el-divider></el-divider>
             </el-card>
@@ -46,6 +46,7 @@
         </el-row>
         <el-row>
           <el-col span="12">
+            <h1>TA的项目</h1>
             <project-display-list :projectList="userInfo.projectUploadList" />
           </el-col>
         </el-row>
@@ -71,7 +72,7 @@ export default {
         projectUploadList: [],
         lectureReserveList: [],
         email: '',
-        phone: ''
+        phone_number: ''
       }
     };
   },
@@ -92,5 +93,11 @@ export default {
 .avatar-display {
   width: 15vw;
   height: 15vw;
+}
+.user-info-display {
+  font-size: 2vh;
+}
+.el-divider {
+  margin: 1.5vh 0;
 }
 </style>

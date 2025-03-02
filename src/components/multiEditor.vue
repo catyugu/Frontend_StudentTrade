@@ -113,7 +113,7 @@ export default {
     uploadImage (file) {
       const formData = new FormData()
       formData.append('image', file)
-
+      console.log(file)
       this.$store.getters.http.post('/api/tool/image', formData)
       .then(response => {
         console.log(response)

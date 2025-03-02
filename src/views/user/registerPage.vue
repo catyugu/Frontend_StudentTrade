@@ -5,10 +5,8 @@
     </el-header>
     <el-main>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="邮箱" prop="email">
+        <el-form-item label="邮箱" prop="email" style="text-align: left;">
           <el-input v-model="ruleForm.email"></el-input>
-        </el-form-item>
-        <el-form-item style="text-align: left;">
           <span style="font-style: italic">备注：邮箱为唯一标识，不可修改</span>
         </el-form-item>
         <el-form-item label="姓名" prop="email" style="text-align: left;">

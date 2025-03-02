@@ -6,7 +6,7 @@
       </el-header>
       <el-main>
         <el-avatar :src="object.avatarSrc || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'"
-                   size="large"></el-avatar>
+                   style="height: 75px;width: 75px"></el-avatar>
         <el-form :model="object" label-width="80px">
           <br>
           <el-form-item label="邮箱" style="text-align: left;">

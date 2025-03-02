@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-header style="padding-top: 20px;padding-bottom: 20px">
+    <el-header style="padding-top: 20px;padding-bottom: 30px">
       <el-row>
         <el-col span="4">
-          <br>
+          <el-button @click="routeReturn">返回</el-button>
         </el-col>
         <el-col span="16">{{ title }}</el-col>
         <el-col span="4">
@@ -57,6 +57,9 @@ export default {
     logout() {
       this.$store.dispatch('logoutProcess');
       this.$router.push('/user/login');
+    },
+    routeReturn() {
+      this.$router.go(-1);
     }
   }
 };
