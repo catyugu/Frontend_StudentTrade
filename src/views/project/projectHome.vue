@@ -3,7 +3,6 @@
     <el-container direction="vertical">
       <header-card :header="{title:'项目广场'}" />
       <el-main style="text-align: center">
-
         <el-input class="searchBar"
                   @focus="focus" @blur="true" v-model="input" placeholder="请输入搜索内容" />
         <div class="block">

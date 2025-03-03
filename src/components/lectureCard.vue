@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="lecture-card-container">
     <div class="lecture-card">
       <el-row style="margin-top: 10px;">
         <el-card :body-style="{ padding: '0px' }">
           <el-row class="card-body">
             <el-col span="6" @click.native="goToLectureDetail">
-              <img :src="img_src" class="image" alt="Image not found!">
+              <img :src="coverSrc" class="image" alt="Image not found!">
             </el-col>
             <el-col span="12">
               <div class="card-info" @click="goToLectureDetail">
@@ -30,7 +30,7 @@
                     登录后方可预约
                   </el-button>
                 </div>
-                <div v-if="this.$store.getters.getIsLogin && state==='报名中' &&
+                <div v-if="this.$store.getters.getIsLogin && status==='报名中' &&
                  !(this.$store.getters.getReserveList.includes(this.id))"
                      class="button-father">
                   <el-button type="primary" class="button" @click="reserveLecture">
@@ -39,14 +39,14 @@
                   <br>
                 </div>
                 <div class="button-father"
-                      v-if="this.$store.getters.getIsLogin && state==='报名中' && (this.$store.getters.getReserveList.includes(this.id))">
+                      v-if="this.$store.getters.getIsLogin && status==='报名中' && (this.$store.getters.getReserveList.includes(this.id))">
                   <el-button type="primary" class="button" @click="cancelReservation"
                   >
                     取消预约
                   </el-button>
                   <br>
                 </div>
-                <div class="button-father" v-if="state==='已结束'">
+                <div class="button-father" v-if="status==='已结束'">
                   <el-button class="button" @click="goToLectureDetail">
                     讲座已结束，点此查看详情
                   </el-button>
@@ -61,7 +61,7 @@
             </el-col>
 
           </el-row>
-          <el-row v-if="showDescription">
+          <el-row v-if="showDescription" class="lecture-description">
             {{ this.description }}
           </el-row>
         </el-card>
@@ -171,31 +171,45 @@ export default {
 <style scoped lang="scss">
 h1 {
   font-weight: bold;
-  font-size: clamp(1.2rem, 2.25vw, 2.25rem);
+  font-size: 2.5vw;
 }
-.button{
-  font-size: clamp(0.8rem, 3vw, 1.5rem);
-  padding: 10px 10px
-}
-.button-father{
-  margin-top: 5%;
-  margin-bottom: 5%;
-}
+
 .lecture-card {
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: clamp(0.7rem, 1.5vw, 1.5rem);
+  font-size: min(2vw,20px);
+  line-height: 2.3vw;
+  width: 100%;
 }
-.card-body{
+.lecture-card-container{
+  width: 100%;
+}
+
+.button {
+  font-size: min(3vw,28px);
+  padding: 6px 10px;
+}
+
+.button-father {
+  margin: 3%;
+}
+
+.card-body {
   display: flex;
   flex-direction: row;
   margin: 5px 0;
 }
+
 .button-group {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.lecture-description{
+  font-size: min(3vw,20px);
+  line-height: 2.5vw;
 }
 </style>

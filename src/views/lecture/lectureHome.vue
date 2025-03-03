@@ -2,17 +2,20 @@
   <div>
     <el-container direction="vertical">
       <header-card :header="{title:'讲座中心'}" />
-      <el-main>
+      <el-main style="text-align: center">
         <el-input class="searchBar"
-                  @focus="focus" @blur="true" v-model="object.input" placeholder="请输入搜索内容" />
+                  @focus="focus" @blur="true" v-model="input" placeholder="请输入搜索内容" />
         <div class="block">
-          <el-carousel height="200px">
-            <el-carousel-item v-for="item in 3" :key="item">
-              <h3 class="small">{{ item }}</h3>
+          <el-carousel height="25vw" type="card" class="carousel-container">
+            <el-carousel-item v-for="item in scrollWin" :key="item">
+              <h3 class="medium">
+                <img :src=" item.coverSrc" alt="" class="carousel-image"
+                     @click="$router.push({name: 'lectureDetail', query: {lectureID: item.id}})"/>
+              </h3>
             </el-carousel-item>
           </el-carousel>
         </div>
-        <div>
+        <div class="lecture-button-group">
           <el-button
             type="primary"
             style="margin-top: 10px"
@@ -38,11 +41,9 @@
           </el-button>
         </div>
         <div>
-          <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
-            <li v-for="(i, index) in object.content" :key="index">
-              <lecture-card :i="i" />
-            </li>
-          </ul>
+          <div style="display: flex; flex-direction: column; align-items: center">
+            <lecture-display-list style="width: 70vw;" :lecture-list="lectureIDList" />
+          </div>
         </div>
       </el-main>
     </el-container>
@@ -50,56 +51,26 @@
 </template>
 
 <script>
-import LectureCard from '@/components/lectureCard.vue';
 import HeaderCard from '@/components/headerCard.vue';
+import { nextTick } from 'vue';
+import LectureDisplayList from '@/components/lectureDisplayList.vue';
 
 export default {
-  components: { HeaderCard, LectureCard },
+  components: { LectureDisplayList, HeaderCard},
   data() {
     return {
-      object: {
-        input: '',
-        content: [
-          {
-            title: '讲座1',
-            speakerID: '114514',
-            coverSrc: 'src/assets/logo.svg',
-            description: '讲座描述',
-            content: '讲座内容',
-            place: '讲座地点',
-            time: '讲座时间',
-            reserve_num: '0',
-            reserve_user_list: '',
-            max_num: '10',
-            status: '报名中',
-            createTime: '2022-05-05',
-            updateTime: '2022-05-05',
-            id: '1'
-          },
-          {
-            title: '讲座2',
-            speakerID: '1919810',
-            coverSrc: 'src/assets/logo.svg',
-            description: '讲座描述',
-            content: '讲座内容',
-            place: '讲座地点',
-            time: '讲座时间',
-            reserve_num: '0',
-            reserve_user_list: '',
-            max_num: '10',
-            status: '报名中',
-            createTime: '2022-05-05',
-            updateTime: '2022-05-05',
-            id: '2'
-          }
-        ]
-      }
-    };
+      lectureIDList: [],
+      scrollWin: [],
+      input: '',
+    }
   },
   methods: {
     toUpload(){
       this.$router.push({
-        name: 'lectureUpload'
+        name: 'LectureUpload',
+        query: {
+          userID: this.$store.state.userInfo.userID
+        }
       });
     },
     myReserve() {
@@ -118,6 +89,23 @@ export default {
         }
       });
     },
+    async created() {
+      console.log('lectureHome created');
+      nextTick(async () => {
+        try {
+          this.lectureIDList = await this.$store.dispatch('getLectureIDList');
+          for (let i = 0; i < 3; i++){
+            this.scrollWin.push(await this.$store.dispatch('getLectureInfoByID', this.lectureIDList[i]));
+          }
+        } catch (error) {
+          this.$notify({
+            type: 'error',
+            title: '获取讲座列表失败!',
+            message: '服务器请求失败，请稍后再试！'
+          });
+        }
+      });
+    }
   },
 
   computed: {}
@@ -134,7 +122,7 @@ export default {
   color: #475669;
   font-size: 14px;
   opacity: 0.75;
-  line-height: 150px;
+  line-height: 200px;
   margin: 0;
 }
 
@@ -149,5 +137,20 @@ export default {
 .image {
   width: 100%;
   display: block;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lecture-button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  el-button{
+    padding: 5px 6px;
+  }
 }
 </style>
