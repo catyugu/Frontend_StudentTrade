@@ -146,8 +146,8 @@ h1 {
 .project-card {
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 1.4vw;
-  line-height: 1.4vw;
+  font-size: 1.5vw;
+  line-height: 1.7vw;
   width: 100%;
 }
 .project-card-container{
@@ -155,8 +155,8 @@ h1 {
 }
 
 .button {
-  font-size: 2.1vw;
-  padding: 7% 7%;
+  font-size: 2vw;
+  padding: 0.5vw 7%;
 }
 
 .button-father {

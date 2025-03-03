@@ -26,7 +26,7 @@
         <el-row>
           <el-col span=24 class="project-content">
             <h2 style="font-size: larger"><b>项目详情</b></h2>
-            <div v-html="projectInfo.content"
+            <div v-html="projectInfo.content" class="project-content-child"
                  style="text-align: left"></div>
           </el-col>
         </el-row>
@@ -75,7 +75,8 @@ export default {
   height: 100%;
 }
 .project-title{
-  font-size: 30px;
+  font-size: 5vw;
+  font-weight: bold;
   margin-bottom: 20px;
 }
 .brief-intro{
@@ -92,6 +93,12 @@ export default {
   border: 1px solid #ccc;
   div{
     font-size: 20px;
+  }
+}
+.project-content-child{
+  display: flex;
+  img{
+    width: 100%;
   }
 }
 </style>

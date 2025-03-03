@@ -57,12 +57,10 @@ export default {
     this.quill.root.innerHTML = this.content
     this.editorContent = this.content // 添加: 初始化 editorContent
     this.quill.on ('text-change', () => {
-      this.editorContent = this.quill.root.innerHTML // 修改: 更新 editorContent
+      this.editorContent = this.quill.root.innerHTML
       this.$emit('contentData', this.editorContent)
     })
     this.addQuillTitle()
-    // 假设需要在其他地方调用 updateContent 方法来更新内容
-    // this.updateContent('新的内容');
   },
   methods: {
     addQuillTitle () {
@@ -157,6 +155,9 @@ export default {
       const img = this.quill.root.querySelector('img[src="' + url + '"]');
       if (img) {
         img.style.maxWidth = '100%';
+        this.editorContent = this.quill.root.innerHTML
+        this.$emit('contentData', this.editorContent)
+        console.log(this.editorContent)
       }
     }
     }

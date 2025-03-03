@@ -10,7 +10,7 @@
 
         </el-col>
         <el-col span="16" style="font-weight: bold;
-        font-size: 20px">{{ title }}</el-col>
+        font-size: 4vw">{{ title }}</el-col>
         <el-col span="4">
           <div v-if="$store.getters.getIsLogin">
             <el-dropdown>
