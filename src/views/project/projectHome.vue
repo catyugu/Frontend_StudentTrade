@@ -21,7 +21,7 @@
           v-if="this.$store.getters.getIsLogin"
           type="primary"
           @click="myLike"
-          style="margin-top: 10px">
+          style="margin-top: 10px;">
           我的收藏
         </el-button>
         <el-button
@@ -145,6 +145,15 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.project-button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  el-button{
+    padding: 5px 6px;
+  }
 }
 
 </style>

@@ -44,16 +44,14 @@
             </el-card>
           </el-col>
         </el-row>
-        <el-row>
-          <el-col span="12">
-            <h1 style="font-size: 3vw;"><b>TA的项目</b></h1>
-            <project-display-list :projectList="userInfo.projectUploadList"  style="text-align: center"/>
-          </el-col>
-          <el-col span="12">
-            <h1 style="font-size: 3vw;"><b>TA的讲座</b></h1>
-
-          </el-col>
-        </el-row>
+        <el-tabs v-model="activeName">
+          <el-tab-pane label="上传的项目" name="first">
+            <project-display-list :projectList="userInfo.projectUploadList" />
+          </el-tab-pane>
+          <el-tab-pane label="上传的讲座" name="second">
+            <lecture-display-list :lectureList="userInfo.lectureUploadList" />
+          </el-tab-pane>
+        </el-tabs>
       </el-main>
     </el-container>
   </div>
@@ -61,22 +59,27 @@
 <script>
 import HeaderCard from '@/components/headerCard.vue';
 import ProjectDisplayList from '@/components/projectDisplayList.vue';
+import LectureDisplayList from '@/components/lectureDisplayList.vue';
 export default {
   components: {
+    LectureDisplayList,
     ProjectDisplayList,
     HeaderCard
   },
   data() {
     return {
+      activeName: 'first',
       userID: '',
       userInfo: {
         avatarSrc: '',
         username: '',
         gender: '',
         projectUploadList: [],
+        lectureUploadList: [],
+        projectLikeList: [],
         lectureReserveList: [],
         email: '',
-        phone_number: ''
+        phone_number: '',
       }
     };
   },

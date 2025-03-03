@@ -41,7 +41,7 @@
               <div
                 v-if="(this.$store.getters.getIsLogin && this.$store.getters.getLikeList.includes(this.thisProject.id))"
                 class="button-father">
-                <el-button type="primary" class="button" @click="cancelLikeProject">
+                <el-button type="danger" class="button" @click="cancelLikeProject">
                   取消收藏
                 </el-button>
               </div>
@@ -53,7 +53,7 @@
           <el-row class="card-description" v-if="showDescription">
             <el-divider></el-divider>
             <el-row>
-              <span v-text="thisProject.description"></span>
+              <span v-text="thisProject.description" class="project-description"></span>
             </el-row>
           </el-row>
         </el-card>
@@ -146,8 +146,8 @@ h1 {
 .project-card {
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 1.5vw;
-  line-height: 1.7vw;
+  font-size: min(2vw,20px);
+  line-height: 2.3vw;
   width: 100%;
 }
 .project-card-container{
@@ -155,8 +155,8 @@ h1 {
 }
 
 .button {
-  font-size: 2vw;
-  padding: 0.5vw 7%;
+  font-size: min(3vw,28px);
+  padding: 6px 10px;
 }
 
 .button-father {
@@ -175,5 +175,10 @@ h1 {
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.project-description{
+  font-size: min(3vw,20px);
+  line-height: 2.5vw;
 }
 </style>

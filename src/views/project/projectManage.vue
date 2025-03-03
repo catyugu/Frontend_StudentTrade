@@ -2,8 +2,8 @@
   <div>
     <el-container direction="vertical">
       <header-card :header="{title:'已发布项目'}" />
+      <project-display-list :projectList="projectList" class="project-list" />
     </el-container>
-    <project-display-list :projectList="projectList" />
   </div>
 </template>
 <script>
@@ -32,5 +32,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.project-list {
+  width: 80vw;
+  align-self: center;
+}
 </style>
