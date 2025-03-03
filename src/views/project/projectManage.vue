@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container direction="vertical">
-      <header-card :header="{title:'发布的项目'}" />
+      <header-card :header="{title:'已发布项目'}" />
     </el-container>
     <project-display-list :projectList="projectList" />
   </div>

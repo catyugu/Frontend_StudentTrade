@@ -10,7 +10,8 @@
           <el-carousel height="25vw" type="card" class="carousel-container">
             <el-carousel-item v-for="item in scrollWin" :key="item">
               <h3 class="medium">
-                <img :src=" item.coverSrc" alt="" class="carousel-image"/>
+                <img :src=" item.coverSrc" alt="" class="carousel-image"
+                @click="$router.push({name: 'projectDetail', query: {projectID: item.id}})"/>
               </h3>
             </el-carousel-item>
           </el-carousel>

@@ -3,11 +3,14 @@
     <el-header style="margin-top: 20px;margin-bottom: 30px">
       <el-row>
         <el-col span="4">
-          &nbsp;
-          <el-button @click="routeReturn"
-          v-if="this.$route.path.split('/').length > 2">返回</el-button>
+          <el-button class="back-button" @click="routeReturn"
+          v-if="this.$route.path.split('/').length > 2">
+           返回</el-button>
+          <div v-else>  &nbsp;</div>
+
         </el-col>
-        <el-col span="16" style="font-weight: bold">{{ title }}</el-col>
+        <el-col span="16" style="font-weight: bold;
+        font-size: 20px">{{ title }}</el-col>
         <el-col span="4">
           <div v-if="$store.getters.getIsLogin">
             <el-dropdown>
@@ -68,5 +71,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.back-button {
+  padding: 5px 5px;
+}
 </style>

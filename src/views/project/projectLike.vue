@@ -1,9 +1,12 @@
 <template>
   <div>
     <el-container direction="vertical">
-      <header-card :header="{title:'我收藏的项目'}" />
+      <header-card :header="{title:'收藏项目'}" />
+      <el-main class="project-list">
+        <project-display-list :projectList="projectIDList" />
+      </el-main>
     </el-container>
-    <project-display-list :projectList="projectIDList" />
+
   </div>
 </template>
 <script>
@@ -23,11 +26,14 @@ export default {
     this.userID = this.$route.query.userID;
     let info = await this.$store.dispatch('getUserInfoByID', this.userID);
     this.projectIDList = info.projectLikeList;
-    console.log(info)
-  },
+    console.log(info);
+  }
 };
 </script>
 
 <style scoped lang="scss">
-
+.project-list {
+  width: 80vw;
+  align-self: center;
+}
 </style>

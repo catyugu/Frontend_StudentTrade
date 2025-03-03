@@ -136,6 +136,10 @@ export default {
         coverSrc: this.form.coverSrc,
         status: this.form.status,
         authorId: this.$store.getters.getUserID
+      },{
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }).then(res => {
         console.log(res)
         if (res.data.code === 0) {

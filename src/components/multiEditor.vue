@@ -104,35 +104,61 @@ export default {
       input.click()
 
       input.onchange = () => {
-        const file = input.files[0]
+        const file = input.files[0];
         if (file) {
-          this.uploadImage(file)
+          const Width = 600;
+          const resize = (width, height) => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            height = Math.round((Width / width) * height);
+            width = Width;
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
+            return canvas.toDataURL(file.type);
+          }
+          const img = new Image();
+          img.src = URL.createObjectURL(file);
+          img.onload = () => {
+            const width = img.width;
+            const height = img.height;
+            const resizedImage = resize(width, height);
+            this.uploadImage(resizedImage);
+          };
         }
       }
     },
-    uploadImage (file) {
-      const formData = new FormData()
-      formData.append('image', file)
-      console.log(file)
-      this.$store.getters.http.post('/api/tool/image', formData)
-      .then(response => {
-        console.log(response)
-        const url = response.data.data.url // 假设服务器返回的 JSON 中包含图片的 URL
-        this.insertToEditor(url)
-      })
-      .catch(error => {
-        console.error('Error uploading image:', error)
+    async uploadImage (base64Image) {
+      try {
+        const response = await this.$store.getters.http.post('/api/tool/image', base64Image, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        console.log(response);
+        const url = response.data.data; // 假设服务器返回的 JSON 中包含图片的 URL
+        this.insertToEditor(url);
+      } catch (error) {
+        console.error('Error uploading image:', error);
         this.$notify({
           type: 'error',
           title: '错误',
           message: '图片上传失败',
-        })
-      })
+        });
+      }
     },
     insertToEditor (url) {
-      const range = this.quill.getSelection()
-      this.quill.insertEmbed(range.index, 'image', url, Quill.sources.USER)
+      const range = this.quill.getSelection();
+      const index = range ? range.index : this.quill.getLength();
+      this.quill.insertEmbed(index, 'image', url, Quill.sources.USER);
+      this.quill.setSelection(index + 1, Quill.sources.SILENT);
+
+      // 获取插入的图片元素
+      const img = this.quill.root.querySelector('img[src="' + url + '"]');
+      if (img) {
+        img.style.maxWidth = '100%';
+      }
     }
-  }
+    }
 }
 </script>
