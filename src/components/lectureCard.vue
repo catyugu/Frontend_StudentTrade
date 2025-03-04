@@ -5,21 +5,21 @@
         <el-card :body-style="{ padding: '0px' }">
           <el-row class="card-body">
             <el-col span="6" @click.native="goToLectureDetail">
-              <img :src="coverSrc" class="image" alt="Image not found!">
+              <img :src="thisLecture.coverSrc" class="image" alt="Image not found!">
             </el-col>
             <el-col span="12">
               <div class="card-info" @click="goToLectureDetail">
-                <h1> {{ title }}</h1>
-                <name-avatar :userID="speakerID"></name-avatar>
+                <h1> {{ thisLecture.title }}</h1>
+                <name-avatar :userID="thisLecture.speakerID"></name-avatar>
                 <br>
-                <span> 地点: {{ place }}</span><br>
-                <span> 时间: {{ time }}</span><br>
-                <span> 预约人数: {{ reserve_num }}/{{ max_num }}</span><br>
+                <span> 地点: {{ thisLecture.place }}</span><br>
+                <span> 时间: {{ thisLecture.time }}</span><br>
+                <span> 预约人数: {{ thisLecture.reserve_num }}/{{ thisLecture.max_num }}</span><br>
               </div>
             </el-col>
             <el-col span="6">
               <div class="button-group clearfix">
-                <div v-if="speakerID === this.$store.getters.getUserID" class="button-father">
+                <div v-if="thisLecture.speakerID === this.$store.getters.getUserID" class="button-father">
                   <el-button type="success" class="button" @click="goEditLecture">
                     前往编辑
                   </el-button>
@@ -30,8 +30,8 @@
                     登录后方可预约
                   </el-button>
                 </div>
-                <div v-if="this.$store.getters.getIsLogin && status==='报名中' &&
-                 !(this.$store.getters.getReserveList.includes(this.id))"
+                <div v-if="this.$store.getters.getIsLogin && thisLecture.status==='报名中' &&
+                 !(this.$store.getters.getReserveList.includes(this.lectureID))"
                      class="button-father">
                   <el-button type="primary" class="button" @click="reserveLecture">
                     预约
@@ -39,14 +39,15 @@
                   <br>
                 </div>
                 <div class="button-father"
-                      v-if="this.$store.getters.getIsLogin && status==='报名中' && (this.$store.getters.getReserveList.includes(this.id))">
+                      v-if="this.$store.getters.getIsLogin && thisLecture.status==='报名中' &&
+                      (this.$store.getters.getReserveList.includes(this.lectureID))">
                   <el-button type="primary" class="button" @click="cancelReservation"
                   >
                     取消预约
                   </el-button>
                   <br>
                 </div>
-                <div class="button-father" v-if="status==='已结束'">
+                <div class="button-father" v-if="thisLecture.status==='已结束'">
                   <el-button class="button" @click="goToLectureDetail">
                     讲座已结束，点此查看详情
                   </el-button>
@@ -62,7 +63,7 @@
 
           </el-row>
           <el-row v-if="showDescription" class="lecture-description">
-            {{ this.description }}
+            {{ thisLecture.description }}
           </el-row>
         </el-card>
       </el-row>
@@ -75,72 +76,43 @@ import NameAvatar from '@/components/nameAvatar.vue';
 export default {
   components: { NameAvatar },
   props: {
-    i: {
-      type: Object,
-      default: () => {
-        return {
-          coverSrc: '',
-          title: '',
-          speakerID: '',
-          description: '',
-          content: '',
-          place: '',
-          time: '',
-          reserve_num: '',
-          reserve_user_list: '',
-          max_num: '',
-          status: '',
-          createTime: '',
-          updateTime: '',
-          id: ''
-        };
-      }
+    lectureID: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return {
       showDescription: false,
-      coverSrc: '',
-      title: '',
-      speakerID: '',
-      description: '',
-      content: '',
-      place: '',
-      time: '',
-      reserve_num: '',
-      reserve_user_list: '',
-      max_num: '',
-      status: '',
-      createTime: '',
-      updateTime: '',
-      id: ''
+      thisLecture: {
+        coverSrc: '',
+        title: '',
+        speakerID: '',
+        description: '',
+        content: '',
+        place: '',
+        time: '',
+        reserve_num: '',
+        reserve_user_list: '',
+        max_num: '',
+        status: '',
+        createTime: '',
+        updateTime: '',
+      },
     };
   },
   created() {
-    this.img_src = this.i.coverSrc;
-    this.title = this.i.title;
-    this.speakerID = this.i.speakerID;
-    this.description = this.i.description;
-    this.content = this.i.content;
-    this.id = this.i.id;
-    this.place = this.i.place;
-    this.time = this.i.time;
-    this.reserve_num = this.i.reserve_num;
-    this.reserve_user_list = this.i.reserve_user_list;
-    this.state = this.i.status;
-    this.create_time = this.i.createTime;
-    this.update_time = this.i.updateTime;
-    this.max_num = this.i.max_num;
+    this.thisLecture = this.$store.dispatch('getLectureInfoByID', this.lectureID);
   },
   methods: {
     expand() {
       this.showDescription = !this.showDescription;
     },
-    reserveLecture() {
-      this.$store.dispatch('reserveProcess', this.id, this.$store.getters.getUserID);
+    async reserveLecture() {
+      await this.$store.dispatch('reserveProcess', this.lectureID, this.$store.getters.getUserID);
     },
-    cancelReservation() {
-      this.$store.dispatch('cancelReserveProcess', this.id, this.$store.getters.getUserID);
+    async cancelReservation() {
+      await this.$store.dispatch('cancelReserveProcess', this.lectureID, this.$store.getters.getUserID);
     },
     goLogin() {
       this.$router.push({
@@ -151,7 +123,7 @@ export default {
       this.$router.push({
         name: 'lectureDetail',
         query: {
-          lectureID: this.id
+          lectureID: this.lectureID
         }
       });
     },
@@ -159,7 +131,7 @@ export default {
       this.$router.push({
         name: 'LectureEdit',
         query: {
-          lectureID: this.id
+          lectureID: this.lectureID
         }
       });
     }
