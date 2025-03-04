@@ -1,121 +1,105 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import ProjectHome from '@/views/project/projectHome.vue';
-import HelpHome from '@/views/help/helpHome.vue'
-import ProjectDetail from '@/views/project/projectDetail.vue';
-import LectureDetail from '@/views/lecture/lectureDetail.vue';
-import UserInfoDisplay from '@/views/user/userInfoDisplay.vue';
-import LectureReserve from '@/views/lecture/lectureReserve.vue';
-import ProjectUpload from '@/views/project/projectUpload.vue';
-import ProjectManage from '@/views/project/projectManage.vue';
-import UserHome from '@/views/user/userHome.vue';
-import LoginPage from '@/views/user/loginPage.vue';
-import LectureUpload from '@/views/lecture/lectureUpload.vue';
-import LectureHome from '@/views/lecture/lectureHome.vue';
-import RegisterPage from '@/views/user/registerPage.vue';
-import ProjectLike from '@/views/project/projectLike.vue';
-import LectureEdit from '@/views/lecture/lectureEdit.vue';
-import LectureManage from '@/views/lecture/lectureManage.vue';
-import ProjectEdit from '@/views/project/projectEdit.vue';
-import App from '@/App.vue';
-import ChangePassword from '@/views/user/changePassword.vue';
 Vue.use(Router)
+
 export default new Router({
   routes: [
     {
       path: '/',
-      component: App,
+      component: () => import('@/App.vue'),
       redirect: '/project',
       children: [
-    {
-      path: '/project',
-      name: 'projectHome',
-      component: ProjectHome
-    },
-    {
-      path: '/project/upload',
-      name: 'projectUpload',
-      component: ProjectUpload
-    },
-    {
-      path: 'project/detail',
-      name: 'projectDetail',
-      component: ProjectDetail,
-    },
-    {
-      path: '/project/like',
-      name: 'projectLike',
-      component: ProjectLike,
-    },
-    {
-      path: '/project/manage',
-      name: 'projectManage',
-      component: ProjectManage,
-    },
-    {
-      path: '/project/edit',
-      name: 'ProjectEdit',
-      component: ProjectEdit,
-    },
-    {
-      path: '/user',
-      name: 'userHome',
-      component:UserHome,
-    },
-    {
-      path: '/user/login',
-      name: 'Login',
-      component: LoginPage,
-    },
-    {
-      path: '/user/register',
-      name: 'register',
-      component: RegisterPage
-    },
         {
-      path: '/user/changePwd',
-      name: 'changePwd',
-      component: ChangePassword,
-    },
-    {
-      path: '/user/userInfoDisplay',
-      name: 'UserInfoDisplay',
-      component: UserInfoDisplay,
-    },
-    {
-      path: '/lecture',
-      name: 'LectureHome',
-      component: LectureHome
-    },
-    {
-      path: '/lecture/upload',
-      name: 'LectureUpload',
-      component: LectureUpload
-    },
-    {
-      path: '/lecture/edit',
-      name: 'LectureEdit',
-      component: LectureEdit,
-    },
-    {
-      path: '/lecture/detail',
-      name: 'lectureDetail',
-      component: LectureDetail,
-    },
-    {
-      path: '/lecture/reserve',
-      name: 'LectureReserve',
-      component: LectureReserve,
-    },
-    {
-      path: '/lecture/manage',
-      name: 'LectureManage',
-      component: LectureManage,
-    },
-    {
-      path: '/help',
-      name: 'HelpHome',
-      component: HelpHome
-    },
-  ]}]
+          path: '/project',
+          name: 'projectHome',
+          component: () => import('@/views/project/projectHome.vue')
+        },
+        {
+          path: '/project/upload',
+          name: 'projectUpload',
+          component: () => import('@/views/project/projectUpload.vue')
+        },
+        {
+          path: 'project/detail',
+          name: 'projectDetail',
+          component: () => import('@/views/project/projectDetail.vue')
+        },
+        {
+          path: '/project/like',
+          name: 'projectLike',
+          component: () => import('@/views/project/projectLike.vue')
+        },
+        {
+          path: '/project/manage',
+          name: 'projectManage',
+          component: () => import('@/views/project/projectManage.vue')
+        },
+        {
+          path: '/project/edit',
+          name: 'ProjectEdit',
+          component: () => import('@/views/project/projectEdit.vue')
+        },
+        {
+          path: '/user',
+          name: 'userHome',
+          component: () => import('@/views/user/userHome.vue')
+        },
+        {
+          path: '/user/login',
+          name: 'Login',
+          component: () => import('@/views/user/loginPage.vue')
+        },
+        {
+          path: '/user/register',
+          name: 'register',
+          component: () => import('@/views/user/registerPage.vue')
+        },
+        {
+          path: '/user/changePwd',
+          name: 'changePwd',
+          component: () => import('@/views/user/changePassword.vue')
+        },
+        {
+          path: '/user/userInfoDisplay',
+          name: 'UserInfoDisplay',
+          component: () => import('@/views/user/userInfoDisplay.vue')
+        },
+        {
+          path: '/lecture',
+          name: 'LectureHome',
+          component: () => import('@/views/lecture/lectureHome.vue')
+        },
+        {
+          path: '/lecture/upload',
+          name: 'LectureUpload',
+          component: () => import('@/views/lecture/lectureUpload.vue')
+        },
+        {
+          path: '/lecture/edit',
+          name: 'LectureEdit',
+          component: () => import('@/views/lecture/lectureEdit.vue')
+        },
+        {
+          path: '/lecture/detail',
+          name: 'lectureDetail',
+          component: () => import('@/views/lecture/lectureDetail.vue')
+        },
+        {
+          path: '/lecture/reserve',
+          name: 'LectureReserve',
+          component: () => import('@/views/lecture/lectureReserve.vue')
+        },
+        {
+          path: '/lecture/manage',
+          name: 'LectureManage',
+          component: () => import('@/views/lecture/lectureManage.vue')
+        },
+        {
+          path: '/help',
+          name: 'HelpHome',
+          component: () => import('@/views/help/helpHome.vue')
+        },
+      ]
+    }
+  ]
 })
