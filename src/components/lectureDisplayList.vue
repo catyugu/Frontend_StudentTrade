@@ -1,8 +1,10 @@
 <template>
   <div>
-    <div v-for="(i, index) in object.list" :key="index">
-      <lecture-card :i="i"></lecture-card>
-    </div>
+    <ul class="lecture-display-list">
+      <li v-for="(item, index) in lectureList" :key="index" class="lecture-display-list-item">
+        <LectureCard :lectureID="item" />
+      </li>
+    </ul>
   </div>
 </template>
 <script>
@@ -24,13 +26,16 @@ export default {
     };
   },
   created() {
-    for (let i = 0; i < this.lectureList.length; i++) {
-      this.object.list.push(this.$store.dispatch('getLectureInfoByID', this.lectureList[i]), i);
-    }
+    this.object.list = this.lectureList;
   }
 };
 </script>
 
 <style scoped lang="scss">
-
+.lecture-display-list-item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 </style>
