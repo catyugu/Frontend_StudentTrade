@@ -1,4 +1,5 @@
 import Vue from 'vue';
+
 export default {
   async loginProcess(context, token) {
     // 设置临时登录状态标志
@@ -73,7 +74,9 @@ export default {
           message: err.message,
           type: 'error'
         });
-      }).finally(() => { return null;});
+      }).finally(() => {
+        return null;
+      });
   },
   async refreshUserInfo(context) {
     return context.state.http.get('/api/user/userInfo/own').then(res => {
@@ -91,7 +94,9 @@ export default {
           message: err.message,
           type: 'error'
         });
-      }).finally(()=>{return false;});
+      }).finally(() => {
+        return false;
+      });
   },
   refreshProjectInfo(context, projectID) {
     context.state.http.get('/project/?' + projectID).then(res => {
@@ -170,7 +175,7 @@ export default {
       });
   },
   likeProcess(context, projectId) {
-    return context.state.http.post( '/api/project/like?projectId='+ projectId + '&userId='+context.getters.getUserID)
+    return context.state.http.post('/api/project/like?projectId=' + projectId + '&userId=' + context.getters.getUserID)
       .then(async res => {
         console.log(res)
         if (res.data.code === 0) {
@@ -181,7 +186,7 @@ export default {
           });
           await context.dispatch('refreshUserInfo');
           await context.dispatch('refreshProjectInfo', projectId);
-        }else{
+        } else {
           Vue.prototype.$notify({
             title: '收藏失败',
             message: res.data.msg,
@@ -200,7 +205,7 @@ export default {
       });
   },
   cancelLikeProcess(context, projectId) {
-    return context.state.http.post('/api/project/cancelLike?projectId='+ projectId + '&userId='+context.getters.getUserID)
+    return context.state.http.post('/api/project/cancelLike?projectId=' + projectId + '&userId=' + context.getters.getUserID)
       .then(async res => {
         console.log(res)
         if (res.data.code === 0) {
@@ -211,7 +216,7 @@ export default {
           });
           await context.dispatch('refreshUserInfo');
           await context.dispatch('refreshProjectInfo', projectId);
-        }else{
+        } else {
           Vue.prototype.$notify({
             title: '取消收藏失败',
             message: res.data.msg,

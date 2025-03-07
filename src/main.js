@@ -26,5 +26,16 @@ new Vue({
     }else {
       await this.$router.push('/user/login');
     }
-  }
+    // 添加全局响应拦截器
+    this.$store.state.http.interceptors.response.use(
+      response => response,
+      error => {
+        if (error.response && error.response.status === 401) {
+          Router.push('/user/login'); // 假设登录页面的路由为 '/login'
+        }
+        return Promise.reject(error);
+      }
+    );
+  },
+
 }).$mount('#app')
