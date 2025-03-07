@@ -7,12 +7,21 @@
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="邮箱" prop="email" style="text-align: left;">
           <el-input v-model="ruleForm.email"></el-input>
+          <el-button type="primary" style="margin-top: 10px"
+                     @click="sendVerifyCode"
+                      v-if="countdown === 0">发送验证码</el-button>
+          <el-button v-if="countdown > 0" style="margin-top: 10px">
+            等待{{ countdown }}秒后重试
+          </el-button><br>
           <span style="font-style: italic">备注：邮箱为唯一标识，不可修改</span>
+
+        </el-form-item>
+        <el-form-item label="验证码" prop="verifyCode" style="text-align: left;">
+          <el-input v-model="ruleForm.verifyCode"></el-input>
         </el-form-item>
         <el-form-item label="姓名" prop="email" style="text-align: left;">
           <el-input v-model="ruleForm.username"></el-input>
           <span style="font-style: italic">备注：该项不可修改，请填写真实姓名,方便身份审核与师生联系</span>
-          <span style="font-style: italic">您的真实姓名</span>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="ruleForm.password"></el-input>
@@ -33,11 +42,13 @@
 export default {
   data() {
     return {
+      countdown: 0,
       ruleForm: {
         email: '',
         username: '',
         password: '',
-        checkPass: ''
+        checkPass: '',
+        verifyCode: ''
       },
       rules: {
         email: [
@@ -47,6 +58,10 @@ export default {
         username: [
           { required: true, message: '请输入真实姓名', trigger: 'blur' },
           { min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur' }
+        ],
+        verifyCode: [
+          { required: true, message: '请输入验证码', trigger: 'blur' },
+          { min: 6, max: 6, message: '验证码为6位字符', trigger: 'blur'}
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }
@@ -66,7 +81,48 @@ export default {
       }
     };
   },
+  mounted() {
+    this.timer();
+  },
+
   methods: {
+    timer() {
+      setInterval(() => {
+        if (this.countdown > 0) {
+          this.countdown--;
+        }
+      }, 1000);
+    },
+    sendVerifyCode() {
+      try {
+        this.$store.getters.http.post('/api/user/sendVerifyCode', null, {
+          params: {
+            email: this.ruleForm.email
+          }
+        })
+          .then((res) => {
+            if (res.data.code === 0) {
+              this.$notify({
+                type: 'success',
+                title: '发送成功！',
+                message: '验证码已发送至邮箱，请注意查收！'
+              });
+              this.countdown = 60;
+            } else {
+              this.$notify({
+                type: 'error',
+                title: '发送失败！',
+                message: res.data.msg
+              });
+            }
+          });
+      } catch (error) {
+        this.$notify({
+          type: 'error',
+          title: '发送失败！',
+          message: '服务器请求失败，请稍后再试！'
+      })}
+    },
     goBack() {
       this.$router.go(-1);
     },
@@ -78,7 +134,8 @@ export default {
                 params: {
                   email: this.ruleForm.email,
                   username: this.ruleForm.username,
-                  password: this.ruleForm.password
+                  password: this.ruleForm.password,
+                  verificationCode: this.ruleForm.verifyCode
                 }
               })
               .then((res) => {

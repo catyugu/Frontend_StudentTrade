@@ -15,6 +15,7 @@
         </el-form>
         <el-button type="primary" @click="login">登录</el-button>
         <el-button type="primary" @click="register">注册</el-button>
+        <el-button type="primary" @click="forgetPassword">忘记密码</el-button>
       </el-main>
 
     </el-container>
@@ -71,6 +72,9 @@ export default {
     },
     register() {
       this.$router.push('/user/register');
+    },
+    forgetPassword() {
+      this.$router.push('/user/changePwd');
     }
   }
 };
