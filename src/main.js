@@ -31,6 +31,7 @@ new Vue({
       response => response,
       error => {
         if (error.response && error.response.status === 401) {
+          this.$store.dispatch('logoutProcess')
           Router.push('/user/login'); // 假设登录页面的路由为 '/login'
         }
         return Promise.reject(error);

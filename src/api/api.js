@@ -80,11 +80,9 @@ export default {
   },
   async refreshUserInfo(context) {
     return context.state.http.get('/api/user/userInfo/own').then(res => {
-      console.log('-----------------------------------')
       context.state.userInfo = res.data.data;
       context.state.userID = res.data.data.id;
       context.dispatch('setUserInfoOnLocalStorage');
-      console.log(context.state.userInfo)
       return true;
     })
       .catch(err => {
@@ -99,7 +97,7 @@ export default {
       });
   },
   refreshProjectInfo(context, projectID) {
-    context.state.http.get('/project/?' + projectID).then(res => {
+    context.state.http.get('/api/project/?' + projectID).then(res => {
       return res.data;
     })
       .catch(err => {
@@ -112,7 +110,7 @@ export default {
       });
   },
   refreshLectureInfo(context, lectureID) {
-    context.state.http.get('/lecture/?' + lectureID).then(res => {
+    context.state.http.get('/api/lecture/?' + lectureID).then(res => {
       return res.data;
     })
       .catch(err => {
@@ -138,7 +136,7 @@ export default {
       });
   },
   getLectureInfoByID(context, lectureID) {
-    return context.state.http.get('/lecture/?' + lectureID, { timeout: 3000 }).then(res => {
+    return context.state.http.get('/api/lecture/?' + lectureID, { timeout: 3000 }).then(res => {
       return res.data;
     }).catch(err => {
       Vue.prototype.$notify({
@@ -150,7 +148,7 @@ export default {
     });
   },
   reserveProcess(context, lectureID, userID) {
-    context.state.http.post('/lecture/reserve/?' + lectureID + '&' + userID).then(res => {
+    context.state.http.post('/api/lecture/reserve/?' + lectureID + '&' + userID).then(res => {
       return res.data;
     })
       .then(
@@ -161,8 +159,8 @@ export default {
               message: '预约成功',
               type: 'success'
             });
-            this.$store.dispatch('refreshUserInfo');
-            this.$store.dispatch('refreshLectureInfo', lectureID);
+            context.dispatch('refreshUserInfo');
+            context.dispatch('refreshLectureInfo', lectureID);
           }
         }
       )
@@ -235,7 +233,7 @@ export default {
       });
   },
   cancelReserveProcess(context, lectureID, userID) {
-    context.state.http.post('/lecture/reserve/?' + lectureID + '&' + userID).then(res => {
+    context.state.http.post('/api/lecture/cancelReserve/?' + lectureID + '&' + userID).then(res => {
       Vue.prototype.$notify({
         title: '取消预约成功',
         message: '取消预约成功',
@@ -267,8 +265,8 @@ export default {
         return null;
       });
   },
-  getLectureIDList(context, start, end, params) {
-    context.state.http.get('/lecture/list/?' + start + '&' + end + '&' + params).then(res => {
+  getLectureIDList(context) {
+    context.state.http.get('/api/lecture/lectures').then((res) => {
       return res.data;
     })
       .catch(err => {

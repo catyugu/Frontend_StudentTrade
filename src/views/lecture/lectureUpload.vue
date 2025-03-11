@@ -160,7 +160,7 @@ export default {
         this.$message.error('最大人数必须为正整数');
         return;
       }
-      this.$store.getters.http.post('/api/lecture/upload', {
+      this.$store.getters.http.post('/api/lecture/create', {
         title: this.form.title,
         description: this.form.description,
         content: this.form.content,
@@ -170,7 +170,6 @@ export default {
         max_num: this.form.max_num,
         reserve_num: 0,
         reserve_user_list: '',
-        status: '',
         coverSrc: this.form.coverSrc,
         authorId: this.$store.getters.getUserID
       }).then(res => {
