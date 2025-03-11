@@ -10,7 +10,7 @@
             <el-carousel-item v-for="item in scrollWin" :key="item">
               <h3 class="medium">
                 <img :src=" item.coverSrc" alt="" class="carousel-image"
-                     @click="$router.push({name: 'lectureDetail', query: {lectureID: item.id}})"/>
+                     @click="$router.push({name: 'lectureDetail', query: {lectureID: item.id}})" />
               </h3>
             </el-carousel-item>
           </el-carousel>
@@ -40,10 +40,8 @@
             讲座管理
           </el-button>
         </div>
-        <div>
-          <div style="display: flex; flex-direction: column; align-items: center">
-            <lecture-display-list style="width: 70vw;" :lecture-list="lectureIDList" />
-          </div>
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <lecture-display-list style="width: 70vw;" :lecture-list="lectureIDList" />
         </div>
       </el-main>
     </el-container>
@@ -56,20 +54,20 @@ import { nextTick } from 'vue';
 import LectureDisplayList from '@/components/lectureDisplayList.vue';
 
 export default {
-  components: { LectureDisplayList, HeaderCard},
+  components: { LectureDisplayList, HeaderCard },
   data() {
     return {
       lectureIDList: [],
       scrollWin: [],
-      input: '',
-    }
+      input: ''
+    };
   },
   async created() {
     console.log('lectureHome created');
     nextTick(async () => {
       try {
         this.lectureIDList = await this.$store.dispatch('getLectureIDList');
-        for (let i = 0; i < 3; i++){
+        for (let i = 0; i < 3; i++) {
           this.scrollWin.push(
             await this.$store.dispatch('getLectureInfoByID', this.lectureIDList[i])
           );
@@ -84,7 +82,7 @@ export default {
     });
   },
   methods: {
-    toUpload(){
+    toUpload() {
       this.$router.push({
         name: 'LectureUpload',
         query: {
@@ -107,8 +105,8 @@ export default {
           userID: this.$store.getters.getUserID
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -149,7 +147,8 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  el-button{
+
+  el-button {
     padding: 5px 6px;
   }
 }

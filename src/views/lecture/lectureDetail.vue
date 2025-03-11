@@ -22,11 +22,12 @@ export default {
       lectureInfo:{
         coverSrc:'',
         title:'',
-        speaker:'',
+        speakerID:'',
         description:'',
         place:'',
-        time:'',
-        reserve_num:'',
+        start_time:'',
+        end_time:'',
+        current_num:'',
         max_num:'',
         id:''
       }
