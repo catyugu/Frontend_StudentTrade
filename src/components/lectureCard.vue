@@ -48,7 +48,7 @@
               </div>
               <div class="button-father" v-if="thisLecture.status==='已结束'">
                 <el-button class="button" @click="goToLectureDetail">
-                  讲座已结束，点此查看详情
+                  预约已结束
                 </el-button>
               </div>
               <div class="button-father">
