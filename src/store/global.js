@@ -84,8 +84,8 @@ export default new Vuex.Store({
     getProjectIDList(context) {
       return api.getProjectIDList(context)
     },
-    getLectureIDList(context, start, end, params) {
-      return api.getLectureIDList(context, start, end, params)
+    getLectureIDList(context) {
+      return api.getLectureIDList(context)
     },
   }
 })

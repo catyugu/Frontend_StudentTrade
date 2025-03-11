@@ -136,8 +136,9 @@ export default {
       });
   },
   getLectureInfoByID(context, lectureID) {
-    return context.state.http.get('/api/lecture/?' + lectureID, { timeout: 3000 }).then(res => {
-      return res.data;
+    return context.state.http.get('/api/lecture/get/' + lectureID, { timeout: 3000 }).then(res => {
+      console.log(res);
+      return res.data.data;
     }).catch(err => {
       Vue.prototype.$notify({
         title: '获取讲座信息失败',
@@ -266,8 +267,9 @@ export default {
       });
   },
   getLectureIDList(context) {
-    context.state.http.get('/api/lecture/lectures').then((res) => {
-      return res.data;
+    return context.state.http.get('/api/lecture/lectures').then((res) => {
+      console.log(res)
+      return res.data.data;
     })
       .catch(err => {
         Vue.prototype.$notify({
@@ -275,6 +277,7 @@ export default {
           message: err.message,
           type: 'error'
         });
+        return null;
       });
   },
 }

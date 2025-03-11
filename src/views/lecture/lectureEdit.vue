@@ -110,6 +110,7 @@ export default {
         return;
       }
       this.$store.getters.http.post('/lecture/update', {
+        id: this.lectureID,
         title: this.form.title,
         description: this.form.description,
         content: this.form.content,
@@ -118,9 +119,9 @@ export default {
         end_time: this.form.end_time,
         max_num: this.form.max_num,
         coverSrc: this.form.coverSrc,
-        authorId: this.$store.getters.getUserID
+        speakerID: this.$store.getters.getUserID
       }).then(res => {
-        if (res.data.code === 1) {
+        if (res.data.code === 0) {
           this.$notify({
             type: 'success',
             title: '上传成功',

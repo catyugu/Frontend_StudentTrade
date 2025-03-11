@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul class="lecture-display-list">
-      <li v-for="(item, index) in lectureList" :key="index" class="lecture-display-list-item">
+      <li v-for="(item, index) in list" :key="index" class="lecture-display-list-item">
         <LectureCard :lectureID="item" />
       </li>
     </ul>
@@ -20,13 +20,13 @@ export default {
   },
   data() {
     return {
-      object: {
-        list: []
-      }
+      list: []
     };
   },
-  created() {
-    this.object.list = this.lectureList;
+  watch: {
+    lectureList() {
+      this.list = this.lectureList;
+    }
   }
 };
 </script>

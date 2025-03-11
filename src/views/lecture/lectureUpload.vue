@@ -168,19 +168,25 @@ export default {
         start_time: this.form.start_time,
         end_time: this.form.end_time,
         max_num: this.form.max_num,
-        reserve_num: 0,
-        reserve_user_list: '',
+        status: 'ON_GOING',
         coverSrc: this.form.coverSrc,
-        authorId: this.$store.getters.getUserID
-      }).then(res => {
-        if (res.data.code === 1) {
+        speakerID: this.$store.getters.getUserID
+      },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      ).then(res => {
+        console.log(res)
+        if (res.data.code === 0) {
           this.$notify({
             type: 'success',
             title: '上传成功',
             message: '上传成功'
           });
           this.$store.dispatch('refreshUserInfo');
-          this.$router.push('/lecture/home');
+          this.$router.push('/lecture');
         } else {
           this.$notify({
             type: 'error',

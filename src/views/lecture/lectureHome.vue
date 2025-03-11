@@ -64,6 +64,25 @@ export default {
       input: '',
     }
   },
+  async created() {
+    console.log('lectureHome created');
+    nextTick(async () => {
+      try {
+        this.lectureIDList = await this.$store.dispatch('getLectureIDList');
+        for (let i = 0; i < 3; i++){
+          this.scrollWin.push(
+            await this.$store.dispatch('getLectureInfoByID', this.lectureIDList[i])
+          );
+        }
+      } catch (error) {
+        this.$notify({
+          type: 'error',
+          title: '获取讲座列表失败!',
+          message: '服务器请求失败，请稍后再试！'
+        });
+      }
+    });
+  },
   methods: {
     toUpload(){
       this.$router.push({
@@ -89,26 +108,7 @@ export default {
         }
       });
     },
-    async created() {
-      console.log('lectureHome created');
-      nextTick(async () => {
-        try {
-          this.lectureIDList = await this.$store.dispatch('getLectureIDList');
-          for (let i = 0; i < 3; i++){
-            this.scrollWin.push(await this.$store.dispatch('getLectureInfoByID', this.lectureIDList[i]));
-          }
-        } catch (error) {
-          this.$notify({
-            type: 'error',
-            title: '获取讲座列表失败!',
-            message: '服务器请求失败，请稍后再试！'
-          });
-        }
-      });
-    }
   },
-
-  computed: {}
 };
 </script>
 
