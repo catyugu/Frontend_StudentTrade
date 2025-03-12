@@ -151,10 +151,7 @@ export default {
     });
   },
   reserveProcess(context, lectureID) {
-    return context.state.http.post('/api/lecture/reserve?lectureId=' + lectureID + '&userId=' + context.getters.getUserID).then(res => {
-      console.log(res)
-      return res.data;
-    })
+    return context.state.http.post('/api/lecture/reserve?lectureId=' + lectureID + '&userId=' + context.getters.getUserID)
       .then(
         async res => {
           if (res.data.code === 0) {
@@ -165,7 +162,14 @@ export default {
             });
             await context.dispatch('refreshUserInfo');
             await context.dispatch('refreshLectureInfo', lectureID);
+          } else {
+            Vue.prototype.$notify({
+              title: '预约失败',
+              message: res.data.msg,
+              type: 'error'
+            });
           }
+          return res.data;
         }
       )
       .catch(err => {
@@ -237,16 +241,27 @@ export default {
       });
   },
   cancelReserveProcess(context, lectureID) {
-    context.state.http.post('/api/lecture/cancelReserve/?' + lectureID + '&' + context.getters.getUserID).then(
+    context.state.http.post('/api/lecture/cancelReserve?lectureId=' + lectureID + '&userId=' + context.getters.getUserID).then(
       async res => {
-      Vue.prototype.$notify({
-        title: '取消预约成功',
-        message: '取消预约成功',
-        type: 'success'
-      });
-      await context.dispatch('refreshUserInfo');
-      await context.dispatch('refreshLectureInfo', lectureID);
-      return res.data;
+        console.log(res)
+        if ( res.data.code === 0){
+          Vue.prototype.$notify({
+            title: '取消预约成功',
+            message: '取消预约成功',
+            type: 'success'
+          });
+          await context.dispatch('refreshUserInfo');
+          await context.dispatch('refreshLectureInfo', lectureID);
+          return res.data;
+        }
+        else {
+          Vue.prototype.$notify({
+            title: '取消预约失败',
+            message: res.data.msg,
+            type: 'error'
+          });
+          return null;
+        }
     })
       .catch(err => {
         Vue.prototype.$notify({

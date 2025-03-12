@@ -120,7 +120,7 @@ export default {
       await this.$store.dispatch('reserveProcess', this.lectureID);
     },
     async cancelReservation() {
-      await this.$store.dispatch('cancelReserveProcess');
+      await this.$store.dispatch('cancelReserveProcess',this.lectureID);
     },
     goLogin() {
       this.$router.push({
