@@ -13,8 +13,9 @@
           <el-col span=14 class="detail-info">
             <h1 class="project-title">{{ projectInfo.title }}</h1>
             <name-avatar :userID="projectInfo.authorId"></name-avatar>
-            <br><span> 发布时间：{{ projectInfo.createTime }}</span>
-            <br><span> 状态：{{ projectInfo.status }}</span>
+            <br><span> 发布时间：
+          {{ projectInfo.createTime.split('T')[0]}}</span>
+            <br><span> 状态：{{getStatusText(projectInfo.status)}}</span>
             <br><span> 收藏数:{{projectInfo.like_num}}</span>
           </el-col>
         </el-row>
@@ -62,6 +63,20 @@ export default {
       }
     };
   },
+  methods:{
+    getStatusText(status) {
+      switch (status) {
+        case 'ON_GOING':
+          return '进行中';
+        case 'FINISHED':
+          return '招募已结束';
+        case 'SUSPENDED':
+          return '暂停招募';
+        default:
+          return status; // 默认情况下返回原始状态
+      }
+    },
+  },
   created() {
     this.projectInfo.id =  this.$route.query.projectID;
     this.$store.dispatch('getProjectInfoByID', this.projectInfo.id).then((res) => {
@@ -78,7 +93,7 @@ export default {
   height: 100%;
 }
 .project-title{
-  font-size: 5vw;
+  font-size: min(40px,5vw);
   font-weight: bold;
   margin-bottom: 20px;
 }
@@ -106,6 +121,7 @@ export default {
 }
 .detail-info{
   font-size: min(20px,3vw);
+  line-height: min(22px, 3.1vw);
 }
 @media screen and (min-width: 768px) {
   .lecture-content-child{

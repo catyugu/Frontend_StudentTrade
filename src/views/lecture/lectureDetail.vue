@@ -22,7 +22,8 @@
             + ' '+(lectureInfo.end_time.split('T')[1]).split('.')[0]
             }}</span><br>
           <span> 预约人数: {{ lectureInfo.current_num }}/{{ lectureInfo.max_num }}
-              </span>
+              </span><br>
+          <span> 预约状态: {{ lectureInfo.status }}</span>
         </el-col>
       </el-row>
       <el-divider></el-divider>
@@ -83,7 +84,7 @@ export default {
   height: 100%;
 }
 .lecture-title{
-  font-size: 5vw;
+  font-size: min(40px,5vw);
   font-weight: bold;
   margin-bottom: 20px;
 }

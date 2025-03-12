@@ -1,12 +1,35 @@
 <template>
   <div id="app">
-    <el-button
-      @click="drawer = true"
-      type="primary"
-      id="drawerButton"
-      circle>
-      <i class="el-icon-menu"> </i>
-    </el-button>
+    <div class="fixed-button-group">
+      <el-button
+        @click="drawer = true"
+        type="primary"
+        class="drawerButton"
+        circle>
+        <i class="el-icon-menu"> </i>
+      </el-button><br>
+      <el-button
+        @click="$router.back()"
+        type="primary"
+        class="drawerButton"
+        circle>
+        <i class="el-icon-d-arrow-left"> </i>
+      </el-button><br>
+      <el-button
+        @click= "refreshPage"
+        type="primary"
+        class="drawerButton"
+        circle>
+        <i class="el-icon-refresh"> </i>
+      </el-button><br>
+      <el-button
+        @click= "scrollTop"
+        type="primary"
+        class="drawerButton"
+        circle>
+        <i class="el-icon-arrow-up"> </i>
+      </el-button><br>
+    </div>
     <el-drawer
       class="el-drawer"
       :visible.sync="drawer"
@@ -41,19 +64,25 @@
   font-size: 32px;
 }
 
-#drawerButton {
+.fixed-button-group {
+  display: flex;
+  flex-direction: column;
   position: fixed;
   top: 20px;
   left: 20px;
-  width: 50px;
-  height: 50px;
   z-index: 999;
+  .drawerButton {
+    width: 45px;
+    height: 45px;
+
+  }
 }
 
 .el-main {
   color: #333;
   text-align: center;
 }
+
 
 </style>
 
@@ -93,9 +122,16 @@ export default {
     };
   },
   methods: {
+    refreshPage(){
+      window.location.reload();
+    },
+    scrollTop(){
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   },
-  async mounted() {
 
-  },
-}
+};
 </script>
