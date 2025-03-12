@@ -24,7 +24,7 @@ export default {
       this.lectureList = this.$store.getters.getUserInfo.lectureUploadList;
     }
   },
-  created() {
+  mounted() {
     this.userID = this.$route.query.userID;
     this.getLectureList();
   }

@@ -22,9 +22,10 @@ export default {
       lectureList: [],
     }
   },
-  created() {
+  async created() {
     this.userID = this.$route.query.userID
-    this.lectureList = this.$store.state.userInfo.lectureReserveList;
+    let info = await this.$store.dispatch('getUserInfoByID', this.userID);
+    this.lectureList = info.lectureReserveList;
   },
 }
 </script>

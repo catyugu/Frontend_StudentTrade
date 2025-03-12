@@ -6,11 +6,11 @@
       </el-header>
       <el-main style="margin-top: 30px">
         <el-row>
-          <el-col span=8>
+          <el-col span=12>
             <img :src="projectInfo.coverSrc" alt="找不到封面"
             class="cover"/>
           </el-col>
-          <el-col span=16>
+          <el-col span=12>
             <h1 class="project-title">{{ projectInfo.title }}</h1>
             <name-avatar :userID="projectInfo.authorId"></name-avatar>
           </el-col>

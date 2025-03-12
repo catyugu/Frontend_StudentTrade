@@ -4,17 +4,54 @@
     <el-header>
       <header-card :header="{title:'讲座详情'}"></header-card>
     </el-header>
-    <el-main>
-      <div> ID:{{this.lectureID}}</div>
+    <el-main style="margin-top: 30px">
+      <el-row>
+        <el-col span=12>
+          <img :src="lectureInfo.coverSrc" alt="找不到封面"
+               class="cover"/>
+        </el-col>
+        <el-col span=12 class="detail-info">
+          <h1 class="lecture-title">{{ lectureInfo.title }}</h1>
+          <name-avatar :userID="lectureInfo.speakerID"></name-avatar>
+          <br>
+          <span>地点： {{ lectureInfo.place }}</span>
+          <br>
+          <span> 时间: {{ lectureInfo.start_time.split('T')[0]
+          + ' '+(lectureInfo.start_time.split('T')[1]).split('.')[0]
+            }} ~ <br>{{ lectureInfo.end_time.split('T')[0]
+            + ' '+(lectureInfo.end_time.split('T')[1]).split('.')[0]
+            }}</span>
+          <br>
+          <span> 预约人数: {{ lectureInfo.current_num }}/{{ lectureInfo.max_num }}
+              </span>
+        </el-col>
+      </el-row>
+      <el-divider></el-divider>
+      <el-row>
+        <el-col span=24 class="brief-intro">
+          <h2 style="font-size: larger"><b>讲座概述</b></h2>
+          <div v-html="lectureInfo.description"
+               style="text-align: left"></div>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col span=24 class="lecture-content">
+          <h2 style="font-size: larger"><b>讲座详情</b></h2>
+          <div v-html="lectureInfo.content" class="lecture-content-child"
+               style="text-align: left"></div>
+        </el-col>
+      </el-row>
+
     </el-main>
   </el-container>
 </div>
 </template>
 <script >
 import HeaderCard from '@/components/headerCard.vue';
+import NameAvatar from '@/components/nameAvatar.vue';
 
 export default {
-  components: { HeaderCard },
+  components: { NameAvatar, HeaderCard },
   data(){
     return{
       // eslint-disable-next-line vue/no-dupe-keys
@@ -33,22 +70,52 @@ export default {
       }
     }
   },
-  created(){
+  async created(){
     // eslint-disable-next-line vue/no-mutating-props
     this.lectureID=this.$route.query.lectureID;
-    this.getLectureInfoByID(this.lectureID);
+    this.lectureInfo = await this.$store.dispatch('getLectureInfoByID',this.lectureID)
   },
-  methods:{
-    getLectureInfoByID(lectureID){
-       this.$store.state.http.get('/lecture/'+lectureID)
-      .then(res=>{
-        this.lectureInfo=res.data.data;
-      })
-    }
-  }
 }
 </script>
 
 <style scoped lang="scss">
-
+.cover{
+  width: 100%;
+  height: 100%;
+}
+.lecture-title{
+  font-size: 5vw;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.brief-intro{
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  div{
+    font-size: 20px;
+  }
+}
+.lecture-content{
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  div{
+    font-size: 20px;
+  }
+}
+.lecture-content-child{
+  display: flex;
+  img{
+    width: 100%;
+  }
+}
+.detail-info{
+  font-size: min(20px,3vw);
+}
+@media screen and (min-width: 768px) {
+  .lecture-content-child{
+    display: block;
+  }
+}
 </style>
