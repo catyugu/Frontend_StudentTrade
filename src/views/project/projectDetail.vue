@@ -121,7 +121,7 @@ export default {
 }
 .detail-info{
   font-size: min(20px,3vw);
-  line-height: min(22px, 3.1vw);
+  line-height: min(24px, 3.2vw);
 }
 @media screen and (min-width: 768px) {
   .lecture-content-child{

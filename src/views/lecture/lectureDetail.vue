@@ -23,7 +23,7 @@
             }}</span><br>
           <span> 预约人数: {{ lectureInfo.current_num }}/{{ lectureInfo.max_num }}
               </span><br>
-          <span> 预约状态: {{ lectureInfo.status }}</span>
+          <span> 预约状态: {{getStatusText( lectureInfo.status) }}</span>
         </el-col>
       </el-row>
       <el-divider></el-divider>
@@ -70,6 +70,18 @@ export default {
       }
     }
   },
+  methods:{
+    getStatusText(status) {
+      switch (status) {
+        case 'ON_GOING':
+          return '进行中';
+        case 'FINISHED':
+          return '招募已结束';
+        default:
+          return status; // 默认情况下返回原始状态
+      }
+    },
+  },
   async created(){
     // eslint-disable-next-line vue/no-mutating-props
     this.lectureID=this.$route.query.lectureID;
@@ -112,7 +124,7 @@ export default {
 }
 .detail-info{
   font-size: min(20px,3vw);
-  line-height: min(22px,3.1vw);
+  line-height: min(24px,3.2vw);
 }
 @media screen and (min-width: 768px) {
   .lecture-content-child{

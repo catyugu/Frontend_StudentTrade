@@ -198,15 +198,16 @@ export default {
             }
           });
           this.$store.dispatch('setUserInfoOnLocalStorage');
-          this.$message({
+          this.$notify({
             type: 'success',
-            message: '上传成功'
+            title: '上传成功'
           });
           this.dialogVisible = false;
         }
       }).catch(err => {
-        this.$message({
+        this.$notify({
           type: 'error',
+          title: '上传失败',
           message: '上传失败: ' + err.message
         });
       });
