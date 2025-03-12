@@ -37,7 +37,7 @@
             <el-input v-model="form.description" />
           </el-form-item>
           <el-form-item label="内容">
-            <editorComponent @contentData="updateContent"/>
+            <editorComponent @contentData="updateContent" :content="form.content"/>
           </el-form-item>
         </el-form>
         <el-dialog :visible.sync="dialogVisible" title="裁剪封面">
