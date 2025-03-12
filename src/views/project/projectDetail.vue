@@ -6,13 +6,16 @@
       </el-header>
       <el-main style="margin-top: 30px">
         <el-row>
-          <el-col span=12>
+          <el-col span=10>
             <img :src="projectInfo.coverSrc" alt="找不到封面"
             class="cover"/>
           </el-col>
-          <el-col span=12>
+          <el-col span=14 class="detail-info">
             <h1 class="project-title">{{ projectInfo.title }}</h1>
             <name-avatar :userID="projectInfo.authorId"></name-avatar>
+            <br><span> 发布时间：{{ projectInfo.createTime }}</span>
+            <br><span> 状态：{{ projectInfo.status }}</span>
+            <br><span> 收藏数:{{projectInfo.like_num}}</span>
           </el-col>
         </el-row>
         <el-divider></el-divider>
@@ -99,6 +102,14 @@ export default {
   display: flex;
   img{
     width: 100%;
+  }
+}
+.detail-info{
+  font-size: min(20px,3vw);
+}
+@media screen and (min-width: 768px) {
+  .lecture-content-child{
+    display: block;
   }
 }
 </style>

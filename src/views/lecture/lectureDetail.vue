@@ -6,11 +6,11 @@
     </el-header>
     <el-main style="margin-top: 30px">
       <el-row>
-        <el-col span=12>
+        <el-col span=10>
           <img :src="lectureInfo.coverSrc" alt="找不到封面"
                class="cover"/>
         </el-col>
-        <el-col span=12 class="detail-info">
+        <el-col span=14 class="detail-info">
           <h1 class="lecture-title">{{ lectureInfo.title }}</h1>
           <name-avatar :userID="lectureInfo.speakerID"></name-avatar>
           <br>
@@ -18,10 +18,9 @@
           <br>
           <span> 时间: {{ lectureInfo.start_time.split('T')[0]
           + ' '+(lectureInfo.start_time.split('T')[1]).split('.')[0]
-            }} ~ <br>{{ lectureInfo.end_time.split('T')[0]
+            }} ~ {{ lectureInfo.end_time.split('T')[0]
             + ' '+(lectureInfo.end_time.split('T')[1]).split('.')[0]
-            }}</span>
-          <br>
+            }}</span><br>
           <span> 预约人数: {{ lectureInfo.current_num }}/{{ lectureInfo.max_num }}
               </span>
         </el-col>
@@ -112,6 +111,7 @@ export default {
 }
 .detail-info{
   font-size: min(20px,3vw);
+  line-height: min(22px,3.1vw);
 }
 @media screen and (min-width: 768px) {
   .lecture-content-child{
