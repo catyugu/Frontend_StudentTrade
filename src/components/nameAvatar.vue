@@ -25,6 +25,9 @@ export default {
       }
     };
   },
+  async created(){
+    this.userInfo = await this.$store.dispatch('getUserInfoByID', this.userID);
+  },
   watch: {
     async userID() {
       console.log(this.userID)
