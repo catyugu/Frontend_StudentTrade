@@ -42,8 +42,10 @@ export default {
       context.state.isFetchingUserInfo = false;
     }
   },
-  async getUserStateFromLocalStorage(context) {
+  getUserStateFromLocalStorage(context) {
+    console.log('getUserStateFromLocalStorage')
     let userState = JSON.parse(localStorage.getItem('userState'));
+    console.log(userState)
     context.state.isLogin = userState.isLogin;
     context.state.userInfo = userState.userInfo;
     context.state.token = userState.token;
@@ -97,7 +99,7 @@ export default {
       });
   },
   refreshProjectInfo(context, projectID) {
-    context.state.http.get('/api/project/?' + projectID).then(res => {
+    context.state.http.get('/api/project/get/' + projectID).then(res => {
       return res.data;
     })
       .catch(err => {
@@ -110,7 +112,7 @@ export default {
       });
   },
   refreshLectureInfo(context, lectureID) {
-    context.state.http.get('/api/lecture/?' + lectureID).then(res => {
+    context.state.http.get('/api/lecture/get/' + lectureID).then(res => {
       return res.data;
     })
       .catch(err => {
@@ -148,20 +150,21 @@ export default {
       return null;
     });
   },
-  reserveProcess(context, lectureID, userID) {
-    context.state.http.post('/api/lecture/reserve/?' + lectureID + '&' + userID).then(res => {
+  reserveProcess(context, lectureID) {
+    return context.state.http.post('/api/lecture/reserve?lectureId=' + lectureID + '&userId=' + context.getters.getUserID).then(res => {
+      console.log(res)
       return res.data;
     })
       .then(
-        res => {
+        async res => {
           if (res.data.code === 0) {
             Vue.prototype.$notify({
               title: '预约成功',
               message: '预约成功',
               type: 'success'
             });
-            context.dispatch('refreshUserInfo');
-            context.dispatch('refreshLectureInfo', lectureID);
+            await context.dispatch('refreshUserInfo');
+            await context.dispatch('refreshLectureInfo', lectureID);
           }
         }
       )
@@ -233,15 +236,16 @@ export default {
         return null;
       });
   },
-  cancelReserveProcess(context, lectureID, userID) {
-    context.state.http.post('/api/lecture/cancelReserve/?' + lectureID + '&' + userID).then(res => {
+  cancelReserveProcess(context, lectureID) {
+    context.state.http.post('/api/lecture/cancelReserve/?' + lectureID + '&' + context.getters.getUserID).then(
+      async res => {
       Vue.prototype.$notify({
         title: '取消预约成功',
         message: '取消预约成功',
         type: 'success'
       });
-      context.dispatch('refreshUserInfo');
-      context.dispatch('refreshLectureInfo', lectureID);
+      await context.dispatch('refreshUserInfo');
+      await context.dispatch('refreshLectureInfo', lectureID);
       return res.data;
     })
       .catch(err => {

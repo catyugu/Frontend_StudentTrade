@@ -117,10 +117,10 @@ export default {
       this.showDescription = !this.showDescription;
     },
     async reserveLecture() {
-      await this.$store.dispatch('reserveProcess', this.lectureID, this.$store.getters.getUserID);
+      await this.$store.dispatch('reserveProcess', this.lectureID);
     },
     async cancelReservation() {
-      await this.$store.dispatch('cancelReserveProcess', this.lectureID, this.$store.getters.getUserID);
+      await this.$store.dispatch('cancelReserveProcess');
     },
     goLogin() {
       this.$router.push({

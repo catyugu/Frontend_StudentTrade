@@ -43,7 +43,7 @@ export default new Vuex.Store({
       return await api.loginProcess(context,token)
     },
     async getUserStateFromLocalStorage(context) {
-       return await api.getUserStateFromLocalStorage(context)
+       api.getUserStateFromLocalStorage(context)
     },
     async setUserInfoOnLocalStorage(context) {
       return await api.setUserInfoOnLocalStorage(context)
@@ -69,8 +69,8 @@ export default new Vuex.Store({
     getLectureInfoByID(context, lectureID) {
       return api.getLectureInfoByID(context, lectureID)
     },
-    reserveProcess(context, lectureID, userID) {
-      return api.reserveProcess(context, lectureID, userID)
+    reserveProcess(context, lectureID) {
+      return api.reserveProcess(context, lectureID)
     },
     likeProcess(context, projectId) {
       return api.likeProcess(context, projectId)
@@ -78,8 +78,8 @@ export default new Vuex.Store({
     cancelLikeProcess(context, projectId) {
       return api.cancelLikeProcess(context, projectId)
     },
-    cancelReserveProcess(context, lectureID, userID) {
-      return api.cancelReserveProcess(context, lectureID, userID)
+    cancelReserveProcess(context, lectureID) {
+      return api.cancelReserveProcess(context, lectureID)
     },
     getProjectIDList(context) {
       return api.getProjectIDList(context)
