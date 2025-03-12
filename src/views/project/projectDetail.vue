@@ -16,7 +16,7 @@
             <br><span> 发布时间：
           {{ projectInfo.createTime.split('T')[0]}}</span>
             <br><span> 状态：{{getStatusText(projectInfo.status)}}</span>
-            <br><span> 收藏数:{{projectInfo.like_num}}</span>
+            <br><span> 收藏人数:{{projectInfo.likeList.length}}</span>
           </el-col>
         </el-row>
         <el-divider></el-divider>
@@ -59,7 +59,8 @@ export default {
         createTime: '',
         updateTime: '',
         like_num: '',
-        id: ''
+        id: '',
+        likeList: [],
       }
     };
   },

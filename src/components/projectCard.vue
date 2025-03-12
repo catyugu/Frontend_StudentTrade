@@ -86,7 +86,7 @@ export default {
         status: '',
         createTime: '',
         updateTime: '',
-        like_num: '',
+        likeList: [],
         id: ''
       }
     };
