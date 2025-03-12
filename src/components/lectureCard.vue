@@ -2,7 +2,7 @@
   <div class="lecture-card-container">
     <div class="lecture-card">
       <el-row style="margin-top: 10px;">
-        <el-card :body-style="{ padding: '0px' }">
+        <el-card>
           <el-row class="card-body">
             <el-col span="12" @click.native="goToLectureDetail">
               <div style="height: inherit;">
@@ -11,12 +11,20 @@
             </el-col>
             <el-col span="12" @click.native="goToLectureDetail">
               <h1> {{ thisLecture.title }}</h1>
-              <name-avatar :userID="thisLecture.speakerID"></name-avatar>
               <br>
-              <span> 地点: {{ thisLecture.place }}</span><br>
-              <span> 时间: {{ thisLecture.time }}</span><br>
-              <span> 预约人数: {{ thisLecture.reserve_num }}/{{ thisLecture.max_num }}
-              </span><br>
+              <name-avatar :userID="thisLecture.speakerID"/>
+              <br>
+              <span> 地点: {{ thisLecture.place }}</span>
+              <br>
+              <span> 时间: {{ thisLecture.start_time.split('T')[0]
+              + ' '+(thisLecture.start_time.split('T')[1]).split('.')[0]
+                }} ~ <br>{{ thisLecture.end_time.split('T')[0]
+              + ' '+(thisLecture.end_time.split('T')[1]).split('.')[0]
+                }}</span>
+              <br>
+              <span> 预约人数: {{ thisLecture.current_num }}/{{ thisLecture.max_num }}
+              </span>
+              <br>
             </el-col>
           </el-row>
           <el-row class="card-button">
@@ -31,7 +39,7 @@
                   登录后方可预约
                 </el-button>
               </div>
-              <div v-if="this.$store.getters.getIsLogin && thisLecture.status==='报名中' &&
+              <div v-if="this.$store.getters.getIsLogin && thisLecture.status==='ON_GOING' &&
                  !(this.$store.getters.getReserveList.includes(this.lectureID))"
                    class="button-father">
                 <el-button type="primary" class="button" @click="reserveLecture">
@@ -39,16 +47,16 @@
                 </el-button>
               </div>
               <div class="button-father"
-                   v-if="this.$store.getters.getIsLogin && thisLecture.status==='报名中' &&
+                   v-if="this.$store.getters.getIsLogin && thisLecture.status==='ON_GOING' &&
                       (this.$store.getters.getReserveList.includes(this.lectureID))">
                 <el-button type="primary" class="button" @click="cancelReservation"
                 >
                   取消预约
                 </el-button>
               </div>
-              <div class="button-father" v-if="thisLecture.status==='已结束'">
+              <div class="button-father" v-if="thisLecture.status==='FINISHED'">
                 <el-button class="button" @click="goToLectureDetail">
-                  预约已结束
+                  预约结束
                 </el-button>
               </div>
               <div class="button-father">
@@ -90,7 +98,8 @@ export default {
         description: '',
         content: '',
         place: '',
-        time: '',
+        start_time: '',
+        end_time: '',
         current_num: '',
         reserve_user_list: '',
         max_num: '',

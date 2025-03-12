@@ -144,10 +144,6 @@ export default {
 }
 
 .lecture-button-group {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
   el-button {
     padding: 5px 6px;
   }

@@ -10,13 +10,16 @@
               </div>
             </el-col>
             <el-col span="12" @click.native="goToProjectDetail">
-              <h1>{{ thisProject.title }}</h1><br>
+              <h1>{{ thisProject.title }}</h1>
+              <br>
               <name-avatar :userID="thisProject.authorId" />
               <br>
-              <span>更新时间：{{ thisProject.updateTime.split("T")[0] }}</span><br>
+              <span>更新时间：{{ thisProject.updateTime.split("T")[0] }}</span>
+              <br>
               <span>
                 招募状态：{{getStatusText(thisProject.status) }}
-              </span><br>
+              </span>
+              <br>
             </el-col>
           </el-row>
           <el-row class="card-button">

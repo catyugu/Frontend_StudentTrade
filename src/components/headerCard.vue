@@ -2,13 +2,14 @@
   <div>
     <el-header style="margin-top: 20px;margin-bottom: 30px">
       <el-row>
-        <el-col span="4" style="text-align: left;">
-          <el-button class="back-button" @click="routeReturn"
-          v-if="this.$route.path.split('/').length > 2">
-           <el-icon :size="20" color="#409EFF" class="el-icon-back"></el-icon>返回</el-button>
-          <div v-else>  &nbsp;</div>
+<!--        <el-col span="4" style="text-align: left;">-->
+<!--          <el-button class="back-button" @click="routeReturn"-->
+<!--          v-if="this.$route.path.split('/').length > 2">-->
+<!--           <el-icon :size="20" color="#409EFF" class="el-icon-back"></el-icon>返回</el-button>-->
+<!--          <div v-else>  &nbsp;</div>-->
 
-        </el-col>
+<!--        </el-col>-->
+        <el-col span="4"> &nbsp; </el-col>
         <el-col span="16" style="font-weight: bold;
         font-size: 30px">{{ title }}</el-col>
         <el-col span="4">
