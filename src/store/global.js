@@ -39,6 +39,9 @@ export default new Vuex.Store({
     getLikeList: state => state.userInfo.projectLikeList
   },
   actions: {
+    async searchLectures(context, query) {
+      return await api.searchLectures(context, query);
+    },
     async loginProcess(context, token){
       return await api.loginProcess(context,token)
     },

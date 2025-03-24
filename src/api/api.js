@@ -1,6 +1,18 @@
 import Vue from 'vue';
 
 export default {
+  async searchLectures(context, query) {
+    return context.state.http.get('/api/lecture/search', { params: { query } }).then(res => {
+      return res.data.data;
+    }).catch(err => {
+      Vue.prototype.$notify({
+        title: '搜索失败api',
+        message: err.message,
+        type: 'error'
+      });
+      return [];
+    });
+  },
   async loginProcess(context, token) {
     // 设置临时登录状态标志
     context.state.isFetchingUserInfo = true;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul class="lecture-display-list">
-      <li v-for="(item, index) in list" :key="index" class="lecture-display-list-item">
+      <li v-for="(item, index) in list" :key="`${item}-${index}`" class="lecture-display-list-item">
         <LectureCard :lectureID="item" />
       </li>
     </ul>
