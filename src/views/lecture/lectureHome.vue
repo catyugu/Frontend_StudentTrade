@@ -4,7 +4,7 @@
       <header-card :header="{title:'讲座中心'}" />
       <el-main style="text-align: center">
         <el-input class="searchBar"
-                  @focus="focus" @blur="true" v-model="input" placeholder="请输入搜索内容" />
+                  @focus="focus"  v-model="input" placeholder="请输入搜索内容" @input="search"/>
         <div class="block">
           <el-carousel height="25vw" type="card" class="carousel-container">
             <el-carousel-item v-for="item in scrollWin" :key="item">
@@ -75,13 +75,39 @@ export default {
       } catch (error) {
         this.$notify({
           type: 'error',
-          title: '获取讲座列表失败!',
+          title: '搜索失败!',
           message: '服务器请求失败，请稍后再试！'
         });
       }
     });
   },
   methods: {
+    async search() {
+    try {
+      console.log('开始搜索');
+      const searchResults = await this.$store.dispatch('searchLectures', this.input);
+      console.log('搜索结果:', searchResults);
+      this.lectureIDList = searchResults;
+      console.log('更新 lectureIDList:', this.lectureIDList);
+      
+      // 更新 scrollWin 以展示搜索结果
+      this.scrollWin = [];
+      for (let i = 0; i < Math.min(100, this.lectureIDList.length); i++) {
+        const lectureInfo = await this.$store.dispatch('getLectureInfoByID', this.lectureIDList[i]);
+        console.log('获取讲座信息:', lectureInfo);
+        this.scrollWin.push(lectureInfo);
+      }
+      console.log('更新 scrollWin:', this.scrollWin);
+    } catch (error) {
+      console.error('搜索失败:', error);
+      console.error('错误详情:', error.message);
+      this.$notify({
+        type: 'error',
+        title: '搜索!',
+        message: '服务器请求失败，请稍后再试！'
+      });
+    }
+  },
     toUpload() {
       this.$router.push({
         name: 'LectureUpload',
