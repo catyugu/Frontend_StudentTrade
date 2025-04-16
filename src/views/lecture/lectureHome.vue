@@ -95,7 +95,6 @@ export default {
       else{
         this.searchResults = await this.$store.dispatch('searchLectures', this.input);
       }
-
       this.searchResultKey++;
 
     } catch (error) {
