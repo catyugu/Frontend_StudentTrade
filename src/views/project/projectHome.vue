@@ -4,7 +4,7 @@
       <header-card :header="{title:'项目广场'}" />
       <el-main style="text-align: center">
         <el-input class="searchBar"
-                  @focus="focus" @blur="true" v-model="input" placeholder="请输入搜索内容" @input="search"/>
+                  v-model="input" placeholder="请输入搜索内容" @input="search"/>
         <div class="block">
           <el-carousel height="25vw" type="card" class="carousel-container">
             <el-carousel-item v-for="item in scrollWin" :key="item">
@@ -41,7 +41,7 @@
         </el-button>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center">
-          <project-display-list style="width: 70vw;" :projectList="searchResults" />
+          <project-display-list :projectList="searchResults" :key="searchResultsKey" style="width: 70vw;" />
         </div>
       </el-main>
     </el-container>
@@ -52,6 +52,7 @@
 import HeaderCard from '@/components/headerCard.vue';
 import { nextTick } from 'vue';
 import ProjectDisplayList from '@/components/projectDisplayList.vue';
+
 export default {
   components: { ProjectDisplayList, HeaderCard },
   data() {
@@ -60,6 +61,7 @@ export default {
       searchResults: [],
       scrollWin: [],
       input: '',
+      searchResultsKey: 114514
     }
   },
   methods: {
@@ -68,13 +70,12 @@ export default {
         console.log('开始搜索');
         if (this.input==='') {
           this.searchResults = this.projectIDList;
-          return;
         }
-        const searchResults = await this.$store.dispatch('searchProjects', this.input);
-        console.log('搜索结果:', searchResults);
-        this.searchResults = searchResults;
-        console.log('更新 projectIDList:', this.searchResults);
+        else{
+          this.searchResults = await this.$store.dispatch('searchProjects', this.input);
 
+        }
+        this.searchResultsKey++;
       } catch (error) {
         console.error('搜索失败:', error);
         console.error('错误详情:', error.message);

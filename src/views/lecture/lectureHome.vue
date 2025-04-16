@@ -4,7 +4,7 @@
       <header-card :header="{title:'讲座中心'}" />
       <el-main style="text-align: center">
         <el-input class="searchBar"
-                  @focus="focus"  v-model="input" placeholder="请输入搜索内容" @input="search"/>
+                  v-model="input" placeholder="请输入搜索内容" @input="search"/>
         <div class="block">
           <el-carousel height="25vw" type="card" class="carousel-container">
             <el-carousel-item v-for="item in scrollWin" :key="item">
@@ -41,7 +41,8 @@
           </el-button>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center">
-          <lecture-display-list style="width: 70vw;" :lecture-list="searchResults" />
+          <lecture-display-list style="width: 70vw;" :lecture-list="searchResults"
+          :key = "searchResultKey"/>
         </div>
       </el-main>
     </el-container>
@@ -60,7 +61,8 @@ export default {
       lectureIDList: [],
       searchResults: [],
       scrollWin: [],
-      input: ''
+      input: '',
+      searchResultKey: 0
     };
   },
   async created() {
@@ -89,11 +91,12 @@ export default {
       console.log('开始搜索');
       if (this.input === '') {
         this.searchResults = this.lectureIDList;
-        return;
       }
-      const searchResults = await this.$store.dispatch('searchLectures', this.input);
-      console.log('搜索结果:', searchResults);
-      this.searchResults = searchResults;
+      else{
+        this.searchResults = await this.$store.dispatch('searchLectures', this.input);
+      }
+
+      this.searchResultKey++;
 
     } catch (error) {
       console.error('搜索失败:', error);
