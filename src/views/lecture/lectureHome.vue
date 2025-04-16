@@ -3,7 +3,7 @@
     <el-container direction="vertical">
       <header-card :header="{title:'讲座中心'}" />
       <el-main style="text-align: center">
-        <input class="searchBar"
+        <el-input class="searchBar"
                v-model="input" placeholder="请输入搜索内容" @input="search" />
         <div class="block">
           <el-carousel height="25vw" type="card" class="carousel-container">
