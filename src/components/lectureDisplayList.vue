@@ -24,9 +24,13 @@ export default {
     };
   },
   watch: {
-    lectureList() {
-      this.list = this.lectureList;
-    }
+    lectureList:
+      {
+        handler(newValue) {
+          this.list = newValue;
+        },
+        immediate: true
+      }
   },
   mounted() {
     this.list = this.lectureList;

@@ -3,8 +3,8 @@
     <el-container direction="vertical">
       <header-card :header="{title:'讲座中心'}" />
       <el-main style="text-align: center">
-        <el-input class="searchBar"
-                  v-model="input" placeholder="请输入搜索内容" @input="search"/>
+        <input class="searchBar"
+               v-model="input" placeholder="请输入搜索内容" @input="search" />
         <div class="block">
           <el-carousel height="25vw" type="card" class="carousel-container">
             <el-carousel-item v-for="item in scrollWin" :key="item">
@@ -42,7 +42,7 @@
         </div>
         <div style="display: flex; flex-direction: column; align-items: center">
           <lecture-display-list style="width: 70vw;" :lecture-list="searchResults"
-          :key = "searchResultKey"/>
+                                :key="searchResultKey" />
         </div>
       </el-main>
     </el-container>
@@ -87,26 +87,24 @@ export default {
   },
   methods: {
     async search() {
-    try {
-      console.log('开始搜索');
-      if (this.input === '') {
-        this.searchResults = this.lectureIDList;
+      try {
+        console.log('开始搜索');
+        if (this.input === '') {
+          this.searchResults = this.lectureIDList;
+        } else {
+          this.searchResults = await this.$store.dispatch('searchLectures', this.input);
+        }
+        this.searchResultKey++;
+      } catch (error) {
+        console.error('搜索失败:', error);
+        console.error('错误详情:', error.message);
+        this.$notify({
+          type: 'error',
+          title: '搜索!',
+          message: '服务器请求失败，请稍后再试！'
+        });
       }
-      else{
-        this.searchResults = await this.$store.dispatch('searchLectures', this.input);
-      }
-      this.searchResultKey++;
-
-    } catch (error) {
-      console.error('搜索失败:', error);
-      console.error('错误详情:', error.message);
-      this.$notify({
-        type: 'error',
-        title: '搜索!',
-        message: '服务器请求失败，请稍后再试！'
-      });
-    }
-  },
+    },
     toUpload() {
       this.$router.push({
         name: 'LectureUpload',
