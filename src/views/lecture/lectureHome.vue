@@ -41,7 +41,7 @@
           </el-button>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center">
-          <lecture-display-list style="width: 70vw;" :lecture-list="lectureIDList" />
+          <lecture-display-list style="width: 70vw;" :lecture-list="searchResults" />
         </div>
       </el-main>
     </el-container>
@@ -68,6 +68,7 @@ export default {
     nextTick(async () => {
       try {
         this.lectureIDList = await this.$store.dispatch('getLectureIDList');
+        this.searchResults = this.lectureIDList;
         for (let i = 0; i < 3; i++) {
           this.scrollWin.push(
             await this.$store.dispatch('getLectureInfoByID', this.lectureIDList[i])

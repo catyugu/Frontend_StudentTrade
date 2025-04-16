@@ -121,6 +121,7 @@ export default {
     nextTick(async () => {
       try {
         this.projectIDList = await this.$store.dispatch('getProjectIDList');
+        this.searchResults = this.projectIDList;
         for (let i = 0; i < 3; i++){
           this.scrollWin.push(await this.$store.dispatch('getProjectInfoByID', this.projectIDList[i]));
         }
