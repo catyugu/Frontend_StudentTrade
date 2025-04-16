@@ -42,6 +42,9 @@ export default new Vuex.Store({
     async searchLectures(context, query) {
       return await api.searchLectures(context, query);
     },
+    async searchProjects(context, query){
+      return await api.searchProjects(context, query)
+    },
     async loginProcess(context, token){
       return await api.loginProcess(context,token)
     },

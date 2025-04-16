@@ -7,6 +7,7 @@ import Components from 'unplugin-vue-components/vite';
 import { ElementUiResolver } from 'unplugin-vue-components/resolvers';
 
 export default defineConfig({
+  base: './',
   plugins: [
     vue2(),
     Components({
@@ -23,6 +24,7 @@ export default defineConfig({
     }
   },
   server: {
+    host: '0.0.0.0',
     port: 5173,
     proxy: {
       '/api': {

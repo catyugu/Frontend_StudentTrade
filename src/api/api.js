@@ -1,8 +1,21 @@
 import Vue from 'vue';
 
 export default {
+  async searchProjects(context, query){
+    return context.state.http.get('/api/project/search', { params: { query } }).then(res => {
+      return res.data.data;
+    }).catch(err => {
+      Vue.prototype.$notify({
+        title: '搜索失败api',
+        message: err.message,
+        type: 'error'
+      });
+      return [];
+    });
+  },
   async searchLectures(context, query) {
-    return context.state.http.get('/api/lecture/search', { params: { query } }).then(res => {
+    return context.state.http.get('/api/lecture/search', { params: { query } }).then(res =>
+    {
       return res.data.data;
     }).catch(err => {
       Vue.prototype.$notify({

@@ -71,13 +71,12 @@
   top: 20px;
   left: 20px;
   z-index: 999;
-  .drawerButton {
+}
+.drawerButton {
     width: 45px;
     height: 45px;
 
-  }
 }
-
 .el-main {
   color: #333;
   text-align: center;
