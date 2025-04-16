@@ -4,41 +4,39 @@
       <header-card :header="{title:'项目广场'}" />
       <el-main style="text-align: center">
         <el-input class="searchBar"
-                  v-model="input" placeholder="请输入搜索内容" @input="search"/>
+                  @focus="focus" @blur="true" v-model="input" placeholder="请输入搜索内容" @input="search"/>
         <div class="block">
           <el-carousel height="25vw" type="card" class="carousel-container">
-            <el-carousel-item v-for="item in scrollWin" :key="item">
+            <el-carousel-item v-for="item in scrollWin" :key="item.id">
               <h3 class="medium">
                 <img :src=" item.coverSrc" alt="" class="carousel-image"
-                @click="$router.push({name: 'projectDetail', query: {projectID: item.id}})"/>
+                     @click="$router.push({name: 'projectDetail', query: {projectID: item.id}})"/>
               </h3>
             </el-carousel-item>
           </el-carousel>
         </div>
         <div class="project-button-group">
-        <el-button
-          v-if="this.$store.getters.getIsLogin"
-          type="primary"
-          @click="myLike"
-          style="margin-top: 10px;">
-          我的收藏
-        </el-button>
-        <el-button
-          v-if="this.$store.getters.getIsLogin
-          && this.$store.state.userInfo.type==='教职'"
-          type="primary"
-          @click="toUpload"
-          style="margin-top: 10px">
-          上传项目
-        </el-button>
-        <el-button
-          v-if="this.$store.getters.getIsLogin
-          && this.$store.state.userInfo.type==='教职'"
-          type="primary"
-          @click="projectManage"
-          style="margin-top: 10px">
-          项目管理
-        </el-button>
+          <el-button
+            v-if="this.$store.getters.getIsLogin"
+            type="primary"
+            @click="myLike"
+            style="margin-top: 10px;">
+            我的收藏
+          </el-button>
+          <el-button
+            v-if="this.$store.getters.getIsLogin && this.$store.state.userInfo.type==='教职'"
+            type="primary"
+            @click="toUpload"
+            style="margin-top: 10px">
+            上传项目
+          </el-button>
+          <el-button
+            v-if="this.$store.getters.getIsLogin && this.$store.state.userInfo.type==='教职'"
+            type="primary"
+            @click="projectManage"
+            style="margin-top: 10px">
+            项目管理
+          </el-button>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center">
           <project-display-list :projectList="searchResults" :key="searchResultsKey" style="width: 70vw;" />
@@ -61,19 +59,17 @@ export default {
       searchResults: [],
       scrollWin: [],
       input: '',
-      searchResultsKey: 114514
+      searchResultsKey: 0
     }
   },
   methods: {
     async search() {
       try {
         console.log('开始搜索');
-        if (this.input==='') {
+        if (this.input === '') {
           this.searchResults = this.projectIDList;
-        }
-        else{
+        } else {
           this.searchResults = await this.$store.dispatch('searchProjects', this.input);
-
         }
         this.searchResultsKey++;
       } catch (error) {
@@ -88,12 +84,12 @@ export default {
     },
     toUpload() {
       this.$router.push(
-          {
-            path: '/project/upload',
-            query: {
-              userID: this.$store.state.userInfo.userID
-            }
+        {
+          path: '/project/upload',
+          query: {
+            userID: this.$store.state.userInfo.userID
           }
+        }
       );
     },
     myLike() {
@@ -109,7 +105,7 @@ export default {
     projectManage() {
       this.$router.push(
         {
-          name:  'projectManage',
+          name: 'projectManage',
           query: {
             userID: this.$store.getters.getUserID
           }
@@ -123,7 +119,7 @@ export default {
       try {
         this.projectIDList = await this.$store.dispatch('getProjectIDList');
         this.searchResults = this.projectIDList;
-        for (let i = 0; i < 3; i++){
+        for (let i = 0; i < 3; i++) {
           this.scrollWin.push(await this.$store.dispatch('getProjectInfoByID', this.projectIDList[i]));
         }
       } catch (error) {
@@ -172,9 +168,8 @@ export default {
 }
 
 .project-button-group {
-  el-button{
+  el-button {
     padding: 5px 6px;
   }
 }
-
 </style>

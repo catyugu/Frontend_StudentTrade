@@ -24,10 +24,16 @@ export default {
     };
   },
   watch: {
-    projectList() {
-      this.list = this.projectList;
+    projectList: {
+      immediate: true,
+      handler(newVal) {
+        this.list = newVal;
+      }
     }
   },
+  mounted() {
+    this.list = this.projectList;
+  }
 };
 </script>
 <style scoped lang="scss">

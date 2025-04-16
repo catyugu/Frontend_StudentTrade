@@ -27,6 +27,9 @@ export default {
     lectureList() {
       this.list = this.lectureList;
     }
+  },
+  mounted() {
+    this.list = this.lectureList;
   }
 };
 </script>
