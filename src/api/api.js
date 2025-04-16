@@ -6,7 +6,7 @@ export default {
       return res.data.data;
     }).catch(err => {
       Vue.prototype.$notify({
-        title: '搜索失败api',
+        title: '搜索失败',
         message: err.message,
         type: 'error'
       });
@@ -19,7 +19,7 @@ export default {
       return res.data.data;
     }).catch(err => {
       Vue.prototype.$notify({
-        title: '搜索失败api',
+        title: '搜索失败',
         message: err.message,
         type: 'error'
       });

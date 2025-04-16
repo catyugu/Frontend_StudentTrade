@@ -41,7 +41,7 @@
         </el-button>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center">
-          <project-display-list style="width: 70vw;" :projectList="projectIDList" />
+          <project-display-list style="width: 70vw;" :projectList="searchResults" />
         </div>
       </el-main>
     </el-container>
@@ -57,6 +57,7 @@ export default {
   data() {
     return {
       projectIDList: [],
+      searchResults: [],
       scrollWin: [],
       input: '',
     }
@@ -65,19 +66,15 @@ export default {
     async search() {
       try {
         console.log('开始搜索');
+        if (this.input==='') {
+          this.searchResults = this.projectIDList;
+          return;
+        }
         const searchResults = await this.$store.dispatch('searchProjects', this.input);
         console.log('搜索结果:', searchResults);
-        this.projectIDList = searchResults;
-        console.log('更新 projectIDList:', this.projectIDList);
-        
-        // 更新 scrollWin 以展示搜索结果
-        this.scrollWin = [];
-        for (let i = 0; i < Math.min(100, this.projectIDList.length); i++) {
-          const projectInfo = await this.$store.dispatch('getProjectInfoByID', this.projectIDList[i]);
-          console.log('获取项目信息:', projectInfo);
-          this.scrollWin.push(projectInfo);
-        }
-        console.log('更新 scrollWin:', this.scrollWin);
+        this.searchResults = searchResults;
+        console.log('更新 projectIDList:', this.searchResults);
+
       } catch (error) {
         console.error('搜索失败:', error);
         console.error('错误详情:', error.message);

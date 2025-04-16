@@ -58,6 +58,7 @@ export default {
   data() {
     return {
       lectureIDList: [],
+      searchResults: [],
       scrollWin: [],
       input: ''
     };
@@ -85,19 +86,14 @@ export default {
     async search() {
     try {
       console.log('开始搜索');
+      if (this.input === '') {
+        this.searchResults = this.lectureIDList;
+        return;
+      }
       const searchResults = await this.$store.dispatch('searchLectures', this.input);
       console.log('搜索结果:', searchResults);
-      this.lectureIDList = searchResults;
-      console.log('更新 lectureIDList:', this.lectureIDList);
-      
-      // 更新 scrollWin 以展示搜索结果
-      this.scrollWin = [];
-      for (let i = 0; i < Math.min(100, this.lectureIDList.length); i++) {
-        const lectureInfo = await this.$store.dispatch('getLectureInfoByID', this.lectureIDList[i]);
-        console.log('获取讲座信息:', lectureInfo);
-        this.scrollWin.push(lectureInfo);
-      }
-      console.log('更新 scrollWin:', this.scrollWin);
+      this.searchResults = searchResults;
+
     } catch (error) {
       console.error('搜索失败:', error);
       console.error('错误详情:', error.message);
