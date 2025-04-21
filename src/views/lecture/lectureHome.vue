@@ -148,6 +148,9 @@ export default {
 .searchBar {
   margin-top: 20px;
   margin-bottom: 20px;
+  width: 70vw;
+  height: 40px;
+  border-radius: 10px;
 }
 
 .el-carousel__item h3 {

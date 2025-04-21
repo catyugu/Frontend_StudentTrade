@@ -3,7 +3,7 @@
     <el-container direction="vertical">
       <header-card :header="{title:'项目广场'}" />
       <el-main style="text-align: center">
-        <el-input class="searchBar"
+        <input class="searchBar"
                   v-model="projectSearchInput"
                   placeholder="请输入搜索内容"
                   @keyup.enter.native="search"/>
@@ -143,6 +143,9 @@ export default {
 .searchBar {
   margin-top: 20px;
   margin-bottom: 20px;
+  width: 70vw;
+  height: 40px;
+  border-radius: 10px;
 }
 
 .el-carousel__item h3 {
