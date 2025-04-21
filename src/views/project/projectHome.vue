@@ -6,7 +6,7 @@
         <input class="searchBar"
                   v-model="projectSearchInput"
                   placeholder="  请输入搜索内容"
-                  @keyup.enter.native="search"/>
+                  @keyup.enter="search"/>
         <div class="block">
           <el-carousel height="25vw" type="card" class="carousel-container">
             <el-carousel-item v-for="item in scrollWin" :key="item.id">
@@ -41,9 +41,10 @@
           </el-button>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center">
-          <project-display-list
-            :projectList="searchResults"
-            :key="searchResultsKey" style="width: 70vw;" />
+          <project-display-list 
+          ref="projectDisplayList" 
+          :key="searchResultsKey"
+          style="width: 70vw;" />
         </div>
       </el-main>
     </el-container>
@@ -76,7 +77,8 @@ export default {
           this.searchResults = await this.$store.dispatch('searchProjects', this.projectSearchInput);
           console.log(this.searchResults)
         }
-        this.searchResultsKey++;
+        // 更新 projectDisplayList 的数据
+        this.updateProjectDisplayList();
       } catch (error) {
         console.error('搜索失败:', error);
         console.error('错误详情:', error.message);
@@ -116,6 +118,12 @@ export default {
           }
         }
       );
+    },
+    updateProjectDisplayList() {
+      // 通过 ref 更新 projectDisplayList 的数据
+      if (this.$refs.projectDisplayList) {
+        this.$refs.projectDisplayList.list = this.searchResults;
+      }
     }
   },
   async created() {
@@ -127,6 +135,8 @@ export default {
         for (let i = 0; i < 3; i++) {
           this.scrollWin.push(await this.$store.dispatch('getProjectInfoByID', this.projectIDList[i]));
         }
+        // 初始化时更新 projectDisplayList 的数据
+        this.updateProjectDisplayList();
       } catch (error) {
         this.$notify({
           type: 'error',

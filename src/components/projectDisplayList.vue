@@ -13,23 +13,12 @@ import ProjectCard from '@/components/projectCard.vue';
 export default {
   components: { ProjectCard },
   props: {
-    projectList: {
-      type: Array,
-      default: () => []
-    }
+
   },
   data() {
     return {
       list: []
     };
-  },
-  watch: {
-    projectList: {
-      immediate: true,
-      handler(newVal) {
-        this.list = newVal;
-      }
-    }
   },
 };
 </script>

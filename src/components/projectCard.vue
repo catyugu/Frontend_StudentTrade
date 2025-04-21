@@ -91,6 +91,11 @@ export default {
       }
     };
   },
+  watch:{
+    async id(){
+      this.thisProject = await this.$store.dispatch('getProjectInfoByID', this.id);
+    }
+  },
   async created() {
     this.thisProject = await this.$store.dispatch('getProjectInfoByID', this.id);
   },
