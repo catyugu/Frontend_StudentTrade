@@ -1,8 +1,8 @@
 <template>
   <div>
     <ul class="lecture-display-list">
-      <li v-for="(item, index) in list" :key="index" class="lecture-display-list-item">
-        <LectureCard :lectureID="item" />
+      <li class="lecture-display-list-item" v-for="(item, index) in list" :key="index" >
+        <lecture-card :lectureID="item" />
       </li>
     </ul>
   </div>
@@ -12,28 +12,15 @@ import LectureCard from '@/components/lectureCard.vue';
 
 export default {
   components: { LectureCard },
-  props: {
-    lectureList: {
-      type: Array,
-      default: () => []
-    }
-  },
   data() {
     return {
       list: []
     };
   },
-  watch: {
-    lectureList:
-      {
-        handler(newValue) {
-          this.list = newValue;
-        },
-        immediate: true
-      }
-  },
-  mounted() {
-    this.list = this.lectureList;
+  methods: {
+    updateList(newList) {
+      this.list = newList;
+    }
   }
 };
 </script>

@@ -109,6 +109,11 @@ export default {
       }
     };
   },
+  watch: {
+    async lectureID() {
+      this.thisLecture = await this.$store.dispatch('getLectureInfoByID', this.lectureID);
+    }
+  },
   async created() {
     this.thisLecture = await this.$store.dispatch('getLectureInfoByID', this.lectureID);
   },

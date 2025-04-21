@@ -14,8 +14,7 @@ export default {
     });
   },
   async searchLectures(context, query) {
-    return context.state.http.get('/api/lecture/search', { params: { query } }).then(res =>
-    {
+    return context.state.http.get('/api/lecture/search', { params: { query } }).then(res => {
       return res.data.data;
     }).catch(err => {
       Vue.prototype.$notify({

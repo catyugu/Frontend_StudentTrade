@@ -31,9 +31,6 @@ export default {
       }
     }
   },
-  mounted() {
-    this.list = this.projectList;
-  }
 };
 </script>
 <style scoped lang="scss">

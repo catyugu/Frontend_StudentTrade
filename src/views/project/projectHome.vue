@@ -4,7 +4,9 @@
       <header-card :header="{title:'项目广场'}" />
       <el-main style="text-align: center">
         <el-input class="searchBar"
-                  @focus="focus" @blur="true" v-model="input" placeholder="请输入搜索内容" @input="search"/>
+                  v-model="projectSearchInput"
+                  placeholder="请输入搜索内容"
+                  @keyup.enter.native="search"/>
         <div class="block">
           <el-carousel height="25vw" type="card" class="carousel-container">
             <el-carousel-item v-for="item in scrollWin" :key="item.id">
@@ -39,7 +41,9 @@
           </el-button>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center">
-          <project-display-list :projectList="searchResults" :key="searchResultsKey" style="width: 70vw;" />
+          <project-display-list
+            :projectList="searchResults"
+            :key="searchResultsKey" style="width: 70vw;" />
         </div>
       </el-main>
     </el-container>
@@ -58,7 +62,7 @@ export default {
       projectIDList: [],
       searchResults: [],
       scrollWin: [],
-      input: '',
+      projectSearchInput: '',
       searchResultsKey: 0
     }
   },
@@ -66,10 +70,11 @@ export default {
     async search() {
       try {
         console.log('开始搜索');
-        if (this.input === '') {
+        if (this.projectSearchInput === '') {
           this.searchResults = this.projectIDList;
         } else {
-          this.searchResults = await this.$store.dispatch('searchProjects', this.input);
+          this.searchResults = await this.$store.dispatch('searchProjects', this.projectSearchInput);
+          console.log(this.searchResults)
         }
         this.searchResultsKey++;
       } catch (error) {

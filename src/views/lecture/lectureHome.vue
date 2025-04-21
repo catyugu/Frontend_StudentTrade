@@ -3,8 +3,10 @@
     <el-container direction="vertical">
       <header-card :header="{title:'讲座中心'}" />
       <el-main style="text-align: center">
-        <el-input class="searchBar"
-               v-model="input" placeholder="请输入搜索内容" @input="search" />
+        <input class="searchBar"
+                  placeholder="请输入搜索内容"
+                  v-model="lectureSearchInput"
+                  @keyup.enter="search" />
         <div class="block">
           <el-carousel height="25vw" type="card" class="carousel-container">
             <el-carousel-item v-for="item in scrollWin" :key="item">
@@ -41,8 +43,10 @@
           </el-button>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center">
-          <lecture-display-list style="width: 70vw;" :lecture-list="searchResults"
-                                :key="searchResultKey" />
+          <lecture-display-list
+            ref="lectureDisplayList"
+            :key="searchResultsKey"
+            style="width: 70vw;" />
         </div>
       </el-main>
     </el-container>
@@ -61,40 +65,20 @@ export default {
       lectureIDList: [],
       searchResults: [],
       scrollWin: [],
-      input: '',
-      searchResultKey: 0
+      lectureSearchInput: '',
+      searchResultsKey: 0
     };
-  },
-  async created() {
-    console.log('lectureHome created');
-    nextTick(async () => {
-      try {
-        this.lectureIDList = await this.$store.dispatch('getLectureIDList');
-        this.searchResults = this.lectureIDList;
-        for (let i = 0; i < 3; i++) {
-          this.scrollWin.push(
-            await this.$store.dispatch('getLectureInfoByID', this.lectureIDList[i])
-          );
-        }
-      } catch (error) {
-        this.$notify({
-          type: 'error',
-          title: '搜索失败!',
-          message: '服务器请求失败，请稍后再试！'
-        });
-      }
-    });
   },
   methods: {
     async search() {
       try {
         console.log('开始搜索');
-        if (this.input === '') {
+        if (this.lectureSearchInput === '') {
           this.searchResults = this.lectureIDList;
         } else {
-          this.searchResults = await this.$store.dispatch('searchLectures', this.input);
+          this.searchResults = await this.$store.dispatch('searchLectures', this.lectureSearchInput);
         }
-        this.searchResultKey++;
+        this.updateLectureDisplayList(this.searchResults);
       } catch (error) {
         console.error('搜索失败:', error);
         console.error('错误详情:', error.message);
@@ -128,8 +112,35 @@ export default {
           userID: this.$store.getters.getUserID
         }
       });
+    },
+    updateLectureDisplayList(newList) {
+      if (this.$refs.lectureDisplayList) {
+        this.$refs.lectureDisplayList.updateList(newList);
+      }
     }
-  }
+  },
+  async created() {
+    console.log('lectureHome created');
+    nextTick(async () => {
+      try {
+        this.lectureIDList = await this.$store.dispatch('getLectureIDList');
+        this.searchResults = this.lectureIDList;
+        for (let i = 0; i < 3; i++) {
+          this.scrollWin.push(
+            await this.$store.dispatch('getLectureInfoByID', this.lectureIDList[i])
+          );
+        }
+        this.searchResultsKey++;
+        this.updateLectureDisplayList(this.searchResults);
+      } catch (error) {
+        this.$notify({
+          type: 'error',
+          title: '搜索失败!',
+          message: '服务器请求失败，请稍后再试！'
+        });
+      }
+    });
+  },
 };
 </script>
 
