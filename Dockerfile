@@ -1,16 +1,11 @@
-# 使用官方 Node.js 镜像
-FROM node:20-alpine AS builder
-# 设置工作目录
+FROM node:21 AS build
 WORKDIR /app
-COPY package.json .
-RUN npm install --cache /tmp/npm-cache
-RUN npm install -g vite  --cache /tmp/npm-cache
-
-FROM node:20-alpine AS dev
-WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install
 COPY . .
-RUN npm install -g vite --cache /tmp/npm-cache
-# 暴露端口
-EXPOSE 5173
-CMD ["vite"]
+RUN npm run build
 
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
