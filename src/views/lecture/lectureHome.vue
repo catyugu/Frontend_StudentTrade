@@ -4,7 +4,7 @@
       <header-card :header="{title:'讲座中心'}" />
       <el-main style="text-align: center">
         <input class="searchBar"
-                  placeholder="请输入搜索内容"
+                  placeholder="  请输入搜索内容"
                   v-model="lectureSearchInput"
                   @keyup.enter="search" />
         <div class="block">
@@ -151,6 +151,7 @@ export default {
   width: 70vw;
   height: 40px;
   border-radius: 10px;
+  font-size: 15px;
 }
 
 .el-carousel__item h3 {

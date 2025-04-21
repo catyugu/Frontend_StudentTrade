@@ -5,7 +5,7 @@
       <el-main style="text-align: center">
         <input class="searchBar"
                   v-model="projectSearchInput"
-                  placeholder="请输入搜索内容"
+                  placeholder="  请输入搜索内容"
                   @keyup.enter.native="search"/>
         <div class="block">
           <el-carousel height="25vw" type="card" class="carousel-container">
@@ -146,6 +146,7 @@ export default {
   width: 70vw;
   height: 40px;
   border-radius: 10px;
+  font-size: 15px;
 }
 
 .el-carousel__item h3 {
