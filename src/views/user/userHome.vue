@@ -42,6 +42,9 @@
           <el-form-item label="手机号">
             <el-input v-model="object.phone_number" :disabled="disabled"></el-input>
           </el-form-item>
+          <el-form-item label="学校">
+            <el-input v-model="object.school" :disabled="disabled"></el-input>
+          </el-form-item>
         </el-form>
         <el-button v-if="disabled" type="primary" @click="uploadAvatar">上传头像</el-button>
         <el-button v-if="disabled" type="primary" @click="Edit">编辑</el-button>
@@ -144,7 +147,8 @@ export default {
         type: this.object.type,
         school_serial: this.object.school_serial,
         gender: this.object.gender,
-        phone_number: this.object.phone_number
+        phone_number: this.object.phone_number,
+        school: this.object.school 
       }, {
         headers: {
           'Content-Type': 'application/json'
@@ -169,15 +173,10 @@ export default {
         });
       });
     },
-    // 添加 cropImage 方法
     cropImage() {
-
       const canvas = this.$refs.cropper.getCroppedCanvas();
       const base64Image = canvas.toDataURL('image/png');
-
-      // 移除所有非预期字符
       const cleanedBase64Image = base64Image.replace(/[^A-Za-z0-9+/=:;,]/g, '');
-
       console.log(cleanedBase64Image);
       this.$store.getters.http.post('/api/tool/image', cleanedBase64Image
         , {
@@ -212,7 +211,6 @@ export default {
         });
       });
     }
-
   },
 };
 </script>

@@ -16,7 +16,8 @@
                 <el-col :span="16">
                   <span>{{userInfo.username}}</span>
                 </el-col>
-              </el-row><el-divider></el-divider>
+              </el-row>
+              <el-divider></el-divider>
               <el-row>
                 <el-col :span="8">
                   <span>性别</span>
@@ -25,14 +26,25 @@
                   <span>{{userInfo.gender}}</span>
                 </el-col>
               </el-row>
-              <el-row><el-divider></el-divider>
+              <el-divider></el-divider>
+              <el-row>
+                <el-col :span="8">
+                  <span>学校</span>
+                </el-col>
+                <el-col :span="16">
+                  <span>{{userInfo.school}}</span>
+                </el-col>
+              </el-row>
+              <el-divider></el-divider>
+              <el-row>
                 <el-col :span="8">
                   <span>邮箱</span>
                 </el-col>
                 <el-col :span="16">
                   <span>{{userInfo.email}}</span>
                 </el-col>
-              </el-row><el-divider></el-divider>
+              </el-row>
+              <el-divider></el-divider>
               <el-row>
                 <el-col :span="8">
                   <span>电话</span>
@@ -56,6 +68,7 @@
     </el-container>
   </div>
 </template>
+
 <script>
 import HeaderCard from '@/components/headerCard.vue';
 import ProjectDisplayList from '@/components/projectDisplayList.vue';
@@ -80,6 +93,7 @@ export default {
         lectureReserveList: [],
         email: '',
         phone_number: '',
+        school: '' // 新增字段
       }
     };
   },
